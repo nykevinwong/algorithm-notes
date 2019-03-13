@@ -1,0 +1,8 @@
+Insertion sort algorithm for ascending order
+It’s easier to think about the insertion sort if we begin in the middle of the process, when the data is half sorted.
+start from first index of the array do the following:
+
+1. store your current item value in a temporary varaible before each comparsion.
+2. compare each item on the left. 
+3. if it's bigger, then copy the bigger item to current item index position. current item index is now changed to this one.
+4. if it's smaller, then the sorting is stopped. 
