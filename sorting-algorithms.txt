@@ -1,8 +1,13 @@
 Insertion sort algorithm for ascending order
 It’s easier to think about the insertion sort if we begin in the middle of the process, when the data is half sorted.
-start from first index of the array do the following:
+This algorithm requires two loop. one inner loop and one outer loop.
 
-1. store your current item value in a temporary varaible before each comparsion.
-2. compare each item on the left. 
+1. store your current item value in a temporary varaible before each comparsion inside outer loop.
+2. compare each item on the left inside an inner loop. 
 3. if it's bigger, then copy the bigger item to current item index position. current item index is now changed to this one.
 4. if it's smaller, then the sorting is stopped. 
+5. repeat the first step until all items are compared.
+
+In the outer loop, out variable starts at 1 and moves right. It marks or stores the item at current index. 
+In the inner loop, in variable starts at out value and moves left, until either temp variable is smaller than the array element there, or it can’t go left any further. 
+Each pass through the inner loop shifts another sorted element one space right.
