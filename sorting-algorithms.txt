@@ -4,9 +4,10 @@ This algorithm requires two loops. one inner loop and one outer loop.
 
 1. inside the outer loop, store your current item value in a temporary varaible before each comparsion .
 2. inside the inner loop, compare each item on the left. 
-3. if it's bigger, then copy the bigger item to current item index position. current item index is now changed to this one.
+3. if it's bigger, then copy the bigger item to current item index position and move to next one on the left. 
 4. if it's smaller, then the sorting is stopped. 
-5. repeat the first step until all items are compared.
+5. once the inner loop is completed, copy previously stored current item value to the last inner-loop index value.
+6. repeat the first step until all items are compared.
 
 In the outer loop, out variable starts at 1 and moves right. It marks or stores the item at current index. 
 In the inner loop, in variable starts at out value and moves left, until either temp variable is smaller than the array element there, or it can’t go left any further. 
