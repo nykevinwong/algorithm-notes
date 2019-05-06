@@ -1,5 +1,7 @@
 // (1) find median
 // (2) 3 way quicksort
+// (3) tail call optimization
+// (4) iterative quicksort
 
 class QuickSelect
 {
