@@ -1,3 +1,6 @@
+// (1) find median
+// (2) 3 way quicksort
+
 class QuickSelect
 {
     public long[] arr;
