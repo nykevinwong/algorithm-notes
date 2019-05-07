@@ -1,5 +1,5 @@
 // (1) find median [done, linear time complexity, but not best in the worst case (median of median is better)]
-// (2) 3 way quicksort/ducth national flag problem
+// (2) 3 way quicksort/ducth national flag problem [https://algorithmsandme.com/dutch-national-flag-problem/]
 // (3) tail call optimization
 // (4) iterative quicksort
 // (5) median of medians 
