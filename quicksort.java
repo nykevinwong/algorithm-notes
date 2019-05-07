@@ -2,6 +2,7 @@
 // (2) 3 way quicksort
 // (3) tail call optimization
 // (4) iterative quicksort
+// (5) median of medians 
 
 class QuickSelect
 {
@@ -75,7 +76,7 @@ class QuickSelect
 
     public static void main(String[] args)
     {
-        int size =  (int)(java.lang.Math.random()*10) + 20; // 10~20
+        int size =  (int)(java.lang.Math.random()*10) + 6; // 10~16
         QuickSelect q = new QuickSelect(size);
         int nth = (int)(java.lang.Math.random()*(size-1)) + 1; // 1~16
 
@@ -85,6 +86,7 @@ class QuickSelect
         if(found>=0)
         System.out.println( (size-nth+1) + "th smallest or " + nth + "th largest = " + q.arr[found] + ",  number of calls: " + q.count + " , size="+ size);
 
+        size =  (int)(java.lang.Math.random()*3) + 3; // 3~6
         QuickSelect q2 = new QuickSelect(size);
         System.out.println("\nFinding the median: ");
         q2.display();
