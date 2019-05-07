@@ -1,4 +1,4 @@
-// (1) find median
+// (1) find median [done, linear time complexity, but not best in the worst case (median of median is better)]
 // (2) 3 way quicksort
 // (3) tail call optimization
 // (4) iterative quicksort
@@ -6,6 +6,7 @@
 class QuickSelect
 {
     public long[] arr;
+    public int count = 0;
 
     public QuickSelect(int size)
     {
@@ -33,6 +34,7 @@ class QuickSelect
 
     public int quickselect(int left, int right, int index)
     {
+        count++;
         if(left >= right)
         {
             if(left==right && left==index)
@@ -44,13 +46,12 @@ class QuickSelect
         long pivotValue = arr[right];
         int pivotIndex = partitionIt(left, right, pivotValue);
         
-        if(pivotIndex > index)
+        if(pivotIndex == index) return pivotIndex;
+        else if(index < pivotIndex)
         return quickselect(left, pivotIndex-1,index);
-        else if(pivotIndex < index)
-        return quickselect(pivotIndex+1, right, index);
+//        else if(index > pivotIndex)
 
-       // if(pivotIndex == index) 
-       return pivotIndex; // found the target value at the index of the sorted data
+        return quickselect(pivotIndex+1, right, index);
     }
     // Hoare algorithm
     public int partitionIt(int left, int right, long pivot)
@@ -74,14 +75,36 @@ class QuickSelect
 
     public static void main(String[] args)
     {
-        QuickSelect q = new QuickSelect(16);
-        int n = (int)(java.lang.Math.random()*15);
+        int size =  (int)(java.lang.Math.random()*10) + 20; // 10~20
+        QuickSelect q = new QuickSelect(size);
+        int nth = (int)(java.lang.Math.random()*(size-1)) + 1; // 1~16
 
         q.display();
-        int found = q.quickselect(15-n);        
+        int found = q.quickselect(size-nth);      
         q.display();
         if(found>=0)
-        System.out.println( (15-n+1) + "th smaller or " +  (n +1) + "th largest = " + q.arr[found]);
+        System.out.println( (size-nth+1) + "th smallest or " + nth + "th largest = " + q.arr[found] + ",  number of calls: " + q.count + " , size="+ size);
+
+        QuickSelect q2 = new QuickSelect(size);
+        System.out.println("\nFinding the median: ");
+        q2.display();
+
+        long median = -1;
+        int medianIndex = q2.quickselect(size/2); 
+
+        if(size%2==1) // odd number
+           median = q2.arr[medianIndex];
+        else 
+        {
+         long sum = q2.arr[medianIndex];
+         int medianIndex2 = q2.quickselect((size/2)-1);
+         sum  = sum + q2.arr[medianIndex2];
+         median = sum/2;
+        }
+        q2.display();
+
+        System.out.println("Median:" + median );
+
     }
 }
 
