@@ -36,3 +36,4 @@ brute-force small input 小型的暴力式輸入
 Iteration: 迭代，重覆
 iteratively 迭代地，重覆地 
 bit-fiddling 有點狡猾的把戲(方法)
+commit ... to memory 記住....
