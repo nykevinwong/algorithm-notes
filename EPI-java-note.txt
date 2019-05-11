@@ -39,5 +39,7 @@ bit-fiddling 有點狡猾的把戲(方法)
 commit ... to memory 記住....
 qualitative difference 本質上的不同(差異)
 qualitatively different 性質上不同的
+more generally 普遍地來說
+
 x & (x-1) equals x with its lowest set bit erased. 等於清除了x的最右邊的二元碼1值。
 x & ~(x-1) isolates the lowest bit that is 1 in x. 將x中最右邊的1值隔離取出。
