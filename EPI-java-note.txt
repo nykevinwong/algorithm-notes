@@ -6,7 +6,7 @@ Swap bits. 交換位元組
 Reverse bits. 反轉位元組
 Find a closet integer with the same weight. 找出相等權重的最接近整數
 Computer product without arithmetical operators 不使用算術運算子來計算乘積
-Computer quotient without arithmetical operators 不使用算術運算子來計算商
+Computer quotient without arithmetical operators 不使用算術運算子來計算商數
 Computer pow(x,y) 計算冪(次方值)
 Reverse digits 反轉數字
 Check if a decimal integer is plalindrome 檢查某個整數是否為迴文數(對稱數)
