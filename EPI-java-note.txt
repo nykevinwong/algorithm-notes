@@ -1,3 +1,4 @@
+Chapter 4
 Boot camp 訓練營
 Primitive Types 基礎型別
 Computing the parity of a word. 計算一個字組的奇偶性。 parity = 同位位元(位元組有奇數個1，即為奇。有偶數個1，即為偶。
@@ -14,4 +15,6 @@ Rectangle intersection 兩個矩形的交集
 
 bitwise opeators 位元運算子
 machine independent 跨平台 (機器無關/非機器依存)
+
+http://www.goldsborough.me/bits/c++/low-level/problems/2015/10/11/23-52-02-bit_manipulation/
 
