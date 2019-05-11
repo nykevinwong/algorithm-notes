@@ -1,0 +1,11 @@
+Computing the parity of a word. 計算一個字組的奇偶性。 parity = 同位位元(位元組有奇數個1，即為奇。有偶數個1，即為偶。
+Swap bits. 交換位元組 
+Reverse bits. 反轉位元組
+Find a closet integer with the same weight. 找出相等權重的最接近整數
+Computer product without arithmetical operators 不使用算術運算子來計算乘積
+Computer quotient without arithmetical operators 不使用算術運算子來計算商
+Computer pow(x,y) 計算冪(次方值)
+Reverse digits 反轉數字
+Check if a decimal integer is plalindrome 檢查某個整數是否為迴文數(對稱數)
+Generate uniform random numbers 產生統一(每個值的可能性相等)亂數值 
+Rectangle intersection 兩個矩形的交集
