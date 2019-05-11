@@ -25,3 +25,7 @@ Varargs 可變參數
 Value Type 實值型別
 Reference Type 參考型別
 Box Type 封箱型別
+associative property--結合律(a+b)+c = a+(b+c) 
+commutative property--交換律a+b=b+a 
+cross product property--交叉乘法 
+distributive property--分配律 
