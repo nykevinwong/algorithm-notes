@@ -19,4 +19,6 @@ machine independent 跨平台 (機器無關/非機器依存)
 http://www.goldsborough.me/bits/c++/low-level/problems/2015/10/11/23-52-02-bit_manipulation/
 
 signedness 符號性. 如果變數可表示正數又可表示負數，該類型是「有符號」的；而如果僅可表示非負數，則為「無符號」類型。
-
+foreach 迴圈
+Varargs 可變參數
+基本資料型別的自動封箱 (Auto Boxing) 與拆箱 (Unboxing)、泛型 (Generics) 等
