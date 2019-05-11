@@ -1,3 +1,4 @@
+Primitive Types 基礎型別
 Computing the parity of a word. 計算一個字組的奇偶性。 parity = 同位位元(位元組有奇數個1，即為奇。有偶數個1，即為偶。
 Swap bits. 交換位元組 
 Reverse bits. 反轉位元組
