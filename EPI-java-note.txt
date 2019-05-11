@@ -43,3 +43,12 @@ more generally 普遍地來說
 
 x & (x-1) equals x with its lowest set bit erased. 等於清除了x的最右邊的二元碼1值。
 x & ~(x-1) isolates the lowest bit that is 1 in x. 將x中最右邊的1值隔離取出。
+
+1000	kB	kilobyte 千位元組
+1000^2	MB	megabyte 百萬位元組
+1000^3	GB	gigabyte 吉位元組	
+1000^4	TB	terabyte 兆位元組	
+1000^5	PB	petabyte 拍位元組	
+1000^6	EB	exabyte  艾位元組	
+1000^7	ZB	zettabyte皆位元組	
+1000^8	YB	yottabyte佑位元組	
