@@ -1,3 +1,4 @@
+Boot camp 訓練營
 Primitive Types 基礎型別
 Computing the parity of a word. 計算一個字組的奇偶性。 parity = 同位位元(位元組有奇數個1，即為奇。有偶數個1，即為偶。
 Swap bits. 交換位元組 
@@ -10,3 +11,7 @@ Reverse digits 反轉數字
 Check if a decimal integer is plalindrome 檢查某個整數是否為迴文數(對稱數)
 Generate uniform random numbers 產生統一(每個值的可能性相等)亂數值 
 Rectangle intersection 兩個矩形的交集
+
+bitwise opeators 位元運算子
+machine independent 跨平台 (機器無關/非機器依存)
+
