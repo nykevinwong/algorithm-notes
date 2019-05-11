@@ -1,6 +1,6 @@
 Chapter 4
 Boot camp 訓練營
-Primitive Types 基礎型別
+Primitive Types 基本資料型別
 Computing the parity of a word. 計算一個字組的奇偶性。 parity = 同位位元(位元組有奇數個1，即為奇。有偶數個1，即為偶。
 Swap bits. 交換位元組 
 Reverse bits. 反轉位元組
@@ -22,3 +22,6 @@ signedness 符號性. 如果變數可表示正數又可表示負數，該類型�
 foreach 迴圈
 Varargs 可變參數
 基本資料型別的自動封箱 (Auto Boxing) 與拆箱 (Unboxing)、泛型 (Generics) 等
+Value Type 實值型別
+Reference Type 參考型別
+Box Type 封箱型別
