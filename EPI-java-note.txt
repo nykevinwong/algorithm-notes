@@ -52,3 +52,7 @@ x & ~(x-1) isolates the lowest bit that is 1 in x. 將x中最右邊的1值隔離
 1000^6	EB	exabyte  艾位元組	
 1000^7	ZB	zettabyte皆位元組	
 1000^8	YB	yottabyte佑位元組	
+
+right propagate the rightmost set bit in x, e.g., turns (01010000) to (01011111). 向右傳播餘數最右邊的二位元值1. x & ( [x & ~(x-1)]  -1)
+compute x mod a power of two, e.g., returs 13 for 77 mode 64. 計算將x除以一個2的次方值的餘數. x & (64-1)
+test if x is a power of 2, i.e., evaluates to true for x = 1,2,4,8,..., false for all other values. 測試 x 是否是二的次方值。 ~(x & 1) 
