@@ -30,3 +30,4 @@ commutative property--交換律a+b=b+a
 cross product property--交叉乘法 
 distributive property--分配律 
 fairly straightforward 相當直截了當、相當簡單、相當直接. 
+a very large number of 64-bit words 以64位元字組表示的一個很大的數字
