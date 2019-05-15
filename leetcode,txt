@@ -107,3 +107,7 @@ Output: true
 
 153. Find Minimum in Rotated Sorted Array
 
+Possible Solutions:
+A simple O(N) time-complexity solution is to traverse the complete array and find minimum.
+
+
