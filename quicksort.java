@@ -1,27 +1,3 @@
-import java.util.*;
-class MergeSortedArray { 
-   public static void main(String[] args)
-      { // Arrays must be sorted before merging.
-      int[] A = {23, 47, 81, 95};
-      int[] B = {7, 14, 39, 55, 62, 74};
-      int[] C = new int[A.length+B.length];
-      merge(A, A.length, B, B.length, C);
-      System.out.println(java.util.Arrays.toString(C));
-      System.out.println("valid array ?" + Arrays.equals(C, new int[] {7,14,23,39,47,55,62,74,81,95} ));
-      }  // end main()
-   //-----------------------------------------------------------
-     public static void merge( int[] A, int N1,
-                               int[] B, int N2,
-                               int[] C )
-      {  // merge A and B into C
-      int a=0, b=0, c=0;
-      // neither array empty
-      while(a < N1 && b < N2) C[c++] = ( A[a] < B[b] ) ? A[a++]:  B[b++];  
-      while(a < N1) C[c++] = A[a++];  // B is empty,but A isn't
-      while(b < N2) C[c++] = B[b++];  // A is empty,but B isn't
-      }  // end mergeSorted()
-   }  // end class MergeSortedArray
-
 // (1) find median [done, linear time complexity, but not best in the worst case (median of median is better)]
 // (2) ducth national flag problem [done for 3 color] [https://algorithmsandme.com/3-way-quicksort/]
 // (3) simple 3 way quicksort [done]
