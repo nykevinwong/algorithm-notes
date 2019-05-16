@@ -33,3 +33,7 @@ class BinarySearchSortedArray {
          return Long.MIN_VALUE; // not found
    } // end iterativeBinarySearch
 }
+
+class BinarySearch2SortedArray
+{ // http://www.zrzahid.com/kth-smallest-element-in-two-sorted-arrays/
+}
