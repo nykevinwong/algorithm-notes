@@ -15,9 +15,9 @@ class BinarySearchSortedArray {
          while(l<=r)
          {  
             int mid = l + (r-l)/2;            
-            if(sorted[mid] == target) return mid; // found it            
             if(sorted[mid] < target) l = mid+1; // search right side
             else if(sorted[mid] > target) r=mid-1; // search left side
+            else return mid;
          }
          return Long.MIN_VALUE; // not found
    } // end iterativeBinarySearch
@@ -26,9 +26,9 @@ class BinarySearchSortedArray {
          if(l<=r)
          {         
             int mid = l + (r-l)/2;
-            if(sorted[mid] == target) return mid; // found it            
             if(sorted[mid] < target) return recurBinarySearch(sorted, mid+1 , r, target); // search right side
             else if(sorted[mid] > target) return recurBinarySearch(sorted, l ,mid-1, target); // search left side
+            else return mid;
          }
          return Long.MIN_VALUE; // not found
    } // end iterativeBinarySearch
