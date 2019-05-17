@@ -113,6 +113,26 @@ class DutchNationalFlag
         System.out.println(java.util.Arrays.toString(nums));
     }
 
+    // two colors.  color zero and color non-zero.
+    public void moveZeroes(int[] nums) {
+        int p = 0;
+        int q = 0;
+        
+        while( p < nums.length )
+        {
+            if(nums[p]==0) p++; // p track current position with non-zero item
+            else if(nums[q]==0) // q track current position with zero-value item
+            {
+                int temp = nums[p];
+                nums[p]= nums[q];
+                nums[q]= temp;
+                q++;
+            }
+            else {p++; q++;} // none of them is zero
+        }
+        
+    }
+    
     public static void main(String[] args)
     {
         solve3Color(new int[] {2,0,1,2,1,1,2,2,0,0,0,1,2,0});
