@@ -60,3 +60,49 @@ class MergeCountFindKth {  // Time: O(m+n) => O(N), Space: O(1)
          return Long.MIN_VALUE;
       }  // end findKth()
    }  // end class MergeCountFindKth
+class MergeSort
+   {
+   //-----------------------------------------------------------
+   public static void mergeSort(long[] arr)           // called by main()
+      {                              // provides temp
+      long[] temp = new long[arr.length];
+      recMergeSort(temp, arr, 0, arr.length-1);
+      }
+   //-----------------------------------------------------------
+   public static void recMergeSort(long[] temp, long[] arr,  int lowerBound,
+                                               int upperBound)
+      {
+      if(lowerBound == upperBound)  return; // if range is 1, no sorting
+      else {                                    // find midpoint
+         int mid = (lowerBound + upperBound) / 2;
+         recMergeSort(temp, arr, lowerBound, mid);  // sort low half
+         recMergeSort(temp, arr, mid+1, upperBound);   // sort high half
+         merge(temp, arr, lowerBound, mid, upperBound);  // merge them
+         }  // end else
+      }  // end recMergeSort()
+   //-----------------------------------------------------------
+   public static void merge(long[] temp, long[] arr, int lowerBound,
+                           int mid, int upperBound)
+      {
+      int j = 0;                             // temp index
+      int l = lowerBound;
+      int r = mid+1;
+
+      while(l <= mid && r <= upperBound)
+          temp[j++] = ( arr[l] < arr[r] ) ? arr[l++]: arr[r++];
+
+      while(l <= mid) temp[j++] = arr[l++];
+      while(r <= upperBound) temp[j++] = arr[r++];
+
+      for(j=lowerBound; j<=upperBound; j++)
+         arr[j] = temp[j-lowerBound];
+      }  // end merge()
+   //-----------------------------------------------------------
+   public static void main(String[] args)
+      {
+      long[] arr = new long[] {64,21,33,70,12,85,44,3,99,0,108,36};
+      System.out.println(java.util.Arrays.toString(arr));
+      mergeSort(arr);
+      System.out.println(java.util.Arrays.toString(arr));
+      }  // end main()
+   }  // end class MergeSortApp
