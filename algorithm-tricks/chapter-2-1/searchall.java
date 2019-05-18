@@ -1,4 +1,4 @@
-class DepthFirstSearchStates // Time: O(N^2)
+class DepthFirstSearchStates // Time: O(2^N)
 {  // 如果用圖形表示所有深度優先搜尋狀態的節點，此圖將是一個二元樹的圖形。
     public static boolean sumEqualToK(int[] arr, int k, int sum, int i)
     {
@@ -7,7 +7,7 @@ class DepthFirstSearchStates // Time: O(N^2)
         if(sumEqualToK(arr, k, sum , i+1)) return true; // exclude arr[i]
         return false;
     }
-    // 如果不剪枝，所有深度優先搜尋狀態的節點數為 N^(2+1) 個，也代表有 N^(2+1) 個狀態。
+    // 如果不剪枝，所有深度優先搜尋狀態的節點數為 2^(N+1) 個，也代表有 2^(N+1) 個狀態。
     // 剪枝: 如果是二元樹，代表有些狀態可在某些狀況下排除。排除不必要狀態的動作就稱為剪枝。
     // 剪枝的目地是降低程式執行時間。
     public static boolean sumEqualToK_cutBranch(int[] arr, int k, int sum, int i)
