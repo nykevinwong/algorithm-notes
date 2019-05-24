@@ -7,9 +7,11 @@ how to study algorithm?
 
 https://medium.freecodecamp.org/the-best-podcasts-for-new-coders-and-the-best-tools-for-listening-to-them-df393b1c8dc
 
+# algorithm (more computer programming approach. easier to understand without math background)
 algorithm 2005 podcast: (simplier)
 https://player.fm/series/introduction-to-algorithms-2005-15478
 
+# algorithm (more mathmatical analysis)
 algorithm 2011 podcast:
 https://player.fm/series/introduction-to-algorithms-2011/lecture-1-algorithmic-thinking-peak-finding
 
