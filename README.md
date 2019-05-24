@@ -7,3 +7,12 @@ how to study algorithm?
 
 https://medium.freecodecamp.org/the-best-podcasts-for-new-coders-and-the-best-tools-for-listening-to-them-df393b1c8dc
 
+algorithm 2011 podcast:
+https://player.fm/series/introduction-to-algorithms-2011/lecture-1-algorithmic-thinking-peak-finding
+
+algorithm 2011 videos plus transcript (the same one as above in video version):
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-1-algorithmic-thinking-peak-finding/
+
+
+Free MIT Courseware (free to attend MIT quality class)
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/
