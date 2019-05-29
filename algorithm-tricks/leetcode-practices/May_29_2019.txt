@@ -1,0 +1,47 @@
+40. Combination Sum II (Medium)
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+Each number in candidates may only be used once in the combination.
+Note:
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+Input: candidates = [10,1,2,7,6,1,5], target = 8,
+A solution set is:
+[
+  [1, 7],
+  [1, 2, 5],
+  [2, 6],
+  [1, 1, 6]
+]
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {        
+           List<List<Integer>> result = new ArrayList<List<Integer>>();
+           Arrays.sort(candidates);
+           findSum(candidates, new boolean[candidates.length], target, 0, result, new ArrayList<Integer>(), 0);
+           return result; 
+    }
+    
+    public void findSum(int[] candidates, boolean[] used, int target, int curSum, List<List<Integer>> result, List<Integer> l, int start) {
+        if(curSum > target) return;
+        if(curSum==target)
+        {
+            result.add(new ArrayList(l));
+            return;
+        }
+        for(int i=start;i<candidates.length;i++)
+        {
+            if(used[i]) continue;
+            
+            if(i > 0 && candidates[i]==candidates[i-1]  && !used[i-1]) continue;
+            
+            used[i]=true;
+            l.add(candidates[i]);
+            findSum(candidates, used, target, curSum+candidates[i], result, l, i+1);
+            l.remove(l.size()-1);
+            used[i]=false;
+        }
+        
+    }
+}
+
