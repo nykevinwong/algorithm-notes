@@ -1,0 +1,139 @@
+216. Combination Sum III (Medium)
+Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
+Note:
+All numbers will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+Input: k = 3, n = 7
+Output: [[1,2,4]]
+Example 2:
+Input: k = 3, n = 9
+Output: [[1,2,6], [1,3,5], [2,3,4]]
+
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        int[] nums = new int[] {1,2,3,4,5,6,7,8,9};        
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        combination(nums, k, n, 0, 0, new ArrayList<Integer>(), result);
+        return result;
+    }
+    
+    public void combination(int[] nums, int k, int target, int sum, int start, List<Integer> l, List<List<Integer>> result)
+    {
+        if(sum > target) return; // add up to a number more than n
+        if(l.size() > k) return; // more than k number
+        
+        if(sum == target && l.size() == k) // k numbers that add up to a number n
+        {
+            result.add(new ArrayList(l));
+            return;
+        }
+        
+        for(int i=start;i < nums.length;i++)
+        {                        
+            l.add(nums[i]);
+            combination(nums, k, target, sum+nums[i],  i+1, l, result); 
+            l.remove(l.size()-1);
+        }
+    }
+}
+
+22. Generate Parentheses (Medium)
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+For example, given n = 3, a solution set is:
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        char[] nums = "()".toCharArray();
+        List<String> result = new ArrayList<String>();
+        combination(nums, new StringBuilder(), result, n,n);
+        return result;
+    }
+    
+    public void combination(char[] nums, StringBuilder sb, List<String> result, int left, int right)
+    {
+        if(left > right) return;
+        if(left<0) return;
+        if(right<0) return;
+        
+        if(left==0 && right==0)
+        {
+            result.add(sb.toString());
+            return;
+        }
+        
+        for(int i=0;i<nums.length;i++)
+        {            
+            sb.append(nums[i]);
+            
+            if(nums[i]=='(') 
+            combination(nums, sb, result, left-1, right);
+            else
+            combination(nums, sb, result, left, right-1);
+                
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+}
+
+
+377. Combination Sum IV (Medium)
+Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
+
+Example:
+
+nums = [1, 2, 3]
+target = 4
+
+The possible combination ways are:
+(1, 1, 1, 1)
+(1, 1, 2)
+(1, 2, 1)
+(1, 3)
+(2, 1, 1)
+(2, 2)
+(3, 1)
+
+Note that different sequences are counted as different combinations.
+
+Therefore the output is 7.
+
+This problem is a DP problem. 
+The hint is (1) it's a permutation/combination. 
+(2) the output requirement is a number and not a result list. This indiciates the answers in each recusrive call can be caculated and cached.
+
+// below is not the CORRECT answer but it's ready to optimize using DP.
+class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        int[] result = new int[2];
+        combination(nums, target, 0, new ArrayList<Integer>(), result);
+        return result[0];
+    }
+    
+    public void combination(int[] nums, int target, int sum, List<Integer> l, int[] result)
+    {
+        if(sum > target) return;
+        if(sum==target)
+        {
+            result[0]++;
+            return;
+        }
+        
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i] > target) break;
+            
+            l.add(nums[i]);
+            combination(nums, target, sum+nums[i], l, result);
+            l.remove(l.size()-1);
+        }
+    }
+}
