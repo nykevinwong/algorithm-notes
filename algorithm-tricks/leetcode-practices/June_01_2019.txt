@@ -31,3 +31,76 @@ class Substrings
         }       
     }
 }
+
+17. Letter Combinations of a Phone Number (Medium)
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+Example:
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+Note:
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<String>();
+        if(digits==null || digits.length() == 0) return res;
+        
+        HashMap<Character, char[]> hs = new HashMap<Character, char[]>();
+        hs.put('2', new char[] {'a','b','c'});
+        hs.put('3', new char[] {'d','e','f'});
+        hs.put('4', new char[] {'g','h','i'});
+        hs.put('5', new char[] {'j','k','l'});
+        hs.put('6', new char[] {'m','n','o'});
+        hs.put('7', new char[] {'p','q','r','s'});
+        hs.put('8', new char[] {'t','u','v'});
+        hs.put('9', new char[] {'w','x','y','z'});
+        combination(hs, digits, res, new char[digits.length()], 0);
+        return res;
+    }
+    
+    public void combination(HashMap<Character, char[]> hs, String digits, List<String> res, char[] l, int index) 
+    {        
+        if(index==digits.length())
+        {
+            res.add(new String(l));
+            return;
+        }
+        
+        char c = digits.charAt(index);
+        char[] alphabet = hs.get(c);
+        for(int i=0;i<alphabet.length;i++)
+        {
+            l[index]= alphabet[i];
+            combination(hs, digits, res, l, index+1);
+        }
+    }    
+}
+
+771. Jewels and Stones (Easy)
+You're given strings J representing the types of stones that are jewels, and S representing the stones you have.  Each character in S is a type of stone you have.  You want to know how many of the stones you have are also jewels.
+The letters in J are guaranteed distinct, and all characters in J and S are letters. Letters are case sensitive, so "a" is considered a different type of stone from "A".
+Example 1:
+Input: J = "aA", S = "aAAbbbb"
+Output: 3
+Example 2:
+Input: J = "z", S = "ZZ"
+Output: 0
+Note:
+S and J will consist of letters and have length at most 50.
+The characters in J are distinct.
+
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        HashSet s = new HashSet();
+        for(int i=0;i<J.length();i++)
+            s.add(J.charAt(i));
+                
+        int count = 0;
+        for(int i=0;i<S.length();i++)
+            if(s.contains(S.charAt(i)))
+                count++;
+        
+        return count;
+    }
+}
