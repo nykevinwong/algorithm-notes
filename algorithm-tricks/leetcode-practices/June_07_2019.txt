@@ -1,0 +1,31 @@
+67. Add Binary (Easy)
+Given two binary strings, return their sum (also a binary string).
+The input strings are both non-empty and contains only characters 1 or 0.
+
+
+Input: a = "11", b = "1"
+Output: "100"
+
+Input: a = "1010", b = "1011"
+Output: "10101"
+
+    public String addBinary(String a, String b) {
+     
+        int p = a.length();
+        int q = b.length();
+        int c = 0;
+        StringBuilder sb = new StringBuilder();
+        while(p > 0 || q > 0)
+        {
+            int x = (p>0) ? (int)(a.charAt(--p)-'0'):0;
+            int y = (q>0) ? (int)(b.charAt(--q)-'0'):0;
+            int sum = x + y + c;
+            int r = sum % 2;
+            c = sum/2;
+            sb.insert(0, r);
+        }
+        
+        if(c>0) sb.insert(0, c);
+        
+        return sb.toString();
+    }
