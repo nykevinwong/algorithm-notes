@@ -133,3 +133,33 @@ The first node is considered odd, the second node even and so on ...
         
         return head;
     }
+
+83. Remove Duplicates from Sorted List (Easy)
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+Example 1: Input: 1->1->2 Output: 1->2
+Example 2: Input: 1->1->2->3->3 Output: 1->2->3
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode cur = head;
+        ListNode prev = null;
+
+        while(cur!=null)
+        {            
+            if(prev!=null && cur.val == prev.val)         
+            {          
+                prev.next = cur.next;
+                // prev stay the same once current value is removed.
+            }
+            else 
+            {  
+                prev = cur;
+            }
+            cur = cur.next;
+        }
+        
+        return dummy.next;
+    }
+
+
