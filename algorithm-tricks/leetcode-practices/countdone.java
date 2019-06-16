@@ -14,7 +14,7 @@ class countdone
 
         try
         {
-            PrintWriter writer = new PrintWriter("READEME.md", "UTF-8");
+            PrintWriter writer = new PrintWriter("README.md", "UTF-8");
             System.out.println("Processing");
             int count =0 ;
             for (File file : filesList) {
