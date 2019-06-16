@@ -1,0 +1,106 @@
+162 Find Peak Element
+A peak element is an element that is greater than its neighbors.
+Given an input array where num[i] ≠ num[i+1], find a peak element and return its index.
+The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.
+You may imagine that num[-1] = num[n] = -∞.
+For example, in array [1, 2, 3, 1], 3 is a peak element and your function should return the index number 2.
+Note:
+Your solution should be in logarithmic complexity.
+
+Solution
+
+Binary Search: Time ~ O(logN), Space ~ O(1) 
+已知 array 中没有重复元素，所以有四种情况，其中只有 (a) 是 peak：
+a)            b)  *        c)       *   d)
+     *                 *            *          *     *
+*       *                *      *                 *
+如果 mid 小于 right (c, d)，则 mid 的右侧一定有 peak；
+如果 mid 小于 left (b, d)，则 mid 的左侧一定有 peak；
+除上述两种情况外即为 (a)，则 mid 为 peak。
+注意：循环条件中必须是 lo <= hi 而不是 lo < hi，因为当 lo = hi = mid 时仍需判断该点是否为 peak。
+
+You may imagine that num[-1] = num[n] = -∞.
+So the array must have a peak.
+In case b), the peak is num[0]. In case c), the peak is num[n-1],
+in case d), num[0] and num[n-1] are peaks.
+
+    public int findPeakElement(int[] nums) {
+        int l = 0, r = nums.length-1;
+        
+        while(l<=r)
+        {
+          int mid = l+(r-l)/2; //prevent overflow of r+l
+        
+           if(mid+1 < nums.length && nums[mid] < nums[mid+1]) l=mid+1;
+           else if(mid-1 >= 0 && nums[mid-1] > nums[mid]) r=mid-1;
+           else return mid;
+        }
+        
+        return -1; // doesn't exist        
+    }
+
+34. Find First and Last Position of Element in Sorted Array (Medium)
+Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+Your algorithm's runtime complexity must be in the order of O(log n).
+If the target is not found in the array, return [-1, -1].
+
+Example 1:  Input: nums = [5,7,7,8,8,10], target = 8 Output: [3,4]
+Example 2:  Input: nums = [5,7,7,8,8,10], target = 6 Output: [-1,-1]
+
+https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+
+    public int[] searchRange(int[] nums, int target) {
+        int l = findFirstOccurrence(nums, target);
+        int r = findLastOccurrence(nums, target);
+        return new int[] {l,r};
+    }
+    
+    public int findFirstOccurrence(int[] nums, int target) {
+        int l = 0, r = nums.length-1;
+        int ans = -1;
+        while(l<=r)
+        {
+            int mid = l + (r-l)/2;
+            
+            if(nums[mid]==target)
+            { // check left side to see if there's any target value that's before this one
+                ans = mid; // remember last position
+                r= mid-1;
+            }
+            else if(target < nums[mid])
+            { // check the left side
+                r = mid-1;
+            }
+            else // nums[mid] is less than target
+            { // check the right side
+                l = mid+1;
+            }                 
+        }    
+        
+        return ans;
+    }
+
+    public int findLastOccurrence(int[] nums, int target) {
+        int l = 0, r = nums.length-1;
+        int ans = -1;
+        while(l<=r)
+        {
+            int mid = l + (r-l)/2;
+            
+            if(nums[mid]==target)
+            { // check left side to see if there's any target value that's after this one
+                ans = mid; // remember last position
+                l = mid+1; // check the right side
+            }
+            else if(target < nums[mid])
+            { // check the left side
+                r= mid-1;
+            }
+            else // nums[mid] is less than target
+            { // check the right side
+                l = mid+1;
+            }                 
+        }    
+        
+        return ans;
+    }
