@@ -49,6 +49,13 @@
 ### 33. Search in Rotated Sorted Array (Medium)
 ### 81. Search in Rotated Sorted Array II (Medium)
 ### 328. Odd Even Linked List (Medium)
+### 83. Remove Duplicates from Sorted List (Easy)
+
+## June_17_2019.txt
+### 237. Delete Node in a Linked List (Easy)
+### 234. Palindrome Linked List (Easy)
+### 203. Remove Linked List Elements (Easy)
+### 23. Merge k Sorted Lists (Hard)
 
 ## May_28_2019.txt
 ### 46. Permutations
@@ -69,4 +76,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 35 problems are COMPLETED!!
+Total 40 problems are COMPLETED!!
