@@ -72,3 +72,56 @@ class countdone
 
     }
 }
+
+class combinefiles
+{
+    public static void main(String[] args) throws IOException
+    {
+        File dir = new File(".");
+        File[] filesList = dir.listFiles(new FilenameFilter() { 
+                 public boolean accept(File dir, String filename)
+                      { return filename.endsWith(".txt"); }
+        } );
+ //       java.util.Arrays.sort(filesList, Collections.reverseOrder());
+        try
+        {
+            PrintWriter writer = new PrintWriter("combined.doc", "UTF-8");
+            System.out.println("Processing");
+            int count =0 ;
+            for (File file : filesList) {
+                if (file.isFile()) {
+                    writer.println("#### " + file.getName());
+                          count++;
+
+                        BufferedReader reader = new BufferedReader(new FileReader(file));
+                        String line = reader.readLine();
+                        String prevLine = "test";
+
+                        while (line != null) {
+                            line = reader.readLine();
+                            if(line!=null)
+                            {
+                          //      if(!prevLine.isEmpty() && !line.isEmpty())
+                                writer.println(line);
+                            }
+                            prevLine = line;
+                        }
+                        reader.close();
+              
+                }
+            }
+
+            System.out.println("\nDone Combining!!");
+            System.out.println("Total " + count + " files are combined!!");
+            writer.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println("error listing files.");
+            e.printStackTrace();
+        }
+
+        
+
+    }
+}
