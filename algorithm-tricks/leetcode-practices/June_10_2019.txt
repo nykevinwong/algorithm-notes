@@ -9,43 +9,26 @@ Input: "cbbd"
 Output: "bb"
 // O(N^2) solution
     public String longestPalindrome(String s) {
-        if(s==null) return null;
-        if(s.length()==0) return s;
+        String max = "";
         
-        int[] odd = new int[3];
-        int[] even = new int[3];
-        int[] max = new int[3];
-        
-        for (int i = 0; i < s.length() ;i ++) {
-            expandAroundCenter(s, i, i , odd);
-            expandAroundCenter(s, i, i + 1, even);
-
-            if(odd[0] > max[0])
-            {
-                max[0]=odd[0];
-                max[1]=odd[1];
-                max[2]=odd[2];
-            }
-            
-            if(even[0] > max[0])
-            {
-                max[0]=even[0];
-                max[1]=even[1];
-                max[2]=even[2];
-            }
-
+        for(int i=0;i< s.length();i++)
+        {
+            String s1 = expandFromCenter(s, i, i);
+            String s2 = expandFromCenter(s, i, i+1);
+            String curMax = (s1.length() > s2.length()) ? s1:s2;
+            max = (curMax.length() > max.length()) ? curMax:max;            
         }
         
-      // create a substring from startIndex position to endIndex -1 position.
-        return s.substring(max[1], max[2]+1); //string.subString(startIndex,endIndex);
+        return max;
     }
     
-    public void expandAroundCenter(String s,int l, int r, int[] res)
+    public String expandFromCenter(String s, int l, int r)
     {
-        while(l >= 0 && r < s.length() && s.charAt(l)==s.charAt(r))
-        { l--; r++; }
+        while(l>=0 && r < s.length() && s.charAt(l) == s.charAt(r))
+        { 
+            l--; r++; 
+        }
         
-        res[0] = (r-1)-(l+1) +1;
-        res[1] = l+1;
-        res[2] = r-1;
+        int len = ((r-1)-(l+1));        
+        return s.substring(l+1, r);
     }
