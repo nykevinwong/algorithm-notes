@@ -1,0 +1,6 @@
+Dynamic Programming
+
+The lower the number the tutorial is more close to beginner level and vice versa.
+(1) https://medium.com/@tiagot/dynamic-programming-an-induction-approach-b5c5e73c4a19
+(2) https://leetcode-cn.com/problems/coin-change/solution/dong-tai-gui-hua-tao-lu-xiang-jie-by-wei-lai-bu-ke/  
+

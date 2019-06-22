@@ -94,17 +94,16 @@ class combinefiles
                           count++;
 
                         BufferedReader reader = new BufferedReader(new FileReader(file));
-                        String line = reader.readLine();
-                        String prevLine = "test";
+                        String line = null;
+                        String prev = null;
+                        int prevLen = -1;
+                        int curLen = -1;
 
-                        while (line != null) {
-                            line = reader.readLine();
-                            if(line!=null)
-                            {
-                          //      if(!prevLine.isEmpty() && !line.isEmpty())
+                        while ((line = reader.readLine()) != null) {
+                            curLen = line.trim().length();
+                            if( !(prevLen < 3 && prevLen==curLen) ) // merged mulitple empty lines into one line
                                 writer.println(line);
-                            }
-                            prevLine = line;
+                            prevLen = curLen;
                         }
                         reader.close();
               

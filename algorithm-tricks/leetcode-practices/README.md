@@ -57,6 +57,12 @@
 ### 203. Remove Linked List Elements (Easy)
 ### 23. Merge k Sorted Lists (Hard)
 
+## June_18_2019.txt
+### 232. Implement Queue using Stacks (Easy)
+
+## June_19_2019.txt
+### 415. Add Strings (Easy)
+
 ## May_28_2019.txt
 ### 46. Permutations
 ### 47. Permutations II (Medium)
@@ -76,4 +82,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 40 problems are COMPLETED!!
+Total 42 problems are COMPLETED!!

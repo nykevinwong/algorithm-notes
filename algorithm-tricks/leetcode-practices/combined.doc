@@ -1,0 +1,1666 @@
+#### June_01_2019.txt
+Substrings. // print all substrings of a given string (the problem is given by Leo)
+import java.util.*;
+class Substrings
+{
+    public static void substrings(char[] str, List<String> res, StringBuilder sb, int start, int end)
+    {        
+        if(start>= str.length || end>=str.length) return; // skip to prevent from app crash.
+
+        for(int i=start;i<=end;i++)
+        {
+            if(sb.indexOf(str[i]+"") >=0) continue;
+            sb.append(str[i]);
+            res.add(sb.toString());
+            substrings(str, res, sb, i,i+1);
+            sb.deleteCharAt(sb.length()-1);
+        }
+
+    public static void main(String[] args)
+    {
+        String given = "abcd";
+        char[] str = given.toCharArray();
+        List<String> res = new ArrayList<String>();
+        System.out.println("given:" + given + "\n ans:");
+        substrings(str, res, new StringBuilder(), 0, str.length-1); 
+
+        for(String s: res)
+        {
+            System.out.println(s);
+        }       
+
+17. Letter Combinations of a Phone Number (Medium)
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+Example:
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+Note:
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<String>();
+        if(digits==null || digits.length() == 0) return res;
+        
+        HashMap<Character, char[]> hs = new HashMap<Character, char[]>();
+        hs.put('2', new char[] {'a','b','c'});
+        hs.put('3', new char[] {'d','e','f'});
+        hs.put('4', new char[] {'g','h','i'});
+        hs.put('5', new char[] {'j','k','l'});
+        hs.put('6', new char[] {'m','n','o'});
+        hs.put('7', new char[] {'p','q','r','s'});
+        hs.put('8', new char[] {'t','u','v'});
+        hs.put('9', new char[] {'w','x','y','z'});
+        combination(hs, digits, res, new char[digits.length()], 0);
+        return res;
+    }
+    
+    public void combination(HashMap<Character, char[]> hs, String digits, List<String> res, char[] l, int index) 
+    {        
+        if(index==digits.length())
+        {
+            res.add(new String(l));
+            return;
+        }
+        
+        char c = digits.charAt(index);
+        char[] alphabet = hs.get(c);
+        for(int i=0;i<alphabet.length;i++)
+        {
+            l[index]= alphabet[i];
+            combination(hs, digits, res, l, index+1);
+        }
+
+771. Jewels and Stones (Easy)
+You're given strings J representing the types of stones that are jewels, and S representing the stones you have.  Each character in S is a type of stone you have.  You want to know how many of the stones you have are also jewels.
+The letters in J are guaranteed distinct, and all characters in J and S are letters. Letters are case sensitive, so "a" is considered a different type of stone from "A".
+Example 1:
+Input: J = "aA", S = "aAAbbbb"
+Output: 3
+Example 2:
+Input: J = "z", S = "ZZ"
+Output: 0
+Note:
+S and J will consist of letters and have length at most 50.
+The characters in J are distinct.
+
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        HashSet s = new HashSet();
+        for(int i=0;i<J.length();i++)
+            s.add(J.charAt(i));
+                
+        int count = 0;
+        for(int i=0;i<S.length();i++)
+            if(s.contains(S.charAt(i)))
+                count++;
+        
+        return count;
+    }
+#### June_02_2019.txt
+127. Word Ladder (Medium)
+Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord, such that:
+
+Only one letter can be changed at a time.
+Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+Note:
+
+Return 0 if there is no such transformation sequence.
+All words have the same length.
+All words contain only lowercase alphabetic characters.
+You may assume no duplicates in the word list.
+You may assume beginWord and endWord are non-empty and are not the same.
+Example 1:
+
+Input:
+beginWord = "hit",
+endWord = "cog",
+wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output: 5
+
+Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+return its length 5.
+Example 2:
+
+Input:
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log"]
+
+Output: 0
+
+Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
+
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordDict) {
+        Set<String> hs = new HashSet<String>(wordDict);
+        Queue<String> q = new LinkedList<String>();        
+        if(!hs.contains(endWord)) return 0;
+        int res = 0;
+        q.offer(beginWord);
+        
+        while(!q.isEmpty())
+        {
+            for(int i=q.size(); i>0; i--) 
+            {
+                String word = q.poll();        
+
+                if(word.equals(endWord)) return res+1; // valid answer must contain endWord
+                
+                for(int j=0;j<word.length();j++)
+                {
+                    char[] newWord = word.toCharArray();
+                    for(char c='a';c <= 'z';c++)
+                    {
+                        newWord[j]=c;
+                        String s = String.valueOf(newWord);                        
+                        if(!s.equals(word) && hs.contains(s))
+                        {
+                            q.offer(s);
+                            hs.remove(s);
+                        }
+            res++;            
+        }
+        
+        return 0; // no valid answer
+    }
+#### June_03_2019.txt
+11. Container With Most Water
+
+Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+Note: You may not slant the container and n is at least 2.
+The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+Example:
+
+Input: [1,8,6,2,5,4,8,3,7]
+Output: 49
+
+class Solution {
+    public int maxArea(int[] height) {
+        int l =0, r = height.length-1;
+        int maxWater = 0;        
+        int minHeight = 0;
+        
+        while(l < r)
+        {
+            minHeight = Math.min(height[l],height[r]);
+            maxWater= Math.max( (r-l)* minHeight, maxWater);
+            if(height[l] < height[r])
+                l++;
+            else
+                r--;
+        }
+        return maxWater;
+    }
+
+42. Trapping Rain Water (Hard)
+Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image!
+Example:
+Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+
+class Solution {
+    public int trap(int[] height) {        
+        int l = 0, r = height.length-1;
+        int lmax = 0, rmax = 0;
+        int water = 0;
+        
+        while(l < r)
+        {
+            if(height[l] <= height[r])
+            {
+                lmax = Math.max(lmax, height[l]);
+                water += lmax - height[l];
+                l++;
+            }
+            else
+            {
+                rmax = Math.max(rmax, height[r]);
+                water += rmax - height[r];
+                r--;
+            }
+        
+        return water;
+    }
+#### June_04_2019.txt
+167. Two Sum II - Input array is sorted
+
+   public int[] twoSum(int[] numbers, int target) {
+        int l = 0;
+        int r = numbers.length-1;
+        int[] res = new int[2];
+        while(l < r)
+        {
+            int x = numbers[l]+numbers[r];
+            
+            if(target < x ) r--;
+            else if(target > x) l++;
+            else 
+            { // target == x
+                res[0] = l+1;
+                res[1] = r+1;
+                return res;
+            }
+        
+        return null;
+    }
+
+189. Rotate Array (Easy)
+
+    public void rotate(int[] nums, int k) {
+        k = k % nums.length;
+        int p = nums.length - k;
+        swap(nums, 0, p-1);
+        swap(nums, p, nums.length-1);
+        swap(nums, 0, nums.length-1);
+    }
+    
+    public void swap(int[] nums, int l, int r)
+    {
+        while(l<r)            
+        {
+            int temp = nums[r];
+            nums[r] = nums[l];
+            nums[l] = temp;
+            l++; r--;
+        }
+
+// 7. Reverse Integer 
+// Given a 32-bit signed integer, reverse digits of an integer.
+
+    public int reverse(int x) {
+        int y = Math.abs(x);
+        int r = 0;
+        int q = 0;
+        long ans = 0;
+        
+        while(y > 0)
+        {
+            q = y / 10;
+            r = y % 10;
+            
+            ans = ans * 10 + r;            
+            y = q;
+        }
+        
+        if(x<0) ans = -ans;
+        
+        return (ans > Integer.MAX_VALUE || ans < Integer.MIN_VALUE) ? 0:(int)ans;
+    }
+
+13. Roman to Integer
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+I can be placed before V (5) and X (10) to make 4 and 9. 
+X can be placed before L (50) and C (100) to make 40 and 90. 
+C can be placed before D (500) and M (1000) to make 400 and 900.
+
+    public int romanToInt(String s) {
+        HashMap<Character, Integer> map = new  HashMap<Character, Integer>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
+        int total = 0;
+        for(int i=0;i<s.length();i++)
+        {
+            char c = s.charAt(i);
+            boolean negative = false;
+            
+            if(i < s.length()-1)
+            {
+                negative |= (c=='I' && ( s.charAt(i+1)=='V' || s.charAt(i+1)=='X' ));
+                negative |= (c=='X' && ( s.charAt(i+1)=='L' || s.charAt(i+1)=='C' ));
+                negative |= (c=='C' && ( s.charAt(i+1)=='D' || s.charAt(i+1)=='M' ));
+            }
+            
+            if(negative)    
+            total -= map.get(c);
+            else 
+            total += map.get(c);
+            
+        }
+        return total;
+    }
+    
+#### June_06_2019.txt
+239. Sliding Window Maximum (Hard)
+Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. 
+You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+Example:
+Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
+Output: [3,3,5,5,6,7] 
+Explanation: 
+
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+
+    // O(nlogk) complexity, since add, pop and remove operation of PriorityQueue cost O(logk) time.
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if(nums.length==0) return new int[] {};
+        int[] res = new int[nums.length-k+1];
+        
+         PriorityQueue<Integer> pq = new PriorityQueue<Integer>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2.compareTo(o1);
+            }
+        });
+        
+        for(int i=0;i<k;i++)
+             pq.add(nums[i]);
+        
+        int i = 0;
+        for(i = k;i< nums.length;i++)
+        {
+            res[i-k] = pq.peek();
+            pq.remove(nums[i-k]);
+            pq.add(nums[i]);
+        }
+        
+        res[i-k] = pq.peek();
+        
+        return res;             
+    }
+
+    // O(kN)
+    public int[] maxSlidingWindow_BF(int[] nums, int k) {
+        if(nums.length==0) return new int[] {};
+        int[] res = new int[nums.length-k+1];
+        int i; int max = 0;
+        for(i = 0;i<= nums.length-k;i++)
+        {
+                max = Integer.MIN_VALUE;
+            for(int j=i; j < i+k; j++)
+                max = Math.max(nums[j], max);
+            res[i] = max;
+        }
+        
+        return res;
+    }
+#### June_07_2019.txt
+67. Add Binary (Easy)
+Given two binary strings, return their sum (also a binary string).
+The input strings are both non-empty and contains only characters 1 or 0.
+
+Input: a = "11", b = "1"
+Output: "100"
+
+Input: a = "1010", b = "1011"
+Output: "10101"
+
+    public String addBinary(String a, String b) {
+     
+        int p = a.length();
+        int q = b.length();
+        int c = 0;
+        StringBuilder sb = new StringBuilder();
+        while(p > 0 || q > 0)
+        {
+            int x = (p>0) ? (int)(a.charAt(--p)-'0'):0;
+            int y = (q>0) ? (int)(b.charAt(--q)-'0'):0;
+            int sum = x + y + c;
+            int r = sum % 2;
+            c = sum/2;
+            sb.insert(0, r);
+        }
+        
+        if(c>0) sb.insert(0, c);
+        
+        return sb.toString();
+    }
+#### June_09_2019.txt
+9. Palindrome Number (Easy)
+Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+
+Input: 121   Output: true
+
+Input: -121  Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+
+Input: 10    Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+Follow up: Coud you solve it without converting the integer to a string?
+
+   public boolean isPalindrome(int x) {
+        int temp = Math.abs(x);
+        int res = 0;
+        while(x > 0)
+        {
+            int r = x % 10;            
+            x = x / 10;
+            res = 10 * res + r;
+        }
+
+        return (res==temp);
+    }
+
+125. Valid Palindrome (Easy)
+Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+Note: For the purpose of this problem, we define empty string as valid palindrome.
+Input: "A man, a plan, a canal: Panama" Output: true
+Input: "race a car" Output: false
+
+    public boolean isPalindrome(String s) {        
+        int l = 0, r = s.length() - 1;
+        
+        while (l < r) 
+        {
+            while (l < r && !Character.isLetterOrDigit(s.charAt(l)))  l++;
+            while (l < r && !Character.isLetterOrDigit(s.charAt(r)))  r--;
+            
+            if (Character.toLowerCase(s.charAt(l)) != Character.toLowerCase(s.charAt(r)))
+                return false;
+            l++; r--;
+        }
+        return true;    
+    }
+    
+#### June_10_2019.txt
+
+5. Longest Palindromic Substring (Medium)
+Example 1:
+Input: "babad"
+Output: "bab"
+Note: "aba" is also a valid answer.
+
+Input: "cbbd"
+Output: "bb"
+// O(N^2) solution
+    public String longestPalindrome(String s) {
+        String max = "";
+        
+        for(int i=0;i< s.length();i++)
+        {
+            String s1 = expandFromCenter(s, i, i);
+            String s2 = expandFromCenter(s, i, i+1);
+            String curMax = (s1.length() > s2.length()) ? s1:s2;
+            max = (curMax.length() > max.length()) ? curMax:max;            
+        }
+        
+        return max;
+    }
+    
+    public String expandFromCenter(String s, int l, int r)
+    {
+        while(l>=0 && r < s.length() && s.charAt(l) == s.charAt(r))
+        { 
+            l--; r++; 
+        }
+        
+        int len = ((r-1)-(l+1));        
+        return s.substring(l+1, r);
+    }
+#### June_11_2019.txt
+2. Add Two Numbers
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+Explanation: 342 + 465 = 807.
+// Time ~ O(Na + Nb), Space ~ O(Na + Nb) 
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode temp = dummy;
+        ListNode p = l1;
+        ListNode q = l2;
+        int carry = 0;
+        
+        while(p!=null || q !=null)
+        {
+            int x = (p==null) ? 0: p.val;
+            int y = (q==null) ? 0: q.val;
+            int sum = x + y + carry;
+            temp.next = new ListNode(sum%10);
+            carry = sum/10;
+            
+            if(p!=null) p=p.next;
+            if(q!=null) q=q.next;            
+            temp = temp.next;
+        }
+        
+        if(carry > 0) temp.next = new ListNode(carry);
+        return dummy.next;
+    }
+
+50. Pow(x, n) Medium
+Implement pow(x, n), which calculates x raised to the power n (xn).
+Example 1:  Input: 2.00000, 10  Output: 1024.00000
+Example 2:  Input: 2.10000, 3   Output: 9.26100
+Example 3:  Input: 2.00000, -2  Output: 0.25000
+Explanation: 2-2 = 1/22 = 1/4 = 0.25
+Note: -100.0 < x < 100.0
+n is a 32-bit signed integer, within the range [−231, 231 − 1]
+
+https://leetcode.wang/leetCode-50-Pow.html
+
+// Brute Force: O(N) Time where n is the power.
+    public double myPow(double x, int n) {
+        if(n==0) return 1.0;
+        double res = x;
+        
+        if(n>=0)
+        {gir 
+            for(int i=1;i<n;i++)
+                    res=res*x;
+        }
+        else if(n < 0)
+        {
+            n = Math.abs(n);
+            for(int i=0;i<=n;i++)
+                    res=res/x;            
+        }
+        
+        return res;
+    }
+#### June_12_2019.txt
+43. Multiply Strings (Medium)
+Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
+Example 1: Input: num1 = "2", num2 = "3" Output: "6"
+Example 2: Input: num1 = "123", num2 = "456" Output: "56088"
+;The length of both num1 and num2 is < 110.
+Both num1 and num2 contain only digits 0-9.
+Both num1 and num2 do not contain any leading zero, except the number 0 itself.
+You must not use any built-in BigInteger library or convert the inputs to integer directly.
+
+public String multiply(String num1, String num2) {
+    int m = num1.length(), n = num2.length();
+    int[] pos = new int[m + n];
+   
+    for(int i = m - 1; i >= 0; i--) {
+        for(int j = n - 1; j >= 0; j--) {
+            int mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0'); 
+            int p1 = i + j, p2 = i + j + 1;
+            int sum = mul + pos[p2];
+
+            pos[p1] += sum / 10;
+            pos[p2] = (sum) % 10;
+        }
+    
+    StringBuilder sb = new StringBuilder();
+    for(int p : pos) if(!(sb.length() == 0 && p == 0)) sb.append(p);
+    return sb.length() == 0 ? "0" : sb.toString();
+}
+
+public String multiply2(String num1, String num2) {
+	int[] res = new int[num1.length()+num2.length()];
+	int k = 0;
+	
+	for(int i=num1.length()-1;i>=0;i--)
+	{
+		int x = (int)(num1.charAt(i)-'0');
+		int carry = 0;
+		int len = k++;  // 0,1,2,3...
+		for(int j=num2.length()-1;j>=0;j--)
+		{
+			if(res[len]>0) carry+=res[len];
+			int y = (int)(num2.charAt(j)-'0');
+			int product = x*y+carry;
+			res[len++] = (product%10);
+			carry = product/10;                
+		}       
+		if(carry>0) res[len]+=carry;      
+	}
+		
+	StringBuilder sb = new StringBuilder();
+	for(int i=res.length-1;i>=0;i--)
+	{
+		if(!(sb.length()==0 && res[i]==0) ) sb.append(res[i]);
+	}
+	
+	return sb.toString();
+}
+#### June_13_2019.txt
+69. Sqrt(x)
+Implement int sqrt(int x).
+Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
+Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.
+Example 1:  Input: 4 Output: 2
+Example 2:  Input: 8 Output: 2
+Explanation: The square root of 8 is 2.82842..., and since the decimal part is truncated, 2 is returned.
+
+Binary Search: Time ~ O(logN), Space ~ O(1) 
+Find a mid and check:
+if x / mid < mid, move lower;
+if x / mid > mid, move higher;
+if x / mid == mid, return mid.
+Don't compare x with mid * mid, which may lead to overflow.
+Return lo.
+
+    public int mySqrt(int x) {
+        if(x<2) return x; // less than 2, which is 1. return 1.
+        int l = 1; int r = x; // l not start from 0 to avoid divided by 0
+        
+        while(l<r)
+        {
+            int mid= l+(r-l)/2;
+            int div = x / mid; //  divide by zero will cause an error
+            
+            if(div > mid) l=mid+1; // Don't compare x with mid * mid, which may lead to overflow.
+            else if(div < mid) r=mid; 
+            else // div == x
+                return mid; // found
+        }
+        
+        return l-1; // the cloest number
+    }
+#### June_14_2019.txt
+162 Find Peak Element
+A peak element is an element that is greater than its neighbors.
+Given an input array where num[i] ≠ num[i+1], find a peak element and return its index.
+The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.
+You may imagine that num[-1] = num[n] = -∞.
+For example, in array [1, 2, 3, 1], 3 is a peak element and your function should return the index number 2.
+Note:
+Your solution should be in logarithmic complexity.
+
+Solution
+
+Binary Search: Time ~ O(logN), Space ~ O(1) 
+已知 array 中没有重复元素，所以有四种情况，其中只有 (a) 是 peak：
+a)            b)  *        c)       *   d)
+     *                 *            *          *     *
+*       *                *      *                 *
+如果 mid 小于 right (c, d)，则 mid 的右侧一定有 peak；
+如果 mid 小于 left (b, d)，则 mid 的左侧一定有 peak；
+除上述两种情况外即为 (a)，则 mid 为 peak。
+注意：循环条件中必须是 lo <= hi 而不是 lo < hi，因为当 lo = hi = mid 时仍需判断该点是否为 peak。
+
+You may imagine that num[-1] = num[n] = -∞.
+So the array must have a peak.
+In case b), the peak is num[0]. In case c), the peak is num[n-1],
+in case d), num[0] and num[n-1] are peaks.
+
+    public int findPeakElement(int[] nums) {
+        int l = 0, r = nums.length-1;
+        
+        while(l<=r)
+        {
+          int mid = l+(r-l)/2; //prevent overflow of r+l
+        
+           if(mid+1 < nums.length && nums[mid] < nums[mid+1]) l=mid+1;
+           else if(mid-1 >= 0 && nums[mid-1] > nums[mid]) r=mid-1;
+           else return mid;
+        }
+        
+        return -1; // doesn't exist        
+    }
+
+34. Find First and Last Position of Element in Sorted Array (Medium)
+Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+Your algorithm's runtime complexity must be in the order of O(log n).
+If the target is not found in the array, return [-1, -1].
+
+Example 1:  Input: nums = [5,7,7,8,8,10], target = 8 Output: [3,4]
+Example 2:  Input: nums = [5,7,7,8,8,10], target = 6 Output: [-1,-1]
+
+https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+
+    public int[] searchRange(int[] nums, int target) {
+        int l = findFirstOccurrence(nums, target);
+        int r = findLastOccurrence(nums, target);
+        return new int[] {l,r};
+    }
+    
+    public int findFirstOccurrence(int[] nums, int target) {
+        int l = 0, r = nums.length-1;
+        int ans = -1;
+        while(l<=r)
+        {
+            int mid = l + (r-l)/2;
+            
+            if(nums[mid]==target)
+            { // check left side to see if there's any target value that's before this one
+                ans = mid; // remember last position
+                r= mid-1;
+            }
+            else if(target < nums[mid])
+            { // check the left side
+                r = mid-1;
+            }
+            else // nums[mid] is less than target
+            { // check the right side
+                l = mid+1;
+            }                 
+        
+        return ans;
+    }
+
+    public int findLastOccurrence(int[] nums, int target) {
+        int l = 0, r = nums.length-1;
+        int ans = -1;
+        while(l<=r)
+        {
+            int mid = l + (r-l)/2;
+            
+            if(nums[mid]==target)
+            { // check left side to see if there's any target value that's after this one
+                ans = mid; // remember last position
+                l = mid+1; // check the right side
+            }
+            else if(target < nums[mid])
+            { // check the left side
+                r= mid-1;
+            }
+            else // nums[mid] is less than target
+            { // check the right side
+                l = mid+1;
+            }                 
+        
+        return ans;
+    }
+#### June_15_2019.txt
+141. Linked List Cycle Easy
+Given a linked list, determine if it has a cycle in it.
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+Example 1:
+
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+
+    public boolean hasCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast!=null && fast.next!=null)
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow==fast) return true;
+        }
+        return false;
+    }
+
+    public ListNode detectCycle(ListNode head) {
+        if(head==null) return null;
+        
+        ListNode node = getCycleNode(head);
+        if(node==null) return null;
+        
+        ListNode cur1 = node;
+        ListNode cur2 = head;
+        while(cur1!=cur2)
+        {
+            cur1 = cur1.next;
+            cur2 = cur2.next;
+        }
+        
+        return cur1;
+    }
+
+142. Linked List Cycle II
+Medium
+
+1440
+
+108
+
+Favorite
+
+Share
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+
+Note: Do not modify the linked list.
+
+Example 1:
+
+Input: head = [3,2,0,-4], pos = 1
+Output: tail connects to node index 1
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+
+    public ListNode getCycleNode(ListNode head)
+    {
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast!=null && fast.next!=null)
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow==fast) return slow;
+        }
+        return null;
+    }
+
+#### June_16_2019.txt
+14. Longest Common Prefix (Easy)
+Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string "".
+Example 1: Input: ["flower","flow","flight"] Output: "fl"
+Example 2: Input: ["dog","racecar","car"] Output: "" 
+Explanation: There is no common prefix among the input strings.
+Note: All given inputs are in lowercase letters a-z.
+
+    public String longestCommonPrefix(String[] strs) {
+        if(strs==null || strs.length==0) return "";
+        
+        for(int i=1;i<strs.length;i++)
+        {
+            String prev = strs[i-1], cur  = strs[i];
+            int len = Math.min(prev.length(), cur.length()),  j =  0;
+            while(j < len && prev.charAt(j)==cur.charAt(j)) j++; 
+            if(j==0) return "";            
+            strs[i] = strs[i].substring(0, j);
+        }
+        
+        return strs[strs.length-1];
+    }
+
+33. Search in Rotated Sorted Array (Medium)
+Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+(i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
+You are given a target value to search. If found in the array return its index, otherwise return -1.
+You may assume no duplicate exists in the array.
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+Example 1: Input: nums = [4,5,6,7,0,1,2], target = 0 Output: 4
+Example 2: Input: nums = [4,5,6,7,0,1,2], target = 3Output: -1
+
+    public int search(int[] nums, int target) {
+        int l = 0;
+        int r = nums.length-1;
+                
+        while(l<=r)
+        {
+            int mid = l + (r-l)/ 2;
+            
+            if(nums[mid]==target) return mid;
+            if(nums[mid] < nums[r]) // ascending range is on current right side
+            {                
+                // check based on current right side, which staisfy binary search condition
+              if(nums[mid] < target && target <= nums[r]) l= mid+1;   
+              else r = mid -1;
+                    
+            }
+            else // nums[mid] >=  nums[r]. why use >= because we have l <=r.
+            {    // ascending range is on the current left side
+                // check based on current left side, which staisfy binary search condition
+                if(nums[l] <= target && target < nums[mid]) r = mid-1;
+                else l = mid + 1;                
+            }            
+            
+        }
+        
+        return -1;        
+    }
+
+81. Search in Rotated Sorted Array II (Medium)
+Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+(i.e., [0,0,1,2,2,5,6] might become [2,5,6,0,0,1,2]).
+You are given a target value to search. If found in the array return true, otherwise return false.
+Example 1:
+Input: nums = [2,5,6,0,0,1,2], target = 0 Output: true Example 2:
+Input: nums = [2,5,6,0,0,1,2], target = 3 Output: false
+Follow up:
+This is a follow up problem to Search in Rotated Sorted Array, where nums may contain duplicates.
+Would this affect the run-time complexity? How and why?
+
+    public boolean search(int[] nums, int target) {
+        int l = 0;
+        int r = nums.length-1;
+                
+        while(l<=r)
+        {
+            int mid = l + (r-l)/ 2;
+            
+            if(nums[mid]==target) return true;
+            if(nums[mid] < nums[r]) // ascending
+            {
+              if(nums[mid] < target && target <= nums[r]) l= mid+1;   
+              else r = mid -1;
+                    
+            }
+            else if(nums[mid] >  nums[r])
+            { 
+                if(nums[l] <= target && target < nums[mid]) r = mid-1;
+                else l = mid + 1;                
+            }            
+            else if(nums[mid] == nums[r]) r--; //when it's duplicate
+        }
+        
+        return false;        
+    }
+
+328. Odd Even Linked List (Medium)
+Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
+You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.
+Example 1: Input: 1->2->3->4->5->NULL Output: 1->3->5->2->4->NULL
+Example 2: Input: 2->1->3->5->6->4->7->NULL Output: 2->3->6->7->1->5->4->NULL
+Note:
+The relative order inside both the even and odd groups should remain as it was in the input.
+The first node is considered odd, the second node even and so on ...
+
+    public ListNode oddEvenList(ListNode head) {
+        if(head==null) return null;
+        ListNode evenRoot = head.next;
+        ListNode cur = head;
+        
+        while(cur!=null)
+        {
+            ListNode tempNext = cur.next;            
+            if(tempNext!=null) cur.next = cur.next.next;
+            cur = tempNext;
+        }
+        
+        ListNode odd = head;
+        while(odd!=null)
+        {
+            if(odd.next==null)
+            {
+                odd.next = evenRoot;
+                break;
+            }
+            odd = odd.next;
+        }
+        
+        return head;
+    }
+
+83. Remove Duplicates from Sorted List (Easy)
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+Example 1: Input: 1->1->2 Output: 1->2
+Example 2: Input: 1->1->2->3->3 Output: 1->2->3
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode cur = head;
+        ListNode prev = null;
+
+        while(cur!=null)
+        {            
+            if(prev!=null && cur.val == prev.val)         
+            {          
+                prev.next = cur.next;
+                // prev stay the same once current value is removed.
+            }
+            else 
+            {  
+                prev = cur;
+            }
+            cur = cur.next;
+        }
+        
+        return dummy.next;
+    }
+
+#### June_17_2019.txt
+237. Delete Node in a Linked List (Easy)
+Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+Given linked list -- head = [4,5,1,9], which looks like following:
+Example 1: Input: head = [4,5,1,9], node = 5 Output: [4,1,9]
+Explanation: You are given the second node with value 5, the linked list should become 4 -> 1 -> 9 after calling your function.
+
+    public void deleteNode(ListNode node) {
+        if(node!=null && node.next!=null)
+        {
+            node.val = node.next.val;
+            node.next = node.next.next;
+        }
+
+234. Palindrome Linked List (Easy)
+Given a singly linked list, determine if it is a palindrome.
+Example 1: Input: 1->2 Output: false
+Example 2: Input: 1->2->2->1 Output: true
+Follow up: Could you do it in O(n) time and O(1) space?
+
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null) return true;
+        
+        ListNode middle = null;
+         middle =   findMiddle(head);
+        ListNode last = reverse(middle);
+        return compare(head, last);
+        
+    }
+    
+    public ListNode findMiddle(ListNode root)
+    {
+        if(root==null) return null;
+        ListNode slow = root;
+        ListNode fast = root;
+        
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    
+    public ListNode reverse(ListNode m){
+        ListNode next = null;
+        ListNode prev = null;
+        ListNode curr = m;
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+    
+    public boolean compare(ListNode head, ListNode last){
+      
+       ListNode curr = head;
+        while(last != null){
+            if(curr.val != last.val) return false;
+            curr = curr.next;
+            last = last.next;
+        }
+        return true;
+    }
+
+203. Remove Linked List Elements (Easy)
+Remove all elements from a linked list of integers that have value val.
+Example: Input:  1->2->6->3->4->5->6, val = 6 Output: 1->2->3->4->5
+
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode cur = head;
+        ListNode prev = dummy;
+        
+        while(cur!=null)
+        {
+            if(cur.val==val)
+            {
+                prev.next = cur.next;
+            }
+            else
+            {
+                prev = cur;
+            }
+            
+                cur=cur.next;
+        }
+        
+        return dummy.next;
+    }
+
+23. Merge k Sorted Lists (Hard)
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+Example:
+Input: 
+[ 1->4->5,
+  1->3->4,
+  2->6   
+]  Output: 1->1->2->3->4->4->5->6
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists==null || lists.length==0) return null;
+        
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(lists.length, new Comparator<ListNode>(){
+            @Override
+            public int compare(ListNode a, ListNode b)
+            {
+                return a.val-b.val;
+            }
+        });
+        
+        for(ListNode l: lists)
+        {
+            if(l!=null) pq.add(l);
+        }
+        
+        while(!pq.isEmpty())
+        {
+            ListNode minimum = pq.poll();
+            if(minimum.next!=null) pq.add(minimum.next);
+            cur.next = minimum;
+            minimum.next = null;
+            cur = cur.next;
+        }
+        
+        return dummy.next;
+    }
+#### June_18_2019.txt
+232. Implement Queue using Stacks (Easy)
+Implement the following operations of a queue using stacks.
+You must use only standard operations of a stack -- which means only push to top, peek/pop from top, size, and is empty operations are valid.
+Depending on your language, stack may not be supported natively. You may simulate a stack by using a list or deque (double-ended queue), as long as you use only standard operations of a stack.
+You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).
+
+class MyQueue {
+    private Stack<Integer> s1 = new Stack<Integer>();
+    private Stack<Integer> s2 = new Stack<Integer>();
+    private int front;
+    
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        
+    }
+    
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        if(s1.isEmpty()) front = x;
+        s1.push(x);
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        
+        if(!s2.isEmpty()) return s2.pop();        
+        while(!s1.isEmpty()) s2.push(s1.pop());        
+        return s2.pop();
+    }
+    
+    /** Get the front element. */
+    public int peek() {
+        if(!s2.isEmpty()) return s2.peek();        
+        return front;
+    }
+    
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        return s1.isEmpty() && s2.isEmpty(); 
+    }
+#### June_19_2019.txt
+415. Add Strings (Easy)
+Given two non-negative integers num1 and num2 represented as string, return the sum of num1 and num2.
+The length of both num1 and num2 is < 5100.
+Both num1 and num2 contains only digits 0-9.
+Both num1 and num2 does not contain any leading zero.
+You must not use any built-in BigInteger library or convert the inputs to integer directly.
+
+    public String addStrings(String num1, String num2) {
+     int i = num1.length()-1;
+     int j = num2.length()-1;
+     int carry = 0;        
+     StringBuilder sb = new StringBuilder();
+        
+      while(i >= 0 || j >= 0)
+      {
+          int x = (i>=0) ? (int)(num1.charAt(i)-'0'):0;
+          int y = (j>=0) ? (int)(num2.charAt(j)-'0'):0;
+          int sum = x+y+carry;
+          char c = (char)(sum%10+'0');
+          sb.insert(0,c);
+          carry = sum/10;
+          i--;
+          j--;
+      }
+        
+        if(carry>0) 
+        {
+            char c = (char)(carry%10+'0');
+            sb.insert(0, c);
+        }
+        
+        return sb.toString();
+    }
+#### May_28_2019.txt
+46. Permutations
+Given a collection of distinct integers, return all possible permutations.
+
+Example:
+Input: [1,2,3]
+Output:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        permutation(nums , result, new ArrayList<Integer>());
+        return result;
+    }
+    
+    public void permutation(int[] nums, List<List<Integer>> result, List<Integer> l)
+    {
+        if(l.size()==nums.length)
+        {
+            result.add(new ArrayList(l));
+            return;
+        }
+        
+        for(int i=0;i< nums.length;i++)
+        {
+            if(l.contains(nums[i])) continue; //permutation without repetition
+            
+            l.add(nums[i]);
+            permutation(nums, result, l);
+            l.remove(l.size()-1);
+        }
+
+47. Permutations II (Medium)
+Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+Example:
+Input: [1,1,2]
+Output:
+[ [1,1,2],
+  [1,2,1],
+  [2,1,1]]
+
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        permutation(nums, new boolean[nums.length], result, new ArrayList<Integer>(), 0);
+        return result;
+    }
+    
+    public void permutation(int[] nums, boolean[] used, List<List<Integer>> result, List<Integer> l, int level)
+    {
+        if(level==nums.length)
+        {
+            result.add(new ArrayList<Integer>(l));
+            return;            
+        }
+        
+        for(int i=0;i<nums.length;i++)
+        {
+            if(used[i]) continue;
+            
+            // prune unwanted branches, skip duplicate nodes
+            if(i> 0 && nums[i-1]==nums[i] && !used[i-1]) continue;
+            
+            used[i]=true;
+            l.add(nums[i]);
+            permutation(nums, used, result, l, level+1);
+            l.remove(l.size()-1);
+            used[i]=false;
+        }
+
+77. Combinations (Medium)
+Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+Example:
+Input: n = 4, k = 2
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        combination(n, k, result, new ArrayList<Integer>(), 1, 0);
+        return result;
+    }
+    
+    public void combination(int n, int k, List<List<Integer>> result, List<Integer> l, int start, int level)
+    {        
+        if(level==k)
+        {
+            result.add(new ArrayList<Integer>(l));
+            return;
+        }
+        
+        for(int i=start;i<=n;i++)
+        {
+            l.add(i);
+            combination(n,k, result, l, i+1, level+1);
+            l.remove(l.size()-1);
+        }
+        
+    }
+
+78. Subsets [Medium]
+Given a set of distinct integers, nums, return all possible subsets (the power set).
+Note: The solution set must not contain duplicate subsets.
+Example:
+Input: nums = [1,2,3]
+Output:
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {        
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        subsetsHelper(nums, result, new ArrayList<Integer>(), 0);
+        return result;
+    }
+    
+    public void subsetsHelper(int[] nums, List<List<Integer>> result, List<Integer> l, int start)
+    {        
+            result.add(new ArrayList<Integer>(l));
+        
+        for(int i=start;i<nums.length;i++)
+        {
+            l.add(nums[i]);
+            subsetsHelper(nums, result, l, i+1);
+            l.remove(l.size()-1);
+        }        
+    
+}
+
+90. Subsets II (Medium)
+Given a collection of integers that might contain duplicates, nums, return all possible subsets (the power set).
+Note: The solution set must not contain duplicate subsets.
+Example:
+Input: [1,2,2]
+Output:
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result =new ArrayList<List<Integer>>(); 
+        Arrays.sort(nums); // sorting is important when there're duplicates
+        subsetsHelper(nums, result, new ArrayList<Integer>(), 0);
+        return result;
+    }
+    
+    public void subsetsHelper(int[] nums, List<List<Integer>> result, List<Integer> l, int start)
+    {
+        result.add(new ArrayList<Integer>(l));
+        for(int i=start;i<nums.length;i++)
+        {
+            if(i > start && nums[i-1]==nums[i]  ) continue;             
+            l.add(nums[i]);
+            subsetsHelper(nums, result, l, i+1);
+            l.remove(l.size()-1);
+        }
+
+https://leetcode.com/problems/combination-sum/
+39. Combination Sum (Medium)
+Given a set of candidate numbers (candidates) (without duplicates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+The same repeated number may be chosen from candidates unlimited number of times.
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+
+Input: candidates = [2,3,6,7], target = 7,
+A solution set is:
+[
+  [7],
+  [2,2,3]
+]
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {        
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Arrays.sort(candidates);
+        findSum(candidates, result, new ArrayList<Integer>(), target, 0, 0);
+        return result;
+    }
+    
+    public void findSum(int[] candidates,List<List<Integer>> result, List<Integer> l, int target, int curSum, int start)
+    {
+        if(curSum > target) return;
+        if(curSum == target)
+        {
+            result.add(new ArrayList(l));
+            return;
+        }
+        
+        for(int i=start;i < candidates.length; i++)
+        {
+            l.add(candidates[i]);
+            findSum(candidates, result, l, target, curSum+candidates[i], i);
+            l.remove(l.size()-1);
+        }         
+
+#### May_29_2019.txt
+40. Combination Sum II (Medium)
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+Each number in candidates may only be used once in the combination.
+Note:
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+Input: candidates = [10,1,2,7,6,1,5], target = 8,
+A solution set is:
+[
+  [1, 7],
+  [1, 2, 5],
+  [2, 6],
+  [1, 1, 6]
+]
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {        
+           List<List<Integer>> result = new ArrayList<List<Integer>>();
+           Arrays.sort(candidates);
+           findSum(candidates, new boolean[candidates.length], target, 0, result, new ArrayList<Integer>(), 0);
+           return result; 
+    }
+    
+    public void findSum(int[] candidates, boolean[] used, int target, int curSum, List<List<Integer>> result, List<Integer> l, int start) {
+        if(curSum > target) return;
+        if(curSum==target)
+        {
+            result.add(new ArrayList(l));
+            return;
+        }
+        for(int i=start;i<candidates.length;i++)
+        {
+            if(used[i]) continue;
+            
+            if(i > 0 && candidates[i]==candidates[i-1]  && !used[i-1]) continue;
+            
+            used[i]=true;
+            l.add(candidates[i]);
+            findSum(candidates, used, target, curSum+candidates[i], result, l, i+1);
+            l.remove(l.size()-1);
+            used[i]=false;
+        }
+        
+    }
+
+#### May_30_2019.txt
+216. Combination Sum III (Medium)
+Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
+Note:
+All numbers will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+Input: k = 3, n = 7
+Output: [[1,2,4]]
+Example 2:
+Input: k = 3, n = 9
+Output: [[1,2,6], [1,3,5], [2,3,4]]
+
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        int[] nums = new int[] {1,2,3,4,5,6,7,8,9};        
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        combination(nums, k, n, 0, 0, new ArrayList<Integer>(), result);
+        return result;
+    }
+    
+    public void combination(int[] nums, int k, int target, int sum, int start, List<Integer> l, List<List<Integer>> result)
+    {
+        if(sum > target) return; // add up to a number more than n
+        if(l.size() > k) return; // more than k number
+        
+        if(sum == target && l.size() == k) // k numbers that add up to a number n
+        {
+            result.add(new ArrayList(l));
+            return;
+        }
+        
+        for(int i=start;i < nums.length;i++)
+        {                        
+            l.add(nums[i]);
+            combination(nums, k, target, sum+nums[i],  i+1, l, result); 
+            l.remove(l.size()-1);
+        }
+
+22. Generate Parentheses (Medium)
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+For example, given n = 3, a solution set is:
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        char[] nums = "()".toCharArray();
+        List<String> result = new ArrayList<String>();
+        combination(nums, new StringBuilder(), result, n,n);
+        return result;
+    }
+    
+    public void combination(char[] nums, StringBuilder sb, List<String> result, int left, int right)
+    {
+        if(left > right) return;
+        if(left<0) return;
+        if(right<0) return;
+        
+        if(left==0 && right==0)
+        {
+            result.add(sb.toString());
+            return;
+        }
+        
+        for(int i=0;i<nums.length;i++)
+        {            
+            sb.append(nums[i]);
+            
+            if(nums[i]=='(') 
+            combination(nums, sb, result, left-1, right);
+            else
+            combination(nums, sb, result, left, right-1);
+                
+            sb.deleteCharAt(sb.length()-1);
+        }
+
+377. Combination Sum IV (Medium)
+Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
+
+Example:
+
+nums = [1, 2, 3]
+target = 4
+
+The possible combination ways are:
+(1, 1, 1, 1)
+(1, 1, 2)
+(1, 2, 1)
+(1, 3)
+(2, 1, 1)
+(2, 2)
+(3, 1)
+
+Note that different sequences are counted as different combinations.
+
+Therefore the output is 7.
+
+This problem is a DP problem. 
+The hint is (1) it's a permutation/combination. 
+(2) the output requirement is a number and not a result list. This indiciates the answers in each recusrive call can be caculated and cached.
+
+// below is not the CORRECT answer but it's ready to optimize using DP.
+class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        int[] result = new int[2];
+        combination(nums, target, 0, new ArrayList<Integer>(), result);
+        return result[0];
+    }
+    
+    public void combination(int[] nums, int target, int sum, List<Integer> l, int[] result)
+    {
+        if(sum > target) return;
+        if(sum==target)
+        {
+            result[0]++;
+            return;
+        }
+        
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i] > target) break;
+            
+            l.add(nums[i]);
+            combination(nums, target, sum+nums[i], l, result);
+            l.remove(l.size()-1);
+        }
+#### May_31_2019.txt
+567. Permutation in String (Medium)
+Given two strings s1 and s2, write a function to return true if s2 contains the permutation of s1. In other words, one of the first string's permutations is the substring of the second string.
+Example 1:
+Input: s1 = "ab" s2 = "eidbaooo"
+Output: True
+Explanation: s2 contains one permutation of s1 ("ba").
+Example 2:
+Input:s1= "ab" s2 = "eidboaoo"
+
+class Solution { 
+// this answer is incorrect due to run time is very bad.
+// the correct answer uses silding window algorithm technique
+
+    public boolean checkInclusion(String s1, String s2) {
+        if(s2.length() < s1.length()) return false;
+        boolean[] used = new boolean[s1.length()];
+        return permutation(s1.toCharArray(), used, new StringBuilder(), s2);
+    }
+    
+    public boolean permutation(char[] str,boolean[] used, StringBuilder sb, String s2)
+    {
+        if(sb.length()==str.length)
+            return s2.contains(sb.toString());
+        
+        for(int i=0;i<str.length;i++)
+        {
+            if(used[i]) continue;
+            used[i]=true;
+            sb.append(str[i]);
+            if(permutation(str, used, sb, s2)) return true;
+            sb.deleteCharAt(sb.length()-1);
+            used[i]=false;
+        }
+        
+        return false;
+    }
+Output: False
+ 
+Note:
+The input strings only contain lower case letters.
+The length of both given strings is in range [1, 10,000].
+
