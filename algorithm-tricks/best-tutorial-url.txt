@@ -2,6 +2,6 @@ Dynamic Programming
 
 The lower the number the tutorial is more close to beginner level and vice versa.
 (1) https://medium.com/@tiagot/dynamic-programming-an-induction-approach-b5c5e73c4a19
-(2) https://leetcode-cn.com/problems/coin-change/solution/dong-tai-gui-hua-tao-lu-xiang-jie-by-wei-lai-bu-ke/  
-(3) https://www.twblogs.net/a/5cd9f06fbd9eee67a77fb7f7 動態規畫常見題解
-(4) http://www.ishenping.com/ArtInfo/300953.html 動態規畫概念漫畫
+(2) http://www.ishenping.com/ArtInfo/300953.html 動態規畫概念漫畫
+(3) https://leetcode-cn.com/problems/coin-change/solution/dong-tai-gui-hua-tao-lu-xiang-jie-by-wei-lai-bu-ke/  
+(4) https://www.twblogs.net/a/5cd9f06fbd9eee67a77fb7f7 動態規畫常見題解
