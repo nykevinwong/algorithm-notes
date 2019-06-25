@@ -32,15 +32,15 @@ class Substrings
     }
 }
 
-17. Letter Combinations of a Phone Number (Medium)
+17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
 Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
 A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
-Example:
-Input: "23"
-Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
-Note:
-Although the above answer is in lexicographical order, your answer could be in any order you want.
+给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
 
+Example: Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+Note: Although the above answer is in lexicographical order, your answer could be in any order you want.
+说明: 尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序
 class Solution {
     public List<String> letterCombinations(String digits) {
         List<String> res = new ArrayList<String>();
@@ -77,18 +77,16 @@ class Solution {
     }    
 }
 
-771. Jewels and Stones (Easy)
+771. Jewels and Stones (Easy) 宝石与石头    
 You're given strings J representing the types of stones that are jewels, and S representing the stones you have.  Each character in S is a type of stone you have.  You want to know how many of the stones you have are also jewels.
 The letters in J are guaranteed distinct, and all characters in J and S are letters. Letters are case sensitive, so "a" is considered a different type of stone from "A".
-Example 1:
-Input: J = "aA", S = "aAAbbbb"
-Output: 3
-Example 2:
-Input: J = "z", S = "ZZ"
-Output: 0
-Note:
-S and J will consist of letters and have length at most 50.
-The characters in J are distinct.
+给定字符串J 代表石头中宝石的类型，和字符串 S代表你拥有的石头。 S 中每个字符代表了一种你拥有的石头的类型，你想知道你拥有的石头中有多少是宝石。
+J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分大小写，因此"a"和"A"是不同类型的石头。
+
+Example 1: Input: J = "aA", S = "aAAbbbb" Output: 3
+Example 2: Input: J = "z", S = "ZZ" Output: 0
+Note: S and J will consist of letters and have length at most 50. The characters in J are distinct.
+说明: S 和 J 最多含有50个字母。 J 中的字符不重复。
 
 class Solution {
     public int numJewelsInStones(String J, String S) {
