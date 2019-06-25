@@ -1,21 +1,23 @@
-239. Sliding Window Maximum (Hard)
+239. Sliding Window Maximum (Hard) 滑动窗口最大值
 Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. 
-You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
-Example:
-Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
-Output: [3,3,5,5,6,7] 
-Explanation: 
+给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
+You can only see the k numbers in the window. 你只可以看到在滑动窗口 k 内的数字。
+Each time the sliding window moves right by one position. 滑动窗口每次只向右移动一位。
+Return the max sliding window. 返回滑动窗口最大值。
 
-Window position                Max
----------------               -----
-[1  3  -1] -3  5  3  6  7       3
- 1 [3  -1  -3] 5  3  6  7       3
- 1  3 [-1  -3  5] 3  6  7       5
- 1  3  -1 [-3  5  3] 6  7       5
- 1  3  -1  -3 [5  3  6] 7       6
- 1  3  -1  -3  5 [3  6  7]      7
-Note: 
-You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+Example: Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3 Output: [3,3,5,5,6,7] 
+Explanation: 
+Window position(滑动窗口的位置)   Max
+---------------                 -----
+[1  3  -1] -3  5  3  6  7         3
+ 1 [3  -1  -3] 5  3  6  7         3
+ 1  3 [-1  -3  5] 3  6  7         5
+ 1  3  -1 [-3  5  3] 6  7         5
+ 1  3  -1  -3 [5  3  6] 7         6
+ 1  3  -1  -3  5 [3  6  7]        7
+Note: You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+你可以假设 k 总是有效的，1 ≤ k ≤ 输入数组的大小，且输入数组不为空。
+进阶： 你能在线性时间复杂度内解决此题吗？
 
     // O(nlogk) complexity, since add, pop and remove operation of PriorityQueue cost O(logk) time.
     public int[] maxSlidingWindow(int[] nums, int k) {
