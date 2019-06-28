@@ -1,13 +1,10 @@
-67. Add Binary (Easy)
+67. Add Binary (Easy) 二进制求和
 Given two binary strings, return their sum (also a binary string).
 The input strings are both non-empty and contains only characters 1 or 0.
+给定两个二进制字符串，返回他们的和（用二进制表示）。
 
-
-Input: a = "11", b = "1"
-Output: "100"
-
-Input: a = "1010", b = "1011"
-Output: "10101"
+Input: a = "11", b = "1" Output: "100"
+Input: a = "1010", b = "1011" Output: "10101"
 
     public String addBinary(String a, String b) {
      
@@ -17,12 +14,13 @@ Output: "10101"
         StringBuilder sb = new StringBuilder();
         while(p > 0 || q > 0)
         {
-            int x = (p>0) ? (int)(a.charAt(--p)-'0'):0;
+            // don't forget to convert numeric char to integer!!
+            int x = (p>0) ? (int)(a.charAt(--p)-'0'):0;             
             int y = (q>0) ? (int)(b.charAt(--q)-'0'):0;
             int sum = x + y + c;
             int r = sum % 2;
             c = sum/2;
-            sb.insert(0, r);
+            sb.insert(0, r);// insert can convert integer to string. risky!! only work for base 2-10
         }
         
         if(c>0) sb.insert(0, c);
