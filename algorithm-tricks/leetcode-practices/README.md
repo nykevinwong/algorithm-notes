@@ -1,24 +1,25 @@
 ## June_01_2019.txt
-### 17. Letter Combinations of a Phone Number (Medium)
-### 771. Jewels and Stones (Easy)
+### 17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
+### 771. Jewels and Stones (Easy) 宝石与石头    
 
 ## June_02_2019.txt
-### 127. Word Ladder (Medium)
+### 127. Word Ladder (Medium) 单词接龙
 
 ## June_03_2019.txt
-### 11. Container With Most Water
-### 42. Trapping Rain Water (Hard)
+### 11. Container With Most Water 盛最多水的容器
+### 42. Trapping Rain Water (Hard) 接雨水
 
 ## June_04_2019.txt
-### 167. Two Sum II - Input array is sorted
-### 189. Rotate Array (Easy)
-### 13. Roman to Integer
+### 167. Two Sum II - Input array is sorted. 两数之和 II - 有序的输入数组
+### 189. Rotate Array (Easy) 旋转数组
+### 7. Reverse Integer 反转整数
+### 13. Roman to Integer 罗马数字转整数    
 
 ## June_06_2019.txt
-### 239. Sliding Window Maximum (Hard)
+### 239. Sliding Window Maximum (Hard) 滑动窗口最大值
 
 ## June_07_2019.txt
-### 67. Add Binary (Easy)
+### 67. Add Binary (Easy) 二进制求和
 
 ## June_09_2019.txt
 ### 9. Palindrome Number (Easy)
@@ -63,6 +64,11 @@
 ## June_19_2019.txt
 ### 415. Add Strings (Easy)
 
+## June_29_2019.txt
+### 64. Minimum Path Sum (Medium)
+### 62. Unique Paths (Medium)
+### 63. Unique Paths II (Medium)
+
 ## May_28_2019.txt
 ### 46. Permutations
 ### 47. Permutations II (Medium)
@@ -82,4 +88,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 42 problems are COMPLETED!!
+Total 46 problems are COMPLETED!!

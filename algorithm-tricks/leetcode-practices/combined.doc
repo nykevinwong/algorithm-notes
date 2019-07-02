@@ -29,15 +29,15 @@ class Substrings
             System.out.println(s);
         }       
 
-17. Letter Combinations of a Phone Number (Medium)
+17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
 Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
 A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
-Example:
-Input: "23"
-Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
-Note:
-Although the above answer is in lexicographical order, your answer could be in any order you want.
+给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
 
+Example: Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+Note: Although the above answer is in lexicographical order, your answer could be in any order you want.
+说明: 尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序
 class Solution {
     public List<String> letterCombinations(String digits) {
         List<String> res = new ArrayList<String>();
@@ -72,18 +72,16 @@ class Solution {
             combination(hs, digits, res, l, index+1);
         }
 
-771. Jewels and Stones (Easy)
+771. Jewels and Stones (Easy) 宝石与石头    
 You're given strings J representing the types of stones that are jewels, and S representing the stones you have.  Each character in S is a type of stone you have.  You want to know how many of the stones you have are also jewels.
 The letters in J are guaranteed distinct, and all characters in J and S are letters. Letters are case sensitive, so "a" is considered a different type of stone from "A".
-Example 1:
-Input: J = "aA", S = "aAAbbbb"
-Output: 3
-Example 2:
-Input: J = "z", S = "ZZ"
-Output: 0
-Note:
-S and J will consist of letters and have length at most 50.
-The characters in J are distinct.
+给定字符串J 代表石头中宝石的类型，和字符串 S代表你拥有的石头。 S 中每个字符代表了一种你拥有的石头的类型，你想知道你拥有的石头中有多少是宝石。
+J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分大小写，因此"a"和"A"是不同类型的石头。
+
+Example 1: Input: J = "aA", S = "aAAbbbb" Output: 3
+Example 2: Input: J = "z", S = "ZZ" Output: 0
+Note: S and J will consist of letters and have length at most 50. The characters in J are distinct.
+说明: S 和 J 最多含有50个字母。 J 中的字符不重复。
 
 class Solution {
     public int numJewelsInStones(String J, String S) {
@@ -99,43 +97,31 @@ class Solution {
         return count;
     }
 #### June_02_2019.txt
-127. Word Ladder (Medium)
+127. Word Ladder (Medium) 单词接龙
 Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord, such that:
+给定两个单词（beginWord 和 endWord）和一个字典，找到从 beginWord 到 endWord 的最短转换序列的长度。转换需遵循如下规则：
 
-Only one letter can be changed at a time.
-Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
-Note:
+Only one letter can be changed at a time. 每次转换只能改变一个字母。
+Each transformed word must exist in the word list. 转换过程中的中间单词必须是字典中的单词。
+Note that beginWord is not a transformed word.
 
-Return 0 if there is no such transformation sequence.
-All words have the same length.
-All words contain only lowercase alphabetic characters.
-You may assume no duplicates in the word list.
-You may assume beginWord and endWord are non-empty and are not the same.
-Example 1:
+Note: 说明:
+Return 0 if there is no such transformation sequence. 如果不存在这样的转换序列，返回 0。
+All words have the same length.所有单词具有相同的长度。
+All words contain only lowercase alphabetic characters.所有单词只由小写字母组成。
+You may assume no duplicates in the word list. 字典中不存在重复的单词。
+You may assume beginWord and endWord are non-empty and are not the same.你可以假设 beginWord 和 endWord 是非空的，且二者不相同。
 
-Input:
-beginWord = "hit",
-endWord = "cog",
-wordList = ["hot","dot","dog","lot","log","cog"]
+Example 1: Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"] Output: 5
+Explanation: As one shortest transformation is (一个最短转换序列是) "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+return its length 5. (返回它的长度 5)
 
-Output: 5
-
-Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
-return its length 5.
-Example 2:
-
-Input:
-beginWord = "hit"
-endWord = "cog"
-wordList = ["hot","dot","dog","lot","log"]
-
-Output: 0
-
-Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
+Example 2: Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log"] , Output: 0
+Explanation: The endWord "cog" is not in wordList, therefore no possible transformation. 不在字典中，所以无法进行转换。
 
 class Solution {
-    public int ladderLength(String beginWord, String endWord, List<String> wordDict) {
-        Set<String> hs = new HashSet<String>(wordDict);
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> hs = new HashSet<String>(wordList);
         Queue<String> q = new LinkedList<String>();        
         if(!hs.contains(endWord)) return 0;
         int res = 0;
@@ -143,7 +129,7 @@ class Solution {
         
         while(!q.isEmpty())
         {
-            for(int i=q.size(); i>0; i--) 
+            for(int i=q.size()-1; i>=0; i--) 
             {
                 String word = q.poll();        
 
@@ -155,7 +141,7 @@ class Solution {
                     for(char c='a';c <= 'z';c++)
                     {
                         newWord[j]=c;
-                        String s = String.valueOf(newWord);                        
+                        String s = String.valueOf(newWord); // or new String(newWord)                        
                         if(!s.equals(word) && hs.contains(s))
                         {
                             q.offer(s);
@@ -167,40 +153,44 @@ class Solution {
         return 0; // no valid answer
     }
 #### June_03_2019.txt
-11. Container With Most Water
+11. Container With Most Water 盛最多水的容器
+Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). 给定 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。
+n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). 在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。
+Find two lines, which together with x-axis forms a container, such that the container contains the most water. 找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
 
-Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
-Note: You may not slant the container and n is at least 2.
-The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
-Example:
-
-Input: [1,8,6,2,5,4,8,3,7]
-Output: 49
+Note: You may not slant the container and n is at least 2. 说明：你不能倾斜容器，且 n 的值至少为 2。
+The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. 图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。
+In this case, the max area of water (blue section) the container can contain is 49. 在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为 49
+Example: Input: [1,8,6,2,5,4,8,3,7] Output: 49
 
 class Solution {
     public int maxArea(int[] height) {
         int l =0, r = height.length-1;
         int maxWater = 0;        
-        int minHeight = 0;
         
         while(l < r)
         {
-            minHeight = Math.min(height[l],height[r]);
-            maxWater= Math.max( (r-l)* minHeight, maxWater);
+            int minHeight = Math.min(height[l],height[r]);
+            maxWater= Math.max( (r-l)* minHeight, maxWater); 
+            // ** don't make a mistake here. r-l (no space for water ) is correct. not r-l+1 (has space)
+            
+        // trying to find a bigger height[l], l++ means trying to find a maximum and vice versa. use r-- if trying to find the minimum.
             if(height[l] < height[r])
-                l++;
+                l++; 
             else
                 r--;
         }
         return maxWater;
     }
 
-42. Trapping Rain Water (Hard)
+42. Trapping Rain Water (Hard) 接雨水
 Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
-The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image!
-Example:
-Input: [0,1,0,2,1,0,1,3,2,1,2,1]
-Output: 6
+给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水
+The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. 上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，
+In this case, 6 units of rain water (blue section) are being trapped. 在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。 
+Thanks Marcos for contributing this image! 感谢 Marcos 贡献此图。
+
+Example: Input: [0,1,0,2,1,0,1,3,2,1,2,1] Output: 6
 
 class Solution {
     public int trap(int[] height) {        
@@ -209,56 +199,56 @@ class Solution {
         int water = 0;
         
         while(l < r)
-        {
+        { // no need to check l=r. when l=r, no water is contained.
+
             if(height[l] <= height[r])
             {
                 lmax = Math.max(lmax, height[l]);
-                water += lmax - height[l];
+                water += lmax - height[l]; // add the water of the current height at current position
                 l++;
             }
             else
             {
                 rmax = Math.max(rmax, height[r]);
-                water += rmax - height[r];
+                water += rmax - height[r]; 
                 r--;
             }
-        
         return water;
     }
 #### June_04_2019.txt
-167. Two Sum II - Input array is sorted
+167. Two Sum II - Input array is sorted. 两数之和 II - 有序的输入数组
+给定一个已按照升序排列 的有序数组，找到两个数使得它们相加之和等于目标数。
+函数应该返回这两个下标值 index1 和 index2，其中 index1 必须小于 index2。
+说明:返回的下标值（index1 和 index2）不是从零开始的。你可以假设每个输入只对应唯一的答案，而且你不可以重复使用相同的元素。
 
-   public int[] twoSum(int[] numbers, int target) {
-        int l = 0;
-        int r = numbers.length-1;
-        int[] res = new int[2];
-        while(l < r)
+    public int[] twoSum(int[] numbers, int target) {
+        int l = 0, r = numbers.length -1;
+        
+        while(l<r)
         {
             int x = numbers[l]+numbers[r];
             
-            if(target < x ) r--;
-            else if(target > x) l++;
-            else 
-            { // target == x
-                res[0] = l+1;
-                res[1] = r+1;
-                return res;
-            }
+            if(x==target) return new int[] {l+1,r+1};
+            if(x < target) l++;
+            else r--;
+        }
         
         return null;
     }
 
-189. Rotate Array (Easy)
-
+189. Rotate Array (Easy) 旋转数组
+给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+Given an array, rotate the array to the right by k steps, where k is non-negative.
+// Time: O(N), Space: O(1)
     public void rotate(int[] nums, int k) {
         k = k % nums.length;
         int p = nums.length - k;
-        swap(nums, 0, p-1);
-        swap(nums, p, nums.length-1);
-        swap(nums, 0, nums.length-1);
+        reverse(nums, 0, p-1); //只在數組區間反轉
+        reverse(nums, p, nums.length-1); //
+        reverse(nums, 0, nums.length-1); //只在數組區間反轉,用nums.length-1
     }
     
-    public void swap(int[] nums, int l, int r)
+    public void reverse(int[] nums, int l, int r)
     {
         while(l<r)            
         {
@@ -268,30 +258,64 @@ class Solution {
             l++; r--;
         }
 
-// 7. Reverse Integer 
-// Given a 32-bit signed integer, reverse digits of an integer.
+// Time O(N^2), Space: O(1)
+    public void rotate(int[] nums, int k) {
+        if(nums==null || nums.length==0) return;
+        k= k % nums.length;
+        
+        for(int i=0;i<k;i++)
+            for(int j=nums.length-1;j>0;j--)
+                swap(nums, j,j-1);
+    }
+    
+    public void swap(int[] nums, int a, int b)
+    {
+        int t= nums[a];
+        nums[a]=nums[b];
+        nums[b]=t;
+    }
+
+// solution: both space and time are O(N)
+    public void rotate(int[] nums, int k) {
+        if(nums==null || nums.length==0) return;
+        k= k % nums.length;
+        int[] res = new int[nums.length];
+        for(int i=0;i<k;i++)
+        {
+            res[i]=nums[nums.length-k+i];
+        }
+        
+        for(int i=k, j=0;i<nums.length;i++)
+        {
+            res[i]=nums[j++];
+        }
+        System.arraycopy(res,0,nums,0,nums.length);
+    }
+
+7. Reverse Integer 反转整数
+Given a 32-bit signed integer, reverse digits of an integer. 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
+Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1]. 
+假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。
+For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+请根据这个假设，如果反转后整数溢出那么就返回 0。
 
     public int reverse(int x) {
         int y = Math.abs(x);
-        int r = 0;
-        int q = 0;
         long ans = 0;
-        
         while(y > 0)
         {
-            q = y / 10;
-            r = y % 10;
-            
-            ans = ans * 10 + r;            
+            int q = y / 10;
+            int r = y % 10;
+            ans = ans * 10 + r;
             y = q;
         }
         
-        if(x<0) ans = -ans;
-        
-        return (ans > Integer.MAX_VALUE || ans < Integer.MIN_VALUE) ? 0:(int)ans;
+        if(x<0) ans=-ans;
+        // 別忘了要將long轉型至integer後再傳回.
+        return (ans < Integer.MIN_VALUE || ans > Integer.MAX_VALUE) ? 0: (int)ans;
     }
 
-13. Roman to Integer
+13. Roman to Integer 罗马数字转整数    
 Symbol       Value
 I             1
 V             5
@@ -300,61 +324,64 @@ L             50
 C             100
 D             500
 M             1000
-I can be placed before V (5) and X (10) to make 4 and 9. 
+I can be placed before V (5) and X (10) to make 4 and 9. I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
 X can be placed before L (50) and C (100) to make 40 and 90. 
 C can be placed before D (500) and M (1000) to make 400 and 900.
-
     public int romanToInt(String s) {
-        HashMap<Character, Integer> map = new  HashMap<Character, Integer>();
-        map.put('I', 1);
-        map.put('V', 5);
-        map.put('X', 10);
-        map.put('L', 50);
-        map.put('C', 100);
-        map.put('D', 500);
-        map.put('M', 1000);
-
+         if(s==null) return 0;
+         HashMap<Character,Integer> m = new HashMap<>();
+         m.put('I',1);
+         m.put('V',5);
+         m.put('X',10);
+         m.put('L',50);
+         m.put('C',100);
+         m.put('D',500);
+         m.put('M',1000);
+        
         int total = 0;
         for(int i=0;i<s.length();i++)
         {
             char c = s.charAt(i);
+            int value = m.get(c);
             boolean negative = false;
-            
-            if(i < s.length()-1)
-            {
-                negative |= (c=='I' && ( s.charAt(i+1)=='V' || s.charAt(i+1)=='X' ));
-                negative |= (c=='X' && ( s.charAt(i+1)=='L' || s.charAt(i+1)=='C' ));
-                negative |= (c=='C' && ( s.charAt(i+1)=='D' || s.charAt(i+1)=='M' ));
+                        
+            if(s.length() > 1 && i < s.length() - 1) 
+            {// length=1 means it's positve. not last one. last one must be positive.
+                char next = s.charAt(i+1);
+                negative |= (c=='I' && (next == 'V' || next=='X'));
+                negative |= (c=='X' && (next == 'L' || next=='C'));
+                negative |= (c=='C' && (next == 'D' || next=='M'));
             }
             
-            if(negative)    
-            total -= map.get(c);
-            else 
-            total += map.get(c);
-            
+            if(negative)
+                total-=value;
+            else
+                total+=value;
         }
+        
         return total;
     }
-    
 #### June_06_2019.txt
-239. Sliding Window Maximum (Hard)
+239. Sliding Window Maximum (Hard) 滑动窗口最大值
 Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. 
-You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
-Example:
-Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
-Output: [3,3,5,5,6,7] 
-Explanation: 
+给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
+You can only see the k numbers in the window. 你只可以看到在滑动窗口 k 内的数字。
+Each time the sliding window moves right by one position. 滑动窗口每次只向右移动一位。
+Return the max sliding window. 返回滑动窗口最大值。
 
-Window position                Max
----------------               -----
-[1  3  -1] -3  5  3  6  7       3
- 1 [3  -1  -3] 5  3  6  7       3
- 1  3 [-1  -3  5] 3  6  7       5
- 1  3  -1 [-3  5  3] 6  7       5
- 1  3  -1  -3 [5  3  6] 7       6
- 1  3  -1  -3  5 [3  6  7]      7
-Note: 
-You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+Example: Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3 Output: [3,3,5,5,6,7] 
+Explanation: 
+Window position(滑动窗口的位置)   Max
+---------------                 -----
+[1  3  -1] -3  5  3  6  7         3
+ 1 [3  -1  -3] 5  3  6  7         3
+ 1  3 [-1  -3  5] 3  6  7         5
+ 1  3  -1 [-3  5  3] 6  7         5
+ 1  3  -1  -3 [5  3  6] 7         6
+ 1  3  -1  -3  5 [3  6  7]        7
+Note: You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+你可以假设 k 总是有效的，1 ≤ k ≤ 输入数组的大小，且输入数组不为空。
+进阶： 你能在线性时间复杂度内解决此题吗？
 
     // O(nlogk) complexity, since add, pop and remove operation of PriorityQueue cost O(logk) time.
     public int[] maxSlidingWindow(int[] nums, int k) {
@@ -400,15 +427,13 @@ You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty a
         return res;
     }
 #### June_07_2019.txt
-67. Add Binary (Easy)
+67. Add Binary (Easy) 二进制求和
 Given two binary strings, return their sum (also a binary string).
 The input strings are both non-empty and contains only characters 1 or 0.
+给定两个二进制字符串，返回他们的和（用二进制表示）。
 
-Input: a = "11", b = "1"
-Output: "100"
-
-Input: a = "1010", b = "1011"
-Output: "10101"
+Input: a = "11", b = "1" Output: "100"
+Input: a = "1010", b = "1011" Output: "10101"
 
     public String addBinary(String a, String b) {
      
@@ -418,12 +443,13 @@ Output: "10101"
         StringBuilder sb = new StringBuilder();
         while(p > 0 || q > 0)
         {
-            int x = (p>0) ? (int)(a.charAt(--p)-'0'):0;
+            // don't forget to convert numeric char to integer!!
+            int x = (p>0) ? (int)(a.charAt(--p)-'0'):0;             
             int y = (q>0) ? (int)(b.charAt(--q)-'0'):0;
             int sum = x + y + c;
             int r = sum % 2;
             c = sum/2;
-            sb.insert(0, r);
+            sb.insert(0, r);// insert can convert integer to string. risky!! only work for base 2-10
         }
         
         if(c>0) sb.insert(0, c);
@@ -1212,6 +1238,89 @@ You must not use any built-in BigInteger library or convert the inputs to intege
         }
         
         return sb.toString();
+    }
+#### June_29_2019.txt
+64. Minimum Path Sum (Medium)
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+Note: You can only move either down or right at any point in time.
+    public int minPathSum(int[][] grid) {
+        int[][] dp = new int[grid.length][grid[0].length];
+        dp[0][0]= grid[0][0];
+        
+        for(int i=1;i<grid.length;i++)
+            dp[i][0] = dp[i-1][0] + grid[i][0];
+                                          
+        for(int i=1;i<grid[0].length;i++)
+            dp[0][i] = dp[0][i-1] + grid[0][i];
+        
+        for(int i=1;i<grid.length;i++)
+            for(int j=1;j<grid[0].length;j++)
+                dp[i][j] = Math.min(dp[i-1][j],dp[i][j-1]) + grid[i][j];
+        return dp[grid.length-1][grid[0].length-1];                                          
+    }
+
+    // Time Limit Exceeded
+    public int uniquePaths(int m, int n) {
+        if(m<=0 && n<=0) return 0;
+        if(m==1||n==1) return 1;
+        return uniquePaths(m-1,n)+uniquePaths(m,n-1);
+    }
+    
+62. Unique Paths (Medium)
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+How many possible unique paths are there?
+
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        dp[0][0] = 1;
+        
+        for(int i=1;i<m;i++)
+            dp[i][0]=dp[i-1][0];
+        
+        for(int i=1;i<n;i++)
+            dp[0][i]=dp[0][i-1];
+        
+        for(int i=1;i<m;i++)
+            for(int j=1;j<n;j++)
+            {
+                dp[i][j] = dp[i-1][j]+dp[i][j-1];
+            }
+        return dp[m-1][n-1];
+    }
+
+    // Time Limit Exceeded
+    public int uniquePaths(int m, int n) {
+        if(m<=0 && n<=0) return 0;
+        if(m==1||n==1) return 1;
+        return uniquePaths(m-1,n)+uniquePaths(m,n-1);
+    }
+
+63. Unique Paths II (Medium)
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+Now consider if some obstacles are added to the grids. How many unique paths would there be?
+An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+Note: m and n will be at most 100.
+
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int[][] dp = obstacleGrid;
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        
+        dp[0][0] = (dp[0][0]==1) ? 0 : 1; 
+        
+        for(int i=1;i < m;i++)
+            dp[i][0]= (dp[i][0]==1) ? 0 : dp[i-1][0];   
+
+        for(int i=1;i < n;i++)
+            dp[0][i] = (dp[0][i]==1) ? 0: dp[0][i-1];
+        
+        for(int i=1;i<m;i++)
+            for(int j=1;j<n;j++)
+                dp[i][j]  = (dp[i][j]==1) ? 0 : dp[i-1][j]+dp[i][j-1];
+        
+        return dp[m-1][n-1];
     }
 #### May_28_2019.txt
 46. Permutations
