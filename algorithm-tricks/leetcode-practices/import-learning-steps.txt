@@ -1,0 +1,3 @@
+(1) must know the optimized approach with lowest time complexity.
+(2) if the optimized approach is difficult to understand, pick the easier code with reasonable time complexity.
+(3) must see if the brute force has connection to optimzed approach. this help you to quickly recognize the optimized approach when just seeing the brute force code.
