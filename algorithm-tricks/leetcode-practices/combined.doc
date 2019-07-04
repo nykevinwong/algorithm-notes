@@ -187,11 +187,12 @@ Example 1: Input: s: "cbaebabacd" p: "abc" ,Output: [0, 6]
 字母异位词指字母相同，但排列不同的字符串。
 
     public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> res = new ArrayList<Integer>();
+        if(s==null || p ==null) return res;
+        
         int start = 0, end = 0;
         int len = 0, pLen = p.length();
         HashMap<Character,Integer> m = new HashMap<>();
-        List<Integer> res = new ArrayList<Integer>();
-        if(s==null || p ==null) return res;
         
         for(int i=0;i<p.length();i++)
         {
@@ -211,9 +212,9 @@ Example 1: Input: s: "cbaebabacd" p: "abc" ,Output: [0, 6]
                 if(m.get(eChar)==0) counter--;
             }
             
-            len++;
+            end++;            
             
-            if(len==pLen)
+            if( (end-start)==pLen)
             {
                 if(counter==0) res.add(start);
                 char sChar = s.charAt(start);
@@ -225,10 +226,98 @@ Example 1: Input: s: "cbaebabacd" p: "abc" ,Output: [0, 6]
                 }
                 
                 start++;               
-                len--;
             }
             
-            end++;            
+        }
+        
+        return res;
+    }
+
+3. Longest Substring Without Repeating Characters (Medium)
+Given a string, find the length of the longest substring without repeating characters.
+Example 1: Input: "abcabcbb", Output: 3, Explanation: The answer is "abc", with the length of 3. 
+Example 2: Input: "bbbbb", Output: 1, Explanation: The answer is "b", with the length of 1.
+示例 3: 输入: "pwwkew", 输出: 3, 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+
+    public int lengthOfLongestSubstring(String s) {
+        if(s==null || s.length()==0) return 0;
+        int start = 0, end = 0;
+        int maxStart = 0, maxEnd = Integer.MIN_VALUE;
+        int[] m = new int[256];
+        
+        while(end < s.length())
+        {
+            char eChar = s.charAt(end);
+            m[eChar]++;
+            
+            while(m[eChar]==2)
+            {
+                char sChar = s.charAt(start);
+                m[sChar]--;
+                start++;
+            }            
+            
+            if((end-start) > (maxEnd-maxStart))
+            {
+                maxEnd = end;
+                maxStart = start;
+            }
+            
+            end++; // the placement of end position affect the result to plus 1 or not.            
+        }
+        
+        return (maxEnd==Integer.MIN_VALUE) ? 0:  (maxEnd-maxStart+1);       
+    }
+
+30. Substring with Concatenation of All Words (Hard) 串联所有单词的子串
+You are given a string, s, and a list of words, words, that are all of the same length.  给定一个字符串 s 和一些长度相同的单词 words。
+Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+找出 s 中恰好可以由 words 中所有单词串联形成的子串的起始位置。 注意子串要与 words 中的单词完全匹配，中间不能有其他字符，但不需要考虑 words 中单词串联的顺序。
+Example 1: Input: s = "barfoothefoobarman", words = ["foo","bar"] Output: [0,9]
+Explanation: Substrings starting at index 0 and 9 are "barfoor" and "foobar" respectively. The output order does not matter, returning [9,0] is fine too.
+Example 2: Input: s = "wordgoodgoodgoodbestword", words = ["word","good","best","word"], Output: []
+
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> res = new ArrayList<Integer>();
+        if(s==null || s.length()==0 || words == null || words.length ==0 ) return res;
+
+        HashMap<String, Integer> m = new HashMap<>();
+        int wordsLen = 0;
+
+        for(String word: words)
+        {
+            wordsLen += word.length();
+            m.put(word, m.getOrDefault(word, 0)+1);
+        }
+        
+        if(s.length() < wordsLen) return res;
+
+        HashMap<String, Integer> tmp = new HashMap<>();
+
+        for(int i=0; i < s.length() - wordsLen + 1;i++)
+        {
+            int matched= 0; int start = i;
+            tmp.clear();
+
+            int fixedVocabularyLen = words[0].length();            
+            while(matched < words.length) 
+            {
+                String w = s.substring(start, start + fixedVocabularyLen);              
+                
+                if(!m.containsKey(w)) break; // 目前字詞不能匹配任何在words的字詞
+                
+                tmp.put(w, tmp.getOrDefault(w,0)+1);
+                if(tmp.get(w) > m.get(w)) break; // 超過同一單詞在words中的出現次數 
+                
+                matched++; // matched
+                start += w.length(); // 調整start位置以檢查下一個字詞
+                // 如果words中的字詞長度不一，就需要這行及 fixedVocabularyLen.
+                if(matched < words.length) fixedVocabularyLen = words[matched].length();
+            }
+            
+            // 匹配數與words字詞數相等，條件符合，加入答案表
+            if(matched==words.length) res.add(i);
         }
         
         return res;

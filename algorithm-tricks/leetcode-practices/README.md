@@ -9,6 +9,8 @@
 ## July_03_2019.txt
 ### 76. Minimum Window Substring (Hard) 最小覆盖子串
 ### 438. Find All Anagrams in a String (Easy) 找到字符串中所有字母异位词
+### 3. Longest Substring Without Repeating Characters (Medium)
+### 30. Substring with Concatenation of All Words (Hard) 串联所有单词的子串
 
 ## June_01_2019.txt
 ### 17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
@@ -100,4 +102,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 52 problems are COMPLETED!!
+Total 54 problems are COMPLETED!!
