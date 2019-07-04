@@ -1,3 +1,238 @@
+#### import-learning-steps.txt
+(1) must know the optimized approach with lowest time complexity.
+(2) if the optimized approach is difficult to understand, pick the easier code with reasonable time complexity.
+(3) must see if the brute force has connection to optimzed approach. this help you to quickly recognize the optimized approach when just seeing the brute force code.
+#### July_01_2019.txt
+121. Best Time to Buy and Sell Stock (Easy)
+Say you have an array for which the ith element is the price of a given stock on day i.
+If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+Note that you cannot sell a stock before you buy one.
+Input: [7,1,5,3,6,4] Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+             Not 7-1 = 6, as selling price needs to be larger than buying price.
+
+    public int maxProfit_k_1(int[] prices) {
+        // on ith day, i don't have a stock and i can do at most k transaction.
+        // dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]);
+        // dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i])
+        // dp[-1][k][0] = 0 // 沒開始前，沒持有股票時的最大獲利值。
+        // dp[-1][k][1] = -infiity // 沒開始前，是不可能持有股票。這狀態不可能存在。
+        // dp[i][0][0] = 0  // 沒法交易時的最大獲利值。
+        // dp[i][0][1] = -infiity // 沒法交易時，是不可能持有股票。這狀態不可能存在。
+        // 
+        if(prices==null || prices.length==0) return 0;
+        
+        int n = prices.length;        
+        int[][] dp = new int[n][2];
+        
+        for (int i = 0; i < n; i++) {
+            if (i - 1 == -1) { 
+                // calculate when i = 0
+                dp[i][0] = 0;
+                // 解释：
+                //   dp[i][0] 
+                // = max(dp[-1][0], dp[-1][1] + prices[i])
+                // = max(0, -infinity + prices[i]) = 0
+                dp[i][1] = -prices[i];
+                //解释：
+                //   dp[i][1] 
+                // = max(dp[-1][1], dp[-1][0] - prices[i])
+                // = max(-infinity, 0 - prices[i]) 
+                // = -prices[i]
+                continue;
+            }
+            dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1] + prices[i]);
+            dp[i][1] = Math.max(dp[i-1][1], -prices[i]);
+        }
+        return dp[n- 1][0];
+    }
+    
+    public int maxProfit_k(int[] prices) {
+        if(prices==null || prices.length==0) return 0;
+        
+        int n = prices.length;        
+        int dp_i_0 = 0,  dp_i_1 = Integer.MIN_VALUE;
+        
+        for (int i = 0; i < n; i++) {
+            dp_i_0 = Math.max(dp_i_0, dp_i_1 + prices[i]);
+            dp_i_1 = Math.max(dp_i_1, -prices[i]);
+        }
+        return dp_i_0;
+    }
+
+122. Best Time to Buy and Sell Stock II (Easy)
+Say you have an array for which the ith element is the price of a given stock on day i.
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).
+
+// when k = +infitiy transaction
+    public int maxProfit(int[] prices) {
+        if(prices==null || prices.length==0) return 0;
+        
+        int n = prices.length;
+        int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
+        
+        for(int i=0;i<n;i++)
+        {
+            int temp = dp_i_0;
+            dp_i_0 = Math.max(dp_i_0, dp_i_1+prices[i]);
+            dp_i_1 = Math.max(dp_i_1, temp - prices[i]);
+        }
+        
+        return dp_i_0;
+    }
+
+714. Best Time to Buy and Sell Stock with Transaction Fee
+Medium
+ // (1) k = +infiity transactions, (2) transactino fee
+    public int maxProfit(int[] prices, int fee) {
+        if(prices==null || prices.length==0) return 0;
+        int n = prices.length;        
+        int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
+        
+        for(int i=0;i<n;i++)
+        {
+            int temp = dp_i_0;
+            dp_i_0 = Math.max(dp_i_0, dp_i_1 + prices[i]);
+            dp_i_1 = Math.max(dp_i_1, temp - prices[i] - fee);            
+        }
+        
+        return dp_i_0;
+    }
+
+309. Best Time to Buy and Sell Stock with Cooldown (Medium)
+
+// +k infiity with Cooldown
+    public int maxProfit(int[] prices) {
+        if(prices==null || prices.length==0) return 0;
+        int n = prices.length;
+        int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
+        int dp_i2_0 = 0;
+        
+        for(int i=0;i<n;i++)
+        {
+            int prev = dp_i_0;
+            dp_i_0 = Math.max( dp_i_0, dp_i_1 + prices[i]);
+            dp_i_1 = Math.max( dp_i_1, dp_i2_0 - prices[i]);
+            dp_i2_0 = prev;
+        }
+        
+        return dp_i_0;
+    }
+#### July_03_2019.txt
+76. Minimum Window Substring (Hard) 最小覆盖子串
+Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+给你一个字符串 S、一个字符串 T，请在字符串 S 里面找出：包含 T 所有字母的最小子串。
+Example: Input: S = "ADOBECODEBANC", T = "ABC", Output: "BANC"
+Note: If there is no such window in S that covers all characters in T, return the empty string "". 
+如果 S 中不存这样的子串，则返回空字符串 ""。
+If there is such window, you are guaranteed that there will always be only one unique minimum window in S.
+如果 S 中存在这样的子串，我们保证它是唯一的答案。
+
+    public String minWindow(String s, String t) {
+        int minStart = 0, minEnd = Integer.MAX_VALUE;
+        HashMap<Character,Integer> m = new HashMap<>();
+
+        for(int i=0;i < t.length();i++)
+        {
+            char c = t.charAt(i);
+            m.put(c, m.getOrDefault(c,0)+1);  
+        }
+
+        int start = 0, end = 0;
+        int counter = m.size();
+
+        while(end < s.length())
+        {
+            char eChar = s.charAt(end);     
+            
+            if(m.containsKey(eChar))
+            {
+                m.put(eChar,m.get(eChar)-1);
+                if(m.get(eChar)==0) counter--;
+            }
+
+            while(counter==0) // when the interval contains the valid string
+            {
+                // shrink the interval
+                char sChar = s.charAt(start);     
+                if(m.containsKey(sChar))
+                {
+                    m.put(sChar,m.get(sChar)+1);
+                    if(m.get(sChar)==1) counter++;
+                }
+                
+                if( (end-start) < (minEnd-minStart))
+                {
+                    minStart = start;
+                    minEnd = end;
+                }
+
+                start++;
+            }
+
+            end++;
+        }
+
+        return (minEnd==Integer.MAX_VALUE) ? "":s.substring(minStart, minEnd+1);
+    }
+
+438. Find All Anagrams in a String (Easy) 找到字符串中所有字母异位词
+Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
+给定一个字符串 s 和一个非空字符串 p，找到 s 中所有是 p 的字母异位词的子串，返回这些子串的起始索引。
+Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100.
+字符串只包含小写英文字母，并且字符串 s 和 p 的长度都不超过 20100。
+The order of output does not matter. 不考虑答案输出的顺序。
+
+Example 1: Input: s: "cbaebabacd" p: "abc" ,Output: [0, 6]
+字母异位词指字母相同，但排列不同的字符串。
+
+    public List<Integer> findAnagrams(String s, String p) {
+        int start = 0, end = 0;
+        int len = 0, pLen = p.length();
+        HashMap<Character,Integer> m = new HashMap<>();
+        List<Integer> res = new ArrayList<Integer>();
+        if(s==null || p ==null) return res;
+        
+        for(int i=0;i<p.length();i++)
+        {
+            char c = p.charAt(i);
+            m.put(c,m.getOrDefault(c,0)+1);
+        }
+        
+        int counter = m.size();
+        
+        while(end < s.length())
+        {
+            char eChar = s.charAt(end);
+            
+            if(m.containsKey(eChar))
+            {
+                m.put(eChar,m.get(eChar)-1);
+                if(m.get(eChar)==0) counter--;
+            }
+            
+            len++;
+            
+            if(len==pLen)
+            {
+                if(counter==0) res.add(start);
+                char sChar = s.charAt(start);
+
+                if(m.containsKey(sChar))
+                {
+                    m.put(sChar,m.get(sChar)+1);
+                    if(m.get(sChar)==1) counter++;
+                }
+                
+                start++;               
+                len--;
+            }
+            
+            end++;            
+        }
+        
+        return res;
+    }
 #### June_01_2019.txt
 Substrings. // print all substrings of a given string (the problem is given by Leo)
 import java.util.*;
@@ -460,9 +695,7 @@ Input: a = "1010", b = "1011" Output: "10101"
 9. Palindrome Number (Easy)
 Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
 
-Input: 121   Output: true
-
-Input: -121  Output: false
+Input: 121   Output: true, Input: -121  Output: false
 Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
 
 Input: 10    Output: false

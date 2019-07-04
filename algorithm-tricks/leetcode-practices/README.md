@@ -1,3 +1,15 @@
+## import-learning-steps.txt
+
+## July_01_2019.txt
+### 121. Best Time to Buy and Sell Stock (Easy)
+### 122. Best Time to Buy and Sell Stock II (Easy)
+### 714. Best Time to Buy and Sell Stock with Transaction Fee
+### 309. Best Time to Buy and Sell Stock with Cooldown (Medium)
+
+## July_03_2019.txt
+### 76. Minimum Window Substring (Hard) 最小覆盖子串
+### 438. Find All Anagrams in a String (Easy) 找到字符串中所有字母异位词
+
 ## June_01_2019.txt
 ### 17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
 ### 771. Jewels and Stones (Easy) 宝石与石头    
@@ -88,4 +100,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 46 problems are COMPLETED!!
+Total 52 problems are COMPLETED!!
