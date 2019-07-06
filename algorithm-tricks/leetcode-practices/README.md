@@ -14,6 +14,12 @@
 ### 3. Longest Substring Without Repeating Characters (Medium)
 ### 30. Substring with Concatenation of All Words (Hard) 串联所有单词的子串
 
+## July_06_2019.txt
+### 159. Longest Substring with At Most Two Distinct Characters (Hard) 至多包含两个不同字符的最长子串
+### 340. Longest Substring with At Most K Distinct Characters (Hard)
+### 1100. Find K-Length Substrings With No Repeated Characters (Medium)
+### 567. Permutation in String (Medium)
+
 ## June_01_2019.txt
 ### 17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
 ### 771. Jewels and Stones (Easy) 宝石与石头    
@@ -104,4 +110,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 54 problems are COMPLETED!!
+Total 58 problems are COMPLETED!!
