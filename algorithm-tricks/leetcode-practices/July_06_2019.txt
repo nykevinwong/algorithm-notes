@@ -40,3 +40,134 @@ Example 1: Input: "eceba", Output: 3, Explanation: t is "ece" which its length i
                 
         return maxEnd==Integer.MIN_VALUE ? 0: (maxEnd-maxStart+1);
     }
+
+
+340. Longest Substring with At Most K Distinct Characters (Hard)
+Given a string, find the length of the longest substring T that contains at most k distinct characters.
+Example 1: Input: s = "eceba", k = 2, Output: 3, Explanation: T is "ece" which its length is 3.
+
+    public int lengthOfLongestSubstringKDistinct(String s, int k) 
+    {
+        if(s==null || s.length()==0) return 0;
+        
+        HashMap<Character,Integer> m = new HashMap<>();
+        int start = 0 , end = 0;
+        int maxStart = 0, maxEnd = Integer.MIN_VALUE;
+        int nonZeroCount = 0; // HashMap.size() is the size of keys. not size when keys == 0
+        
+        while(end < s.length())
+        {
+            char eChar = s.charAt(end);            
+            m.put(eChar, m.getOrDefault(eChar,0)+1); // m[eChar]++
+            
+            if(m.get(eChar)==1) nonZeroCount++;
+
+            while(nonZeroCount==k+1)
+            {
+                char sChar = s.charAt(start);            
+                m.put(sChar, m.get(sChar)-1); // m[sChar]--
+                if(m.get(sChar)==0) nonZeroCount--;
+                start++;
+            }
+                
+            if(nonZeroCount<=k) // <= because at most 2 means it includes when it's 0 or 1.
+            {
+                if((end-start) > (maxEnd-maxStart))
+                {
+                    maxStart = start;
+                    maxEnd = end;
+                }
+            }
+            
+            end++;
+        }
+                
+        return maxEnd==Integer.MIN_VALUE ? 0: (maxEnd-maxStart+1);
+    }
+
+1100. Find K-Length Substrings With No Repeated Characters (Medium)
+Given a string S, return the number of substrings of length K with no repeated characters.
+Example 1: Input: S = "havefunonleetcode", K = 5, Output: 6
+Explanation:  There are 6 substrings they are : 'havef','avefu','vefun','efuno','etcod','tcode'.
+Example 2: Input: S = "home", K = 5, Output: 0 
+Explanation:  Notice K can be larger than the length of S. In this case is not possible to find any substring.
+
+    public int numKLenSubstrNoRepeats(String S, int K) {
+        if(S==null) return 0;
+        if(S.length() < K) return 0;
+        int start = 0, end = 0;        
+        int[] m = new int[256];
+        int res = 0;
+        
+        while(end < S.length())
+        {
+            char eChar = S.charAt(end);
+            m[eChar]++;
+            
+            while(m[eChar]==2) // if the interval is invalid
+            {
+                char sChar = S.charAt(start);
+                m[sChar]--;
+                start++;
+            }
+            
+            int len = end-start+1;            
+            if(len==K)  // valid interval
+            { 
+                res++; // add answer count
+                
+                // move the window with the fixed size
+                char sChar = S.charAt(start); 
+                m[sChar]--;
+                start++;                                
+            }            
+            
+            end++;
+        }
+        
+        return res;        
+    }
+
+567. Permutation in String (Medium)
+Given two strings s1 and s2, write a function to return true if s2 contains the permutation of s1. In other words, one of the first string's permutations is the substring of the second string.
+Example 1: Input: s1 = "ab" s2 = "eidbaooo" ,Output: True
+Explanation: s2 contains one permutation of s1 ("ba").
+
+        public boolean checkInclusion(String s1, String s2) {
+        if(s1==null || s2 == null) return false;
+        if(s1.length() > s2.length()) return false;
+        
+        HashMap<Character,Integer> m = new HashMap<>();
+        HashMap<Character,Integer> tmp = new HashMap<>();
+        
+        for(int i=0;i<s1.length();i++)
+        {
+            char c = s1.charAt(i);
+            m.put(c, m.getOrDefault(c, 0)+1);
+        }
+        
+        int start = 0, end = 0;
+        
+        while(end < s2.length())
+        {
+            char eChar = s2.charAt(end);
+            tmp.put(eChar, tmp.getOrDefault(eChar, 0)+1);
+            
+            int len = end-start +1;
+            if(len == s1.length())
+            {
+                // this is a valid answer
+                if(tmp.equals(m)) return true;
+                
+                char sChar = s2.charAt(start);                
+                tmp.put(sChar, tmp.getOrDefault(sChar, 0)-1);
+                
+                if(tmp.get(sChar)==0) tmp.remove(sChar);
+
+                start++;                
+            }
+            end++;
+        }
+
+        return false;
+    }

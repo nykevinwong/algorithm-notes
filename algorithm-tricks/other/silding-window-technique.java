@@ -195,3 +195,67 @@ class LongestSubstringwithAtMost2DistinctCharacters
         System.out.println("s: " + s + " , ans:" + len);
     }
 }
+
+class PermutationInString
+{
+        public boolean checkInclusion(String s1, String s2) {
+        if(s1==null || s2 == null) return false;
+        if(s1.length() > s2.length()) return false;
+        
+        HashMap<Character,Integer> m = new HashMap<>();
+        HashMap<Character,Integer> tmp = new HashMap<>();
+        
+        for(int i=0;i<s1.length();i++)
+        {
+            char c = s1.charAt(i);
+            m.put(c, m.getOrDefault(c, 0)+1);
+        }
+        
+        int start = 0, end = 0;
+        
+        while(end < s2.length())
+        {
+            char eChar = s2.charAt(end);
+            tmp.put(eChar, tmp.getOrDefault(eChar, 0)+1);
+            
+            int len = end-start +1;
+            log("move end:", s2, start, end, m, tmp);
+            if(len == s1.length())
+            {
+                if(tmp.equals(m)) // valid answer
+                {
+                    System.out.println("answer => "+ s2.substring(start,end+1));
+                    return true;
+                }
+                
+                char sChar = s2.charAt(start);
+                
+                tmp.put(sChar, tmp.getOrDefault(sChar, 0)-1);
+
+                if(tmp.get(sChar)==0)
+                    tmp.remove(sChar);
+
+                start++;                
+               log("move start:", s2, start, end, m, tmp);
+            }
+            end++;
+        }
+
+        return false;
+    }
+
+    public void log(String msg, String s, int start, int end, HashMap<Character,Integer> m, HashMap<Character,Integer> tmp)
+    {
+        System.out.println(msg + ": " + s.substring(start,end+1) + " at the interval ("+start+","+end+") , tmp: " + tmp.toString() + " ,frequency:" + m.toString() );
+    }
+    
+    public static void main(String[] args)
+    {
+        PermutationInString t = new PermutationInString();
+        String s1 = "ab";        
+        String s2 = "eidbaooo";    
+        System.out.println("Permutation in String");
+        System.out.println("s1:" + s1 + ",s2:" + s2 + ", answer:"+ t.checkInclusion(s1, s2));
+    }
+
+}
