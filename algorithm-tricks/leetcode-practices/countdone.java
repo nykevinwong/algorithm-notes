@@ -58,8 +58,9 @@ class countdone
                 }
             }
 
-            System.out.println("\nDone Processing!!");
-            writer.println("Total " + count + " problems are COMPLETED!!");
+            String msg ="Total " + count + " problems are COMPLETED!!";
+            System.out.println("\nDone Processing!! " + msg);
+            writer.println(msg);
             writer.close();
         }
         catch(Exception e)
