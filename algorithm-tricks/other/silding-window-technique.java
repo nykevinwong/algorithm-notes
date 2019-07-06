@@ -133,3 +133,65 @@ class SubstringWithConcatenationOfAllWords
         System.out.println("Brute Force Solution:" + res.toString());
     }
 }
+
+class LongestSubstringwithAtMost2DistinctCharacters
+{
+    public int lengthOfLongestSubstringTwoDistinct(String s) 
+    {
+        if(s==null || s.length()==0) return 0;
+        
+        HashMap<Character,Integer> m = new HashMap<>();
+        int start = 0 , end = 0;
+        int maxStart = 0, maxEnd = Integer.MIN_VALUE;
+        int nonZeroCount = 0; // HashMap.size() is the size of keys. not size when keys == 0
+        
+        while(end < s.length())
+        {
+            char eChar = s.charAt(end);            
+            m.put(eChar, m.getOrDefault(eChar,0)+1); // m[eChar]++
+            log("CHAREND", s, start, end, m);
+            
+            if(m.get(eChar)==1) nonZeroCount++;
+
+            while(nonZeroCount==3)
+            {
+                char sChar = s.charAt(start);            
+                m.put(sChar, m.get(sChar)-1); // m[sChar]--
+                if(m.get(sChar)==0) nonZeroCount--;
+                start++;
+                 log("STARTEND", s, start, end, m);
+            }
+                
+            if(nonZeroCount<=2) // <= because at most 2 means it includes when it's 0 or 1.
+            {
+                if((end-start) > (maxEnd-maxStart))
+                {
+                    maxStart = start;
+                    maxEnd = end;
+                }
+                 log("UDATEDMAX:", s, maxStart, maxEnd, m);
+            }
+
+            end++;
+        }
+        
+        
+        return maxEnd==Integer.MIN_VALUE ? 0: (maxEnd-maxStart+1);
+    }
+
+    public void log(String msg, String s, int start, int end, HashMap<Character,Integer> m)
+    {
+        System.out.println(msg + ": " + s.substring(start,end+1) + " at the interval ("+start+","+end+") , frequency:" + m.toString() );
+    }
+
+    public static void main(String[] args)
+    {
+        LongestSubstringwithAtMost2DistinctCharacters t = new LongestSubstringwithAtMost2DistinctCharacters();
+        String s = "eceba";        
+        System.out.println("Longest Substring with At Most 2 Distinct Characters");
+        int len = t.lengthOfLongestSubstringTwoDistinct("a");
+        System.out.println("s: " + "a" + " , ans:" + len);
+        len = t.lengthOfLongestSubstringTwoDistinct(s);
+        System.out.println("s: " + s + " , ans:" + len);
+    }
+}

@@ -1,0 +1,42 @@
+159. Longest Substring with At Most Two Distinct Characters (Hard) 至多包含两个不同字符的最长子串
+Given a string s , find the length of the longest substring t  that contains at most 2 distinct characters.
+Example 1: Input: "eceba", Output: 3, Explanation: t is "ece" which its length is 3.
+
+    public int lengthOfLongestSubstringTwoDistinct(String s) 
+    {
+        if(s==null || s.length()==0) return 0;
+        
+        HashMap<Character,Integer> m = new HashMap<>();
+        int start = 0 , end = 0;
+        int maxStart = 0, maxEnd = Integer.MIN_VALUE;
+        int nonZeroCount = 0; // HashMap.size() is the size of keys. not size when keys == 0
+        
+        while(end < s.length())
+        {
+            char eChar = s.charAt(end);            
+            m.put(eChar, m.getOrDefault(eChar,0)+1); // m[eChar]++
+            
+            if(m.get(eChar)==1) nonZeroCount++;
+
+            while(nonZeroCount==3)
+            {
+                char sChar = s.charAt(start);            
+                m.put(sChar, m.get(sChar)-1); // m[sChar]--
+                if(m.get(sChar)==0) nonZeroCount--;
+                start++;
+            }
+                
+            if(nonZeroCount<=2) // <= because at most 2 means it includes when it's 0 or 1.
+            {
+                if((end-start) > (maxEnd-maxStart))
+                {
+                    maxStart = start;
+                    maxEnd = end;
+                }
+            }
+
+            end++;
+        }
+                
+        return maxEnd==Integer.MIN_VALUE ? 0: (maxEnd-maxStart+1);
+    }
