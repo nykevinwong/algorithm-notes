@@ -24,7 +24,7 @@
 
 ## July_11_2019.txt
 ### 75. Sort Colors (Medium)
-### 75. Sort Colors (Medium)
+### 49. Group Anagrams (Medium)
 ### 36. Valid Sudoku (Medium)
 ### 138. Copy List with Random Pointer (Medium)
 
