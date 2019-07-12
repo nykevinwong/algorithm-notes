@@ -31,11 +31,12 @@ Output: [0,0,1,1,2,2]
         nums[b] =temp;
     }
 
-75. Sort Colors (Medium)
-Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white and blue.
-Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
-Note: You are not suppose to use the library's sort function for this problem.
-Example: Input: [2,0,2,1,1,0], Output: [0,0,1,1,2,2]
+49. Group Anagrams (Medium)
+Given an array of strings, group anagrams together.
+Example:
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:[  ["ate","eat","tea"],  ["nat","tan"],  ["bat"]]
+Note: All inputs will be in lowercase. The order of your output does not matter.
     
     // O(N*k*log*(k)) , k = max length of a string in strs. sorting cost k*log(k) times
     public List<List<String>> groupAnagrams(String[] strs) {
