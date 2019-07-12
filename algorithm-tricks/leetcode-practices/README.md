@@ -20,6 +20,14 @@
 ### 1100. Find K-Length Substrings With No Repeated Characters (Medium)
 ### 567. Permutation in String (Medium)
 
+## July_07_2019.txt
+
+## July_11_2019.txt
+### 75. Sort Colors (Medium)
+### 75. Sort Colors (Medium)
+### 36. Valid Sudoku (Medium)
+### 138. Copy List with Random Pointer (Medium)
+
 ## June_01_2019.txt
 ### 17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
 ### 771. Jewels and Stones (Easy) 宝石与石头    
@@ -110,4 +118,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 58 problems are COMPLETED!!
+Total 62 problems are COMPLETED!!

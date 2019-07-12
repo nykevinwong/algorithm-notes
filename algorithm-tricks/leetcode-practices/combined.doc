@@ -494,6 +494,298 @@ Explanation: s2 contains one permutation of s1 ("ba").
 
         return false;
     }
+#### July_07_2019.txt
+class Solution {
+    public int[] crossMaxSum(int[] nums, int l, int m, int r)
+    {
+        int leftSum = 0;
+        int leftMax = Integer.MIN_VALUE;
+        int leftIndex = -1;
+        for(int i=m;i>=l;i--)
+        {
+            leftSum+= nums[i];
+            if(leftSum > leftMax)
+            {
+                leftMax = leftSum;
+                leftIndex = i;
+            }
+        
+        int rightSum = 0;
+        int rightMax = Integer.MIN_VALUE;
+        int rightIndex = -1;
+        for(int i=m+1;i<=r;i++)
+        {
+            rightSum+= nums[i];
+            if(rightSum > rightMax)
+            {
+                rightMax = rightSum;
+                rightIndex = i;
+            }
+        
+        return new int[]{leftIndex,rightIndex, leftMax + rightMax};
+    }
+    
+    public int maxSubArraySum(int[] nums, int l, int r)
+    {
+        if(l==r)
+            return nums[l];
+        
+        int m = l+(r-l)/2;
+        int leftSum = maxSubArraySum(nums, l, m);
+        int rightSum = maxSubArraySum(nums, m+1, r);
+        int crossSum = crossMaxSum(nums, l, m, r)[2];
+        
+        int max = Math.max(leftSum,rightSum);
+        
+        return Math.max(crossSum, max);
+    }
+    
+    public int maxSubArray2(int[] nums) {
+        if(nums==null) return 0;
+        return maxSubArraySum(nums, 0, nums.length-1);
+    }
+    
+    // Kadane's algorithm. it won't work when an array fille with negative values
+    public int maxSubArray_Kadane(int[] nums) {
+        if(nums==null) return 0;
+
+        int maxSoFar = Integer.MIN_VALUE;
+        int maxEndingHere = 0;
+        for(int i=0;i<nums.length;i++)
+        {
+            maxEndingHere+= nums[i];
+            maxEndingHere= Math.max(maxEndingHere,0);
+            maxSoFar= Math.max(maxSoFar,maxEndingHere);        
+        }
+        
+        return maxSoFar;
+    }
+    
+    // dyanmic programming approach
+    public int maxSubArray(int[] nums) {
+        if(nums==null) return 0;
+        int[] dp = new int[nums.length];        
+        int max = Integer.MIN_VALUE;
+        
+        //dp[i] = 從0到目前i位置的每個包含i位置的子數組總和的最大值
+        //dp[i] = max(sum(i,i),sum(i,i-1),sum(i,0))
+        //如 dp[3] = max(sum(3,3),sum(3,2),sum(3,1),sum(3,0))
+        //如 dp[2] = max(sum(2,2),sum(2,1),sum(2,0))
+        // 暴力解即是一次找出所有(0,0)至(n-1,n-1)區間之各個子數組之和的最大值
+        // 此動態規劃解是求出每個(i,0)至(i,i)區間之各個子數組之和的最大值，並存入dp[i]
+        // 因此，得到各個到目前數組索引的總和的最大值，必須再對所有最大值找出總最大值就是答案。
+        for(int i=0;i<nums.length;i++)
+        {
+            if(i-1==-1) dp[i]=nums[i];
+            else dp[i]=Math.max(dp[i-1]+nums[i], nums[i]);
+            
+            max = Math.max(dp[i], max);
+        }
+
+        return max;
+    }
+    
+}
+#### July_11_2019.txt
+75. Sort Colors (Medium)
+Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+
+Example:
+Input: [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+
+    public void sortColors(int[] nums) {
+        // Counting sort is also the solution, but its space complexity sucks.
+        int left, right = nums.length-1;
+        int reader;
+        left=reader=0;
+        
+        while(reader <= right)
+        {
+            if(nums[reader]==0)
+                swap(nums,left++,reader++);
+            else if(nums[reader]==1)
+                reader++;
+            else if(nums[reader]==2)
+                swap(nums,reader,right--);
+        }
+
+    }
+    
+    public void swap(int[] nums, int a,int b)
+    {
+        int temp = nums[a];
+        nums[a]= nums[b];
+        nums[b] =temp;
+    }
+
+75. Sort Colors (Medium)
+Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+Note: You are not suppose to use the library's sort function for this problem.
+Example: Input: [2,0,2,1,1,0], Output: [0,0,1,1,2,2]
+    
+    // O(N*k*log*(k)) , k = max length of a string in strs. sorting cost k*log(k) times
+    public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String, List> ans = new HashMap<>();
+        
+        for(String s:strs)
+        {
+            char[] arr = s.toCharArray();
+            Arrays.sort(arr);
+            String key = String.valueOf(arr);
+            if(!ans.containsKey(key)) ans.put(key, new ArrayList());
+            ans.get(key).add(s);
+        }
+        
+        return new ArrayList(ans.values());
+    }
+
+    // O(kN) 
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if(strs==null || strs.length==0) return new ArrayList();
+        
+        Map<String, List> m = new HashMap<>();
+        Map<String, List> ans = new HashMap<>();
+        int[] count = new int[26];
+        
+        for(String s: strs)
+        {
+            Arrays.fill(count,0);
+            for(char c: s.toCharArray()) count[c-'a']++;
+            
+            StringBuilder sb = new StringBuilder("");            
+            for(int i=0; i < 26; i++)
+            {
+                sb.append("#");
+                sb.append(count[i]);
+            }
+            
+            String key = sb.toString();
+            if(!ans.containsKey(key)) ans.put(key, new ArrayList());
+            ans.get(key).add(s);            
+        }
+        
+        return new ArrayList(ans.values());        
+    }
+
+36. Valid Sudoku (Medium)
+Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+Each row must contain the digits 1-9 without repetition.
+Each column must contain the digits 1-9 without repetition.
+Each of the 9 3x3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+
+    public boolean isValidSudoku(char[][] board) {
+        HashMap<Integer,Integer>[] rows = new HashMap[9]; 
+        HashMap<Integer,Integer>[] cols = new HashMap[9]; 
+        HashMap<Integer,Integer>[] boxes = new HashMap[9]; 
+        
+        for(int i=0;i<9;i++)
+        {
+            rows[i] = new HashMap<Integer,Integer>();
+            cols[i] = new HashMap<Integer,Integer>();
+            boxes[i] = new HashMap<Integer,Integer>();            
+        }
+        
+        for(int y=0;y<9;y++)
+        {
+            for(int x=0;x<9;x++)
+            {
+                char c = board[y][x];
+                if(c!='.')
+                {
+                    int number = (int)(c-'0');
+                    int boxID = (y/3)*3+ (x/3); //calculate grid index
+                    int key = number;
+                    rows[y].put(key, rows[y].getOrDefault(key,0)+1);
+                    cols[x].put(key, cols[x].getOrDefault(key,0)+1);
+                    boxes[boxID].put(key, boxes[boxID].getOrDefault(key,0)+1);
+                    
+                    if(rows[y].get(key) > 1 || cols[x].get(key) > 1 || boxes[boxID].get(key) > 1) 
+                        return false;
+                }                
+        
+        return true;
+    }
+
+138. Copy List with Random Pointer (Medium)
+A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+Return a deep copy of the list.
+
+// Time: O(N), Space:O(N)
+    public Node copyRandomList(Node head) {
+        if(head==null) return null;
+        Node dummy = new Node(0,null,null);
+        Node cur = dummy; // pay attention here.
+        Node old = head;
+        HashMap<Node,Node> m = new HashMap<>();
+        
+        while(old!=null)
+        {
+            Node node = new Node(old.val, null, null);  // make a copy       
+            m.put(old, node); 
+            cur.next = node; // add to new list           
+            cur = cur.next; // move next on new list
+            old = old.next; // move next on old list
+        }
+
+        cur = dummy.next; // pay attention here.
+        old = head;
+        while(old!=null)
+        {
+            if(old.random!=null)
+                cur.random = m.get(old.random);
+            cur = cur.next;
+            old = old.next;
+        }        
+        
+        return dummy.next;        
+    }
+
+// Time: O(N), Space:O(1)
+    public Node copyRandomList(Node head) {
+        if(head==null) return null;
+        Node old = head;
+        HashMap<Node,Node> m = new HashMap<>();
+        
+        // insert new copy node into new list
+        while(old!=null)
+        {
+            Node copy = new Node(old.val, null, null);  // make a copy       
+            // insert into old list
+            copy.next = old.next;
+            old.next = copy;
+            
+            // move to next
+            old = old.next.next; // or p = copy.next
+        }
+        
+        // copy random node for new one
+        old = head;
+        while(old!=null)
+        {
+            Node copy = old.next;
+            if(old.random!=null) // the position of new random node is next position of old one 
+                copy.random = old.random.next;
+            old=old.next.next;            
+        }
+        
+        // split into two list
+        old = head;
+        Node newHead = head.next;
+        while(old!=null)
+        {
+            Node copy = old.next;
+            old.next = copy.next;
+            if(copy.next!=null)
+                copy.next = copy.next.next;
+            old=old.next;            
+        }
+
+        return newHead;        
+    }
+
 #### June_01_2019.txt
 Substrings. // print all substrings of a given string (the problem is given by Leo)
 import java.util.*;

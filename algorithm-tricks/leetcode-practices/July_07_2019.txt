@@ -1,0 +1,94 @@
+class Solution {
+    public int[] crossMaxSum(int[] nums, int l, int m, int r)
+    {
+        int leftSum = 0;
+        int leftMax = Integer.MIN_VALUE;
+        int leftIndex = -1;
+        for(int i=m;i>=l;i--)
+        {
+            leftSum+= nums[i];
+            if(leftSum > leftMax)
+            {
+                leftMax = leftSum;
+                leftIndex = i;
+            }
+        }
+        
+        int rightSum = 0;
+        int rightMax = Integer.MIN_VALUE;
+        int rightIndex = -1;
+        for(int i=m+1;i<=r;i++)
+        {
+            rightSum+= nums[i];
+            if(rightSum > rightMax)
+            {
+                rightMax = rightSum;
+                rightIndex = i;
+            }
+        }
+        
+        return new int[]{leftIndex,rightIndex, leftMax + rightMax};
+    }
+    
+    public int maxSubArraySum(int[] nums, int l, int r)
+    {
+        if(l==r)
+            return nums[l];
+        
+        int m = l+(r-l)/2;
+        int leftSum = maxSubArraySum(nums, l, m);
+        int rightSum = maxSubArraySum(nums, m+1, r);
+        int crossSum = crossMaxSum(nums, l, m, r)[2];
+        
+        int max = Math.max(leftSum,rightSum);
+        
+        return Math.max(crossSum, max);
+    }
+    
+    public int maxSubArray2(int[] nums) {
+        if(nums==null) return 0;
+        return maxSubArraySum(nums, 0, nums.length-1);
+    }
+    
+    // Kadane's algorithm. it won't work when an array fille with negative values
+    public int maxSubArray_Kadane(int[] nums) {
+        if(nums==null) return 0;
+
+        int maxSoFar = Integer.MIN_VALUE;
+        int maxEndingHere = 0;
+        for(int i=0;i<nums.length;i++)
+        {
+            maxEndingHere+= nums[i];
+            maxEndingHere= Math.max(maxEndingHere,0);
+            maxSoFar= Math.max(maxSoFar,maxEndingHere);        
+        }
+        
+        return maxSoFar;
+    }
+    
+    // dyanmic programming approach
+    public int maxSubArray(int[] nums) {
+        if(nums==null) return 0;
+        int[] dp = new int[nums.length];        
+        int max = Integer.MIN_VALUE;
+        
+        //dp[i] = 從0到目前i位置的每個包含i位置的子數組總和的最大值
+        //dp[i] = max(sum(i,i),sum(i,i-1),sum(i,0))
+        //如 dp[3] = max(sum(3,3),sum(3,2),sum(3,1),sum(3,0))
+        //如 dp[2] = max(sum(2,2),sum(2,1),sum(2,0))
+        // 暴力解即是一次找出所有(0,0)至(n-1,n-1)區間之各個子數組之和的最大值
+        // 此動態規劃解是求出每個(i,0)至(i,i)區間之各個子數組之和的最大值，並存入dp[i]
+        // 因此，得到各個到目前數組索引的總和的最大值，必須再對所有最大值找出總最大值就是答案。
+        for(int i=0;i<nums.length;i++)
+        {
+            if(i-1==-1) dp[i]=nums[i];
+            else dp[i]=Math.max(dp[i-1]+nums[i], nums[i]);
+            
+            max = Math.max(dp[i], max);
+        }
+
+        return max;
+    }
+    
+    
+}
