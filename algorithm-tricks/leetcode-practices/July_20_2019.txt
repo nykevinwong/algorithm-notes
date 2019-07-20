@@ -14,8 +14,7 @@ Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3). 解释: �
 Example 2: Input: [2,7,9,3,1], Output: 12
 Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
              Total amount you can rob = 2 + 9 + 1 = 12.
-
-    public int rob(int[] nums) {
+    public int rob_1(int[] nums) {
         if(nums==null || nums.length==0) return 0;
         int[] dp= new int[nums.length];
         
@@ -54,3 +53,187 @@ Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (m
         
         return dp[nums.length+1];
     }
+    
+    // finalzed DP appraoch: reduced Space from O(N) to O(1)
+    public int rob(int[] nums) {                        
+        int dp_i_2 = 0;
+        int dp_i_1 = 0;
+        int curMax = 0;
+        
+        for(int i=0;i < nums.length ; i++)
+        {
+            curMax= Math.max( dp_i_2 + nums[i] , dp_i_1);
+            dp_i_2 = dp_i_1;
+            dp_i_1 = curMax;            
+        }
+        
+        return curMax;
+    }
+    
+    // two dimension representation of the same problem
+    public int rob_other(int[] num) {
+    int[][] dp = new int[num.length + 1][2];
+        
+        for (int i = 1; i <= num.length; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]); // don't rob ith house
+            dp[i][1] = num[i - 1] + dp[i - 1][0];            // rob ith house
+        }
+        
+        return Math.max(dp[num.length][0], dp[num.length][1]);
+    }
+
+213. House Robber II
+The problem is same as the first one expect all houses at this place are arranged in a circle. 
+
+    public int rob(int[] nums) {
+        if(nums==null) return 0;
+        if(nums.length==1) return nums[0];
+        return Math.max(rob(nums,0, nums.length-2), rob(nums,1,nums.length-1));
+    }
+    
+    public int rob(int[] nums, int l, int r)
+    {
+        int dp_i_2 = 0;
+        int dp_i_1 = 0;
+        int curMax = 0;
+        for(int i=l;i<=r;i++)
+        {
+            curMax = Math.max(dp_i_2+ nums[i], dp_i_1);
+            dp_i_2 = dp_i_1;
+            dp_i_1 = curMax;
+        }
+        
+        return curMax;        
+    }
+
+
+337. House Robber III (Medium)
+The thief has found himself a new place for his thievery again. 在上次打劫完一条街道之后和一圈房屋后，小偷又发现了一个新的可行窃的地区。
+There is only one entrance to this area, called the "root." 这个地区只有一个入口，我们称之为“根”。 
+Besides the root, each house has one and only one parent house.  除了“根”之外，每栋房子有且只有一个“父“房子与之相连。
+After a tour, the smart thief realized that "all houses in this place forms a binary tree". 
+一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。 
+It will automatically contact the police if two directly-linked houses were broken into on the same night.
+如果两个直接相连的房子在同一天晚上被打劫，房屋将自动报警。
+
+Determine the maximum amount of money the thief can rob tonight without alerting the police.
+计算在不触动警报的情况下，小偷一晚能够盗取的最高金额。
+
+// detail explanation worthy of memorized as a talk
+https://leetcode.com/problems/house-robber-iii/discuss/79330/Step-by-step-tackling-of-the-problem
+
+    public int rob(TreeNode root) {
+        // res[0] = don't rob this house, res[1] = rob this house
+        int[] res = robDP(root);        
+        return Math.max(res[0],res[1]);
+    }
+    
+    /*
+    public int rob(TreeNode root) {
+        return robMemroized(root, new HashMap<TreeNode, Integer>() );
+    }*/
+    
+    // the solution is too slow to pass the leetcode.
+    public int robRecursive(TreeNode root) {
+        if(root==null) return 0;
+        
+        int value = 0;
+        if(root.left!=null)
+        {
+            value = rob(root.left.left) + rob(root.left.right);
+        }
+        
+        if(root.right!=null)
+        {
+            value += rob(root.right.left) + rob(root.right.right);
+        }
+        
+        return Math.max(value + root.val  , rob(root.left) + rob(root.right));
+    }
+    
+    // memorized version
+    public int robMemroized(TreeNode root, Map<TreeNode,Integer> m) {
+        if(root==null) return 0;
+        
+        if(m.containsKey(root))
+            return m.get(root);
+        
+        int value = 0;
+        
+        if(root.left!=null)
+        {
+            value = robMemroized(root.left.left, m) + robMemroized(root.left.right, m);
+        }
+        
+        if(root.right!=null)
+        {
+            value += robMemroized(root.right.left, m) + robMemroized(root.right.right, m);
+        }
+                
+        int max = Math.max(value + root.val  , 
+                           robMemroized(root.left, m) + robMemroized(root.right, m));
+        m.put(root, max);
+        return max;
+    }
+
+    public int[] robDP(TreeNode root) {
+        // res[0] = don't rob this house, res[1] = rob this house
+        int[] res = new int[2];
+        if(root==null) return res;
+        
+        int[] leftRes = robDP(root.left);
+        int[] rightRes = robDP(root.right);
+        res[0] = Math.max(leftRes[0],leftRes[1]) + Math.max(rightRes[0],rightRes[1]);
+        res[1] = root.val + leftRes[0] + rightRes[0]; // don't rob children
+        return res;
+    }
+
+152. Maximum Product Subarray (Medium)
+Given an integer array nums, find the contiguous subarray within an array (containing at least one number) which has the largest product.
+
+Example 1: Input: [2,3,-2,4], Output: 6 Explanation: [2,3] has the largest product 6.
+Example 2: Input: [-2,0,-1], Output: 0, Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+
+    public int maxProductDPDraft(int[] nums) {
+        if(nums==null) return 0;
+        if(nums.length==1) return nums[0];
+        
+        int[] maxDP = new int[nums.length];
+        int[] minDP = new int[nums.length];
+        int max = Integer.MIN_VALUE;
+        
+        maxDP[0]=minDP[0] = nums[0];
+        max = nums[0];
+        for(int i=1;i<nums.length;i++)
+        {
+            maxDP[i] = Math.max( Math.max(maxDP[i-1]*nums[i], minDP[i-1]*nums[i]) , nums[i]);
+            minDP[i] = Math.min( Math.min(maxDP[i-1]*nums[i], minDP[i-1]*nums[i]) , nums[i]);
+            max = Math.max( Math.max(maxDP[i], minDP[i]), max);
+        }
+        
+        return max;
+    }
+    
+    // reduced space complextiy from O(n) to O(1)
+    public int maxProduct(int[] nums) {
+        if(nums==null) return 0;
+        if(nums.length==1) return nums[0];
+                
+        int maxDP, minDP;
+        int maxDP_i_1, minDP_i_1;        
+        int max = Integer.MIN_VALUE;
+        
+        maxDP_i_1 = minDP_i_1 = nums[0];
+        max = nums[0];
+        for(int i=1;i<nums.length;i++)
+        {
+            maxDP = Math.max( Math.max(maxDP_i_1*nums[i], minDP_i_1*nums[i]) , nums[i]);
+            minDP = Math.min( Math.min(maxDP_i_1*nums[i], minDP_i_1*nums[i]) , nums[i]);
+            max = Math.max( Math.max(maxDP, minDP), max);
+            maxDP_i_1 = maxDP;
+            minDP_i_1 = minDP;
+        }
+        
+        return max;
+    }
+
