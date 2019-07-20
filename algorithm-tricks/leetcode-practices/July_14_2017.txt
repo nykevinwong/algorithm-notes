@@ -98,5 +98,5 @@ int count(TreeNode node, int sum) {
     // 右边的小老弟，你那边能凑几个 sum - node.val 呀？
     int rightBrother = count(node.right, sum - node.val);
     return  isMe + leftBrother + rightBrother; // 我这能凑这么多个
-}
-还是那句话，明白每个函数能做的事，并相信他们能够完成。
+}   //还是那句话，明白每个函数能做的事，并相信他们能够完成。
+

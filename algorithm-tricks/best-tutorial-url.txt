@@ -5,5 +5,5 @@ The lower the number the tutorial is more close to beginner level and vice versa
 (2) http://www.ishenping.com/ArtInfo/300953.html 動態規畫概念漫畫
 (3) https://leetcode-cn.com/problems/coin-change/solution/dong-tai-gui-hua-tao-lu-xiang-jie-by-wei-lai-bu-ke/  
 (4) https://www.twblogs.net/a/5cd9f06fbd9eee67a77fb7f7 動態規畫常見題解
-
+(5) https://www.itread01.com/content/1549055189.html 【動態規劃】矩陣鏈乘法
 股票題型框架解題 https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/solution/yi-ge-tong-yong-fang-fa-tuan-mie-6-dao-gu-piao-wen/
