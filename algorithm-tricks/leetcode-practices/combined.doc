@@ -787,6 +787,390 @@ Return a deep copy of the list.
         return newHead;        
     }
 
+#### July_13_2019.txt
+133. Clone Graph (Medium)
+Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph. Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors.
+Example:
+[1]---[2]
+ |     |
+[3]---[4]
+
+Explanation:
+Node 1's value is 1, and it has two neighbors: Node 2 and 4.
+Node 2's value is 2, and it has two neighbors: Node 1 and 3.
+Node 3's value is 3, and it has two neighbors: Node 2 and 4.
+Node 4's value is 4, and it has two neighbors: Node 1 and 3.
+ 
+Note:
+The number of nodes will be between 1 and 100.
+The undirected graph is a simple graph, which means no repeated edges and no self-loops in the graph.
+Since the graph is undirected, if node p has node q as neighbor, then node q must have node p as neighbor too.
+You must return the copy of the given node as a reference to the cloned graph.
+
+    public Node cloneGraph(Node node) {
+        if(node==null) return node;
+        
+        return dfs(node, new HashMap<Node,Node>());
+    }
+    
+    public Node dfs(Node node, Map<Node,Node> m)
+    {
+        if(node==null) return node;
+        
+        if(m.containsKey(node))
+        {
+            return m.get(node);
+        }
+        else
+        {
+            Node copy = new Node(node.val, new ArrayList<Node>());
+            m.put(node, copy);
+            
+            for(Node ni: node.neighbors)
+                copy.neighbors.add(dfs(ni,m));
+            
+            return copy;
+        }
+#### July_14_2017.txt
+112. Path Sum (Easy)
+Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+Note: A leaf is a node with no children.
+Example:
+Given the below binary tree and sum = 22,
+return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+Given sum can be negataive as well.
+
+    public boolean hasPathSum(TreeNode root, int sum) {
+        return anyPathSumEqual(root, sum, 0);
+    }
+    
+    public boolean anyPathSumEqual(TreeNode root, int target, int curSum)
+    {
+        if(root==null) return false;
+        
+        curSum+= root.val;        
+        if(curSum==target && root.left==null && root.right==null) return true;
+        
+        return anyPathSumEqual(root.left, target, curSum) || anyPathSumEqual(root.right, target, curSum);
+        
+    }
+
+113. Path Sum II (Medium)
+Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+Note: A leaf is a node with no children.
+Example: Given the below binary tree and sum = 22,
+
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        List<Integer> l = new ArrayList<Integer>();
+        anyPathSumEqual(root, sum, 0, res, l);
+        return res;        
+    }
+    
+    public void anyPathSumEqual(TreeNode root, int target, int curSum, List<List<Integer>> res, List<Integer> l)
+    {
+        if(root==null) return;
+        
+        curSum+= root.val;
+        l.add(root.val); 
+        
+        if(curSum==target && root.left == null && root.right == null)
+            res.add(new ArrayList(l));
+        else
+        {
+            anyPathSumEqual(root.left, target, curSum, res, l);
+            anyPathSumEqual(root.right, target, curSum, res, l);
+        }
+        l.remove(l.size()-1); //backtracking
+    }
+
+437. Path Sum III (Easy)
+You are given a binary tree in which each node contains an integer value.
+Find the number of paths that sum to a given value.
+The path does not need to start or end at the root or a leaf, but it must go downwards (traveling only from parent nodes to child nodes).
+The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.
+
+// not an efficient solution
+//Typical recursive DFS.
+//Space: O(n) due to recursion.
+//Time: O(n^2) in worst case (no branching); O(nlogn) in best case (balanced tree).
+
+public class Solution {
+    public int pathSum(TreeNode root, int sum) {
+        if (root == null) return 0;
+        return pathSumFrom(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
+    }
+    
+    private int pathSumFrom(TreeNode node, int sum) {
+        if (node == null) return 0;
+        return (node.val == sum ? 1 : 0) 
+            + pathSumFrom(node.left, sum - node.val) + pathSumFrom(node.right, sum - node.val);
+    }
+
+写递归的技巧是：明白一个函数的作用并相信它能完成这个任务，千万不要跳进这个函数里面企图探究更多细节，否则就会陷入无穷的细节无法自拔。你就算浑身是铁，能压几个栈？
+
+按照前面说的技巧，先来定义清楚每个递归函数应该做的事：
+pathSum 函数：给他一个节点和一个目标值，他返回以这个节点为根的树中，和为目标值的路径总数。
+count 函数：给他一个节点和一个目标值，他返回以这个节点为根的树中，能凑出几个以该节点为路径开头，和为目标值的路径总数。
+
+/* 有了以上铺垫，详细注释一下代码 */
+int pathSum(TreeNode root, int sum) {
+    if (root == null) return 0;
+    int pathImLeading = count(root, sum); // 自己为开头的路径数
+    int leftPathSum = pathSum(root.left, sum); // 左边路径总数（相信他能算出来）
+    int rightPathSum = pathSum(root.right, sum); // 右边路径总数（相信他能算出来）
+    return leftPathSum + rightPathSum + pathImLeading;
+}
+int count(TreeNode node, int sum) {
+    if (node == null) return 0;
+    // 我自己能不能独当一面，作为一条单独的路径呢？
+    int isMe = (node.val == sum) ? 1 : 0;
+    // 左边的小老弟，你那边能凑几个 sum - node.val 呀？
+    int leftBrother = count(node.left, sum - node.val); 
+    // 右边的小老弟，你那边能凑几个 sum - node.val 呀？
+    int rightBrother = count(node.right, sum - node.val);
+    return  isMe + leftBrother + rightBrother; // 我这能凑这么多个
+}   //还是那句话，明白每个函数能做的事，并相信他们能够完成。
+
+#### July_20_2019.txt
+198. House Robber (Easy)  打家劫舍
+You are a professional robber planning to rob houses along a street. 你是一个专业的小偷，计划偷窃沿街的房屋。
+Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses 
+have security system connected (每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，)
+and it will automatically contact the police if two adjacent houses were broken into on the same night.
+如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
+给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。
+
+Example 1: Input: [1,2,3,1] ,Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3). 解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。
+             Total amount you can rob = 1 + 3 = 4. 偷窃到的最高金额 = 1 + 3 = 4 
+
+Example 2: Input: [2,7,9,3,1], Output: 12
+Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+             Total amount you can rob = 2 + 9 + 1 = 12.
+    public int rob_1(int[] nums) {
+        if(nums==null || nums.length==0) return 0;
+        int[] dp= new int[nums.length];
+        
+        for(int i=0;i < nums.length; i++)
+        {
+            if(i-1 < 0)
+            dp[i]= Math.max(nums[i], 0);
+            else if(i-2 < 0)                
+            dp[i]= Math.max(nums[i], dp[i-1]);
+            else
+            dp[i]= Math.max( dp[i-2] + nums[i], dp[i-1]);
+            
+        }
+        
+        return dp[nums.length-1];
+    }
+    
+    // adjust to use a bigger array and update loop init and condition can
+    // get rid of if-statement on some edge/corner cases.
+    public int rob_2(int[] nums) {        
+        int dp[]= new int [nums.length+2];
+                
+        for(int i=2;i < nums.length + 2; i++)
+        {
+            /* 
+            // start with i = 2 and an array of nums.length+2 can cover below two cases
+            if(i-1 < 0)
+            dp[i]= Math.max(nums[i], 0);
+            else if(i-2 < 0)                
+            dp[i]= Math.max(nums[i] , dp[i-1]);
+            else
+                */
+            dp[i]= Math.max( dp[i-2] + nums[i-2] , dp[i-1]);
+            
+        }
+        
+        return dp[nums.length+1];
+    }
+    
+    // finalzed DP appraoch: reduced Space from O(N) to O(1)
+    public int rob(int[] nums) {                        
+        int dp_i_2 = 0;
+        int dp_i_1 = 0;
+        int curMax = 0;
+        
+        for(int i=0;i < nums.length ; i++)
+        {
+            curMax= Math.max( dp_i_2 + nums[i] , dp_i_1);
+            dp_i_2 = dp_i_1;
+            dp_i_1 = curMax;            
+        }
+        
+        return curMax;
+    }
+    
+    // two dimension representation of the same problem
+    public int rob_other(int[] num) {
+    int[][] dp = new int[num.length + 1][2];
+        
+        for (int i = 1; i <= num.length; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]); // don't rob ith house
+            dp[i][1] = num[i - 1] + dp[i - 1][0];            // rob ith house
+        }
+        
+        return Math.max(dp[num.length][0], dp[num.length][1]);
+    }
+
+213. House Robber II
+The problem is same as the first one expect all houses at this place are arranged in a circle. 
+
+    public int rob(int[] nums) {
+        if(nums==null) return 0;
+        if(nums.length==1) return nums[0];
+        return Math.max(rob(nums,0, nums.length-2), rob(nums,1,nums.length-1));
+    }
+    
+    public int rob(int[] nums, int l, int r)
+    {
+        int dp_i_2 = 0;
+        int dp_i_1 = 0;
+        int curMax = 0;
+        for(int i=l;i<=r;i++)
+        {
+            curMax = Math.max(dp_i_2+ nums[i], dp_i_1);
+            dp_i_2 = dp_i_1;
+            dp_i_1 = curMax;
+        }
+        
+        return curMax;        
+    }
+
+337. House Robber III (Medium)
+The thief has found himself a new place for his thievery again. 在上次打劫完一条街道之后和一圈房屋后，小偷又发现了一个新的可行窃的地区。
+There is only one entrance to this area, called the "root." 这个地区只有一个入口，我们称之为“根”。 
+Besides the root, each house has one and only one parent house.  除了“根”之外，每栋房子有且只有一个“父“房子与之相连。
+After a tour, the smart thief realized that "all houses in this place forms a binary tree". 
+一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。 
+It will automatically contact the police if two directly-linked houses were broken into on the same night.
+如果两个直接相连的房子在同一天晚上被打劫，房屋将自动报警。
+
+Determine the maximum amount of money the thief can rob tonight without alerting the police.
+计算在不触动警报的情况下，小偷一晚能够盗取的最高金额。
+
+// detail explanation worthy of memorized as a talk
+https://leetcode.com/problems/house-robber-iii/discuss/79330/Step-by-step-tackling-of-the-problem
+
+    public int rob(TreeNode root) {
+        // res[0] = don't rob this house, res[1] = rob this house
+        int[] res = robDP(root);        
+        return Math.max(res[0],res[1]);
+    }
+    
+    /*
+    public int rob(TreeNode root) {
+        return robMemroized(root, new HashMap<TreeNode, Integer>() );
+    }*/
+    
+    // the solution is too slow to pass the leetcode.
+    public int robRecursive(TreeNode root) {
+        if(root==null) return 0;
+        
+        int value = 0;
+        if(root.left!=null)
+        {
+            value = rob(root.left.left) + rob(root.left.right);
+        }
+        
+        if(root.right!=null)
+        {
+            value += rob(root.right.left) + rob(root.right.right);
+        }
+        
+        return Math.max(value + root.val  , rob(root.left) + rob(root.right));
+    }
+    
+    // memorized version
+    public int robMemroized(TreeNode root, Map<TreeNode,Integer> m) {
+        if(root==null) return 0;
+        
+        if(m.containsKey(root))
+            return m.get(root);
+        
+        int value = 0;
+        
+        if(root.left!=null)
+        {
+            value = robMemroized(root.left.left, m) + robMemroized(root.left.right, m);
+        }
+        
+        if(root.right!=null)
+        {
+            value += robMemroized(root.right.left, m) + robMemroized(root.right.right, m);
+        }
+                
+        int max = Math.max(value + root.val  , 
+                           robMemroized(root.left, m) + robMemroized(root.right, m));
+        m.put(root, max);
+        return max;
+    }
+
+    public int[] robDP(TreeNode root) {
+        // res[0] = don't rob this house, res[1] = rob this house
+        int[] res = new int[2];
+        if(root==null) return res;
+        
+        int[] leftRes = robDP(root.left);
+        int[] rightRes = robDP(root.right);
+        res[0] = Math.max(leftRes[0],leftRes[1]) + Math.max(rightRes[0],rightRes[1]);
+        res[1] = root.val + leftRes[0] + rightRes[0]; // don't rob children
+        return res;
+    }
+
+152. Maximum Product Subarray (Medium)
+Given an integer array nums, find the contiguous subarray within an array (containing at least one number) which has the largest product.
+
+Example 1: Input: [2,3,-2,4], Output: 6 Explanation: [2,3] has the largest product 6.
+Example 2: Input: [-2,0,-1], Output: 0, Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+
+    public int maxProductDPDraft(int[] nums) {
+        if(nums==null) return 0;
+        if(nums.length==1) return nums[0];
+        
+        int[] maxDP = new int[nums.length];
+        int[] minDP = new int[nums.length];
+        int max = Integer.MIN_VALUE;
+        
+        maxDP[0]=minDP[0] = nums[0];
+        max = nums[0];
+        for(int i=1;i<nums.length;i++)
+        {
+            maxDP[i] = Math.max( Math.max(maxDP[i-1]*nums[i], minDP[i-1]*nums[i]) , nums[i]);
+            minDP[i] = Math.min( Math.min(maxDP[i-1]*nums[i], minDP[i-1]*nums[i]) , nums[i]);
+            max = Math.max( Math.max(maxDP[i], minDP[i]), max);
+        }
+        
+        return max;
+    }
+    
+    // reduced space complextiy from O(n) to O(1)
+    public int maxProduct(int[] nums) {
+        if(nums==null) return 0;
+        if(nums.length==1) return nums[0];
+                
+        int maxDP, minDP;
+        int maxDP_i_1, minDP_i_1;        
+        int max = Integer.MIN_VALUE;
+        
+        maxDP_i_1 = minDP_i_1 = nums[0];
+        max = nums[0];
+        for(int i=1;i<nums.length;i++)
+        {
+            maxDP = Math.max( Math.max(maxDP_i_1*nums[i], minDP_i_1*nums[i]) , nums[i]);
+            minDP = Math.min( Math.min(maxDP_i_1*nums[i], minDP_i_1*nums[i]) , nums[i]);
+            max = Math.max( Math.max(maxDP, minDP), max);
+            maxDP_i_1 = maxDP;
+            minDP_i_1 = minDP;
+        }
+        
+        return max;
+    }
+
 #### June_01_2019.txt
 Substrings. // print all substrings of a given string (the problem is given by Leo)
 import java.util.*;

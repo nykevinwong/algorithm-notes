@@ -28,6 +28,20 @@
 ### 36. Valid Sudoku (Medium)
 ### 138. Copy List with Random Pointer (Medium)
 
+## July_13_2019.txt
+### 133. Clone Graph (Medium)
+
+## July_14_2017.txt
+### 112. Path Sum (Easy)
+### 113. Path Sum II (Medium)
+### 437. Path Sum III (Easy)
+
+## July_20_2019.txt
+### 198. House Robber (Easy)  打家劫舍
+### 213. House Robber II
+### 337. House Robber III (Medium)
+### 152. Maximum Product Subarray (Medium)
+
 ## June_01_2019.txt
 ### 17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
 ### 771. Jewels and Stones (Easy) 宝石与石头    
@@ -118,4 +132,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 62 problems are COMPLETED!!
+Total 70 problems are COMPLETED!!

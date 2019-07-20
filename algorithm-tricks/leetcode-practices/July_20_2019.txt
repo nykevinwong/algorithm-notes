@@ -237,3 +237,51 @@ Example 2: Input: [-2,0,-1], Output: 0, Explanation: The result cannot be 2, bec
         return max;
     }
 
+338. Counting Bits (Medium)
+Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num calculate the number of 1's in their binary representation and return them as an array.
+Example 1: Input: 2, Output: [0,1,1]
+Example 2: Input: 5, Output: [0,1,1,2,1,2]
+
+    public int[] countBits(int num) {
+        // dp[i] = dp[i>>1] + (i & 1)        
+        int[] dp = new int[num+1];
+
+        for(int i=0;i<=num;i++)
+            dp[i] = dp[i>>1] + (i & 1); // must have parenthesis around i & 1 to get a correct result
+        
+        return dp;
+    }
+    
+    public int[] countBits2(int num) {
+        Map<Integer,Integer> m = new HashMap<Integer, Integer>();
+        List<Integer> l = new ArrayList<Integer>();
+        
+        for(int i=0;i<=255;i++) 
+        {
+            int n = i;
+            int count = 0;
+            while(n > 0) 
+            {
+                if((n & 1) == 1) count++;
+                n = n >> 1;
+            }
+            m.put(i, count);
+        }
+        
+        int[] res = new int[num+1];
+        for(int i=0; i <= num; i++)
+        {
+            if(i > 255)
+            {
+                int l1 = i & 0xFF;
+                int l2 = (i>>8) & 0xFF;
+                int l3 = (i>>16) & 0xFF;
+                int l4 = (i>>24) & 0xFF;
+                int count = m.get(l1)+ m.get(l2)+m.get(l3)+m.get(l4);
+                res[i] = count;
+            }
+            else res[i] = m.get(i);
+        }
+        
+        return res;
+    }
