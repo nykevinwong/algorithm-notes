@@ -1,0 +1,57 @@
+The Edit distance Problem.
+
+It's also called The Levenshtein distance problem.
+Edit distance is a way of quantifying how dissimilar two strings are to one another by counting the minimum number of operations required to transform one string into the other.
+The Levenshtein distance between two words is the minimum number of single-character edits required to change one word into the other. 
+edits means insertions, deletions or substitutions. Each of these operations has unit cost.
+For example, the Levenshtein distance between kitten and sitting is 3. A minimal edit script that transforms the former into the latter is:
+kitten became sitten. (substitution of s for k)
+sitten became sittin. (substitution of i for e)
+sittin became sitting. (insertion of g at the end)
+
+The Edit distance problem has an optimal substructure. That means the problem can be broken down into smaller, simple “subproblems”, which can be broken down into yet simpler subproblems, and so on, until, finally, the solution becomes trivial.
+Problem: Convert the source string with the interval from 1 to m into the target string with the interval from 1 to n by performing edit operations on the source string.
+Sub-problem: Convert the substring of the source string with the interval from 1 to i into the target string with the interval from 1 to j by performing edit operations on substring of the source string.
+
+Let's think about different cases. 
+CASE 1: We have reached the end of either substring
+If substring of the source string is empty, then we insert all remaining characters of substring of the target string to the source string and the cost of this operation is equal to number of characters left in substring of the target string.
+for example, if X is empty and Y is ABC, the cost will be adding the same 3 characters of Y in X. the cost is 3.
+If substring Y is empty, then we delete all remaining characters of X to convert it into substring Y. The cost of this operation is equal to number of characters left in substring X.
+for example, if X is ABC and Y is empty, the cost will be adding the same 3 characters of X in Y. the cost is 3.
+
+CASE 2: Last characters of substring X and substring Y are same
+If last characters of substring X and substring Y matches, nothing needs to be done. We simply recur for remaining substring X[0..i-1], Y[0..j-1]. As no edit operation is involved, the cost will be 0.
+
+CASE 3: Last characters of substring X and substring Y are different
+If the last characters of substring X and substring Y are different, then we return minimum of below insert, delete and replace operations:
+
+Insert last character of Y to X. The size of Y reduces by 1 and size of X remains the same. This accounts for X[1..i], Y[1..j-1] as we move in on target substring, but not in source substring.
+
+('ABA', 'ABC') --> ('ABAC', 'ABC') ==  ('ABA', 'AB') (using case 2)
+
+ 
+
+Delete last character of X. The size of X reduces by 1 and size of Y remains the same. This accounts for X[1..i-1], Y[1..j] as we move in on source string, but not in target string.
+
+('ABA', 'ABC') --> ('AB', 'ABC')
+
+ 
+
+Substitute (Replace) current character of X by current character of Y. The size of both X and Y reduces by 1. This accounts for X[1..i-1], Y[1..j-1] as we move in both source string and target string.
+
+('ABA', 'ABC') - > ('ABC', 'ABC')  == ('AB', 'AB')  (using case 2)
+
+It is basically same as case 2 where the last two characters matches and we move in both source string and target string except it costs an edit operation.
+
+ 
+So we can define the problem recursively as –
+
+
+             | max(i, j)                       when min(i, j) = 0
+             
+dist[i][j] = | dist[i - 1][j - 1]              when X[i-1] == Y[j-1]
+             
+             | 1 + minimum { dist[i - 1][j],   when X[i-1] != Y[j-1]
+             |               dist[i][j - 1],
+             |               dist[i - 1][j - 1] }
