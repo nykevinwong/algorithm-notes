@@ -41,6 +41,17 @@
 ### 213. House Robber II
 ### 337. House Robber III (Medium)
 ### 152. Maximum Product Subarray (Medium)
+### 338. Counting Bits (Medium)
+
+## July_25_2019.txt
+### 72. Edit Distance (Hard)
+
+## July_30_2019.txt
+### 215. Kth Largest Element in an Array
+
+## July_31_2019.txt
+### 347. Top K Frequent Elements (Medium)
+### 692. Top K Frequent Words (Medium)
 
 ## June_01_2019.txt
 ### 17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
@@ -132,4 +143,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 70 problems are COMPLETED!!
+Total 75 problems are COMPLETED!!
