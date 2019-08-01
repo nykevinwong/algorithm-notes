@@ -1,0 +1,74 @@
+215. Kth Largest Element in an Array
+Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+Example 1: Input: [3,2,1,5,6,4] and k = 2, Output: 5
+三種解: (1) Sorting. Time: n Log(n), space: O(1)
+        (2) Priority Queue: Time n log(k), space:o(k)
+        (3) Quick Select: Time O(N), worst time: O(N^2), space: O(1)
+
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> heap = new PriorityQueue<Integer>( (n1,n2) -> n1-n2 );
+        
+        for(int n :nums)
+        {
+            heap.add(n);
+            
+            if(heap.size() > k) 
+                heap.poll(); // take out the smallest in the queue
+        }
+        
+        return heap.poll();
+    }
+
+// quickselect solution
+    public int findKthLargest(int[] nums, int k) {
+        // k is always valid. it also means input array is never empty.
+        int pos = nums.length - k;
+        int index = quickselect(nums, 0, nums.length-1, pos);
+        
+        return nums[index];
+    }
+    
+    public int quickselect(int[] nums, int left, int right, int index)
+    {
+        if(left>=right)
+        {
+            if(left==right && index==left)
+                return index;
+            return -1; // not found
+        }
+        
+        int pivot = nums[right];
+        int pivotIndex = partition(nums, left, right, pivot);
+        
+        if(pivotIndex==index) return index;
+        if(pivotIndex > index)
+            return quickselect(nums, left, pivotIndex-1, index);
+        
+        return quickselect(nums, pivotIndex+1, right, index);
+    }
+    
+    public void swap(int[] nums, int left, int right)
+    {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+    }
+    public int partition(int[] nums, int left, int right, int pivot)
+    {
+        int leftPos = left-1;
+        int rightPos = right;
+        
+        while(true)
+        {
+            while(leftPos < right && nums[++leftPos] < pivot); // find larger-than-pivot item on lhs
+            while(rightPos > left && nums[--rightPos] > pivot);// find smaller-than-pivot item on rhs
+            
+            if(leftPos>=rightPos) break;
+            swap(nums, leftPos, rightPos);            
+        }
+            // place the pivot value in the dividing position
+            swap(nums, leftPos, right);            
+        
+        return leftPos;// return pivot index
+    }
