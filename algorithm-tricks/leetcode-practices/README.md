@@ -1,3 +1,8 @@
+## Aug_03_2019.txt
+### 15. 3Sum (Medium)
+### 16. 3Sum Closest (Medium)
+### 18. 4Sum (Medium)
+
 ## import-learning-steps.txt
 
 ## July_01_2019.txt
@@ -143,4 +148,4 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 75 problems are COMPLETED!!
+Total 78 problems are COMPLETED!!
