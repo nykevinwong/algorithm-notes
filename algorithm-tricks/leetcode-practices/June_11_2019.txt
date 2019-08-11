@@ -44,7 +44,7 @@ https://leetcode.wang/leetCode-50-Pow.html
         double res = x;
         
         if(n>=0)
-        {gir 
+        {
             for(int i=1;i<n;i++)
                     res=res*x;
         }

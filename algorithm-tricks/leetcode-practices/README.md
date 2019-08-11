@@ -12,7 +12,7 @@
 ### 309. Best Time to Buy and Sell Stock with Cooldown (Medium)
 
 ## July_03_2019.txt
-### 76. Minimum Window Substring (Hard) 最小覆盖子串
+### 76. Minimum Window Substring (Hard) 最小覆盖子串group
 ### 438. Find All Anagrams in a String (Easy) 找到字符串中所有字母异位词
 
 ## July_04_2019.txt
