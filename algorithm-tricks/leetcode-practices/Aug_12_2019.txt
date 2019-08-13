@@ -1,0 +1,50 @@
+
+56. Merge Intervals
+Given a collection of intervals, merge all overlapping intervals.
+Example 1: Input: [[1,3],[2,6],[8,10],[15,18]], Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+
+	public int[][] merge(int[][] intervals) {
+		if (intervals.length <= 1)
+			return intervals;
+
+		// Sort by ascending starting point
+		Arrays.sort(intervals, (i1, i2) -> i1[0]-i2[0]);
+
+		List<int[]> result = new ArrayList<>();
+		int[] prev = intervals[0];
+		result.add(prev);
+		for (int[] cur : intervals) {
+			if (cur[0] <= prev[1]) // Overlapping intervals, move the end if needed
+				prev[1] = Math.max(prev[1], cur[1]);
+			else {                             // Disjoint intervals, add the new interval to the list
+				result.add(cur);
+				prev = cur;
+			}
+		}
+
+		return result.toArray(new int[result.size()][]); // convert to two dimension array
+	}
+
+252. Meeting Rooms
+Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), determine if a person could attend all meetings.
+
+Example 1: Input: [[0,30],[5,10],[15,20]] ,Output: false
+Example 2: Input: [[7,10],[2,4]], Output: true
+
+    public boolean canAttendMeetings(int[][] intervals) {
+        Arrays.sort(intervals, (n1,n2) -> n1[0]-n2[0]);
+        int[] prev = null;
+        
+        for(int i=0;i < intervals.length;i++)
+        {
+            int[] cur = intervals[i];
+            // if they're equal, it means it's not overlapped in this problem.
+            if(prev!=null && prev[1] > cur[0] ) // previous end > curren start
+                return false;
+            
+            prev = cur;
+        }
+        
+        return true;
+    }
