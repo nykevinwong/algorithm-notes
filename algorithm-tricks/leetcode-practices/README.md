@@ -3,7 +3,15 @@
 ### 16. 3Sum Closest (Medium)
 ### 18. 4Sum (Medium)
 
-## import-learning-steps.txt
+## Aug_10_2019.txt
+### 973. K Closest Points to Origin (Medium)
+
+## Aug_12_2019.txt
+### 56. Merge Intervals
+### 252. Meeting Rooms
+
+## Aug_24_2019.txt
+### 336. Palindrome Pairs Hard
 
 ## July_01_2019.txt
 ### 121. Best Time to Buy and Sell Stock (Easy)
@@ -12,7 +20,7 @@
 ### 309. Best Time to Buy and Sell Stock with Cooldown (Medium)
 
 ## July_03_2019.txt
-### 76. Minimum Window Substring (Hard) 最小覆盖子串group
+### 76. Minimum Window Substring (Hard) 最小覆盖子串
 ### 438. Find All Anagrams in a String (Easy) 找到字符串中所有字母异位词
 
 ## July_04_2019.txt
@@ -148,4 +156,7 @@
 ## May_31_2019.txt
 ### 567. Permutation in String (Medium)
 
-Total 78 problems are COMPLETED!!
+## Sep_02_2019.txt
+### 79. Word Search (Medium)
+
+Total 83 problems are COMPLETED!!

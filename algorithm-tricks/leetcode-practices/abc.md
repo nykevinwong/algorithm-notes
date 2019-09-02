@@ -1,4 +1,3 @@
-#### Aug_03_2019.txt
 15. 3Sum (Medium)
 Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? 
 Find all unique triplets in the array which gives the sum of zero.
@@ -15,6 +14,8 @@ Note: The solution set must not contain duplicate triplets.
 檢查這三數之和是否等於目標值。若等於目標值，可以在此存入解答。
 同時，在此可用兩個迴圈檢查左右指標的下一個值是否等於當前數值，也就是檢查是否有充覆數字。有就跳過。
 小於目標值，就將左指標走一步。大於目標植，就讓右指標走一步。
+
+
 
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {        
@@ -53,6 +54,8 @@ class Solution {
                 {
                     l++;
                 }
+            }
+        }
         
         return res;
     }
@@ -67,6 +70,7 @@ class Solution {
     }
     
 }
+
 
 16. 3Sum Closest (Medium)
 Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
@@ -115,9 +119,12 @@ The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
                 {
                     l++;
                 }
+            }
+        }
         
         return ans;
     }
+
 
 18. 4Sum (Medium)
 Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? 
@@ -161,12 +168,15 @@ Note: The solution set must not contain duplicate quadruplets.
                         l++;
                     }
                         
+                    
                 }
+            }
             
         }
         
             return res;
     }
+
 
 KSUM Example:
 
@@ -204,6 +214,7 @@ KSUM Example:
                 else if(x > target) { r--; }
                 else if(x < target) { l++; }
             }
+        }
         else
         {
             for(int i=start;i < nums.length ; i++)
@@ -219,10 +230,10 @@ KSUM Example:
                 
                 res.addAll(temp);
             }
+        }
         
         return res;
     }
-#### Aug_10_2019.txt
 973. K Closest Points to Origin (Medium)
 We have a list of points on the plane.  Find the K closest points to the origin (0, 0).
 You may return the answer in any order.  The answer is guaranteed to be unique (except for the order that it is in.)
@@ -263,7 +274,6 @@ You may return the answer in any order.  The answer is guaranteed to be unique (
         
         return res;
     }
-#### Aug_12_2019.txt
 
 56. Merge Intervals
 Given a collection of intervals, merge all overlapping intervals.
@@ -287,6 +297,7 @@ Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
 				result.add(cur);
 				prev = cur;
 			}
+		}
 
 		return result.toArray(new int[result.size()][]); // convert to two dimension array
 	}
@@ -313,7 +324,6 @@ Example 2: Input: [[7,10],[2,4]], Output: true
         
         return true;
     }
-#### Aug_24_2019.txt
 336. Palindrome Pairs Hard
 Given a list of unique words, find all pairs of distinct indices (i, j) in the given list, so that the concatenation of the two words, i.e. words[i] + words[j] is a palindrome.
 
@@ -351,6 +361,7 @@ Explanation: The palindromes are ["battab","tabbat"]
                         l.add(i);
                         res.add(l);
                     }
+                }
                 
                 // no need to check right when the left string contains the whole string and the right string contains empty one to prevent from adding inaccurate result
                 if(isPalindrome(right) && right.length()!=0)
@@ -365,8 +376,10 @@ Explanation: The palindromes are ["battab","tabbat"]
                         l.add(m.get(reversedLeft));
                         res.add(l);
                     }
+                }
                                 
             }
+        }
         
         return res;
     }
@@ -379,7 +392,6 @@ Explanation: The palindromes are ["battab","tabbat"]
         }
         return true;
     }   
-#### July_01_2019.txt
 121. Best Time to Buy and Sell Stock (Easy)
 Say you have an array for which the ith element is the price of a given stock on day i.
 If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.
@@ -455,6 +467,7 @@ Design an algorithm to find the maximum profit. You may complete as many transac
             dp_i_1 = Math.max(dp_i_1, temp - prices[i]);
         }
         
+        
         return dp_i_0;
     }
 
@@ -495,7 +508,6 @@ Medium
         
         return dp_i_0;
     }
-#### July_03_2019.txt
 76. Minimum Window Substring (Hard) 最小覆盖子串
 Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
 给你一个字符串 S、一个字符串 T，请在字符串 S 里面找出：包含 T 所有字母的最小子串。
@@ -610,7 +622,6 @@ Example 1: Input: s: "cbaebabacd" p: "abc" ,Output: [0, 6]
         return res;
     }
 
-#### July_04_2019.txt
 3. Longest Substring Without Repeating Characters (Medium)
 Given a string, find the length of the longest substring without repeating characters.
 Example 1: Input: "abcabcbb", Output: 3, Explanation: The answer is "abc", with the length of 3. 
@@ -647,6 +658,7 @@ Example 2: Input: "bbbbb", Output: 1, Explanation: The answer is "b", with the l
         
         return (maxEnd==Integer.MIN_VALUE) ? 0:  (maxEnd-maxStart+1);       
     }
+
 
 30. Substring with Concatenation of All Words (Hard) 串联所有单词的子串
 You are given a string, s, and a list of words, words, that are all of the same length.  给定一个字符串 s 和一些长度相同的单词 words。
@@ -700,7 +712,6 @@ Example 2: Input: s = "wordgoodgoodgoodbestword", words = ["word","good","best",
         
         return res;
     }
-#### July_06_2019.txt
 159. Longest Substring with At Most Two Distinct Characters (Hard) 至多包含两个不同字符的最长子串
 Given a string s , find the length of the longest substring t  that contains at most 2 distinct characters.
 Example 1: Input: "eceba", Output: 3, Explanation: t is "ece" which its length is 3.
@@ -736,12 +747,14 @@ Example 1: Input: "eceba", Output: 3, Explanation: t is "ece" which its length i
                     maxStart = start;
                     maxEnd = end;
                 }
+            }
 
             end++;
         }
                 
         return maxEnd==Integer.MIN_VALUE ? 0: (maxEnd-maxStart+1);
     }
+
 
 340. Longest Substring with At Most K Distinct Characters (Hard)
 Given a string, find the length of the longest substring T that contains at most k distinct characters.
@@ -778,6 +791,7 @@ Example 1: Input: s = "eceba", k = 2, Output: 3, Explanation: T is "ece" which i
                     maxStart = start;
                     maxEnd = end;
                 }
+            }
             
             end++;
         }
@@ -870,9 +884,7 @@ Explanation: s2 contains one permutation of s1 ("ba").
         }
 
         return false;
-    }
-#### July_07_2019.txt
-class Solution {
+    }class Solution {
     public int[] crossMaxSum(int[] nums, int l, int m, int r)
     {
         int leftSum = 0;
@@ -886,6 +898,7 @@ class Solution {
                 leftMax = leftSum;
                 leftIndex = i;
             }
+        }
         
         int rightSum = 0;
         int rightMax = Integer.MIN_VALUE;
@@ -898,6 +911,7 @@ class Solution {
                 rightMax = rightSum;
                 rightIndex = i;
             }
+        }
         
         return new int[]{leftIndex,rightIndex, leftMax + rightMax};
     }
@@ -962,9 +976,8 @@ class Solution {
         return max;
     }
     
-}
-#### July_11_2019.txt
-75. Sort Colors (Medium)
+    
+}75. Sort Colors (Medium)
 Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white and blue.
 Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
 
@@ -1083,6 +1096,8 @@ Each of the 9 3x3 sub-boxes of the grid must contain the digits 1-9 without repe
                     if(rows[y].get(key) > 1 || cols[x].get(key) > 1 || boxes[boxID].get(key) > 1) 
                         return false;
                 }                
+            }
+        }
         
         return true;
     }
@@ -1164,7 +1179,6 @@ Return a deep copy of the list.
         return newHead;        
     }
 
-#### July_13_2019.txt
 133. Clone Graph (Medium)
 Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph. Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors.
 Example:
@@ -1208,8 +1222,7 @@ You must return the copy of the given node as a reference to the cloned graph.
             
             return copy;
         }
-#### July_14_2017.txt
-112. Path Sum (Easy)
+    }112. Path Sum (Easy)
 Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
 Note: A leaf is a node with no children.
 Example:
@@ -1231,6 +1244,7 @@ Given sum can be negataive as well.
         return anyPathSumEqual(root.left, target, curSum) || anyPathSumEqual(root.right, target, curSum);
         
     }
+
 
 113. Path Sum II (Medium)
 Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
@@ -1283,6 +1297,7 @@ public class Solution {
         return (node.val == sum ? 1 : 0) 
             + pathSumFrom(node.left, sum - node.val) + pathSumFrom(node.right, sum - node.val);
     }
+}
 
 写递归的技巧是：明白一个函数的作用并相信它能完成这个任务，千万不要跳进这个函数里面企图探究更多细节，否则就会陷入无穷的细节无法自拔。你就算浑身是铁，能压几个栈？
 
@@ -1309,7 +1324,6 @@ int count(TreeNode node, int sum) {
     return  isMe + leftBrother + rightBrother; // 我这能凑这么多个
 }   //还是那句话，明白每个函数能做的事，并相信他们能够完成。
 
-#### July_20_2019.txt
 198. House Robber (Easy)  打家劫舍
 You are a professional robber planning to rob houses along a street. 你是一个专业的小偷，计划偷窃沿街的房屋。
 Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses 
@@ -1417,6 +1431,7 @@ The problem is same as the first one expect all houses at this place are arrange
         
         return curMax;        
     }
+
 
 337. House Robber III (Medium)
 The thief has found himself a new place for his thievery again. 在上次打劫完一条街道之后和一圈房屋后，小偷又发现了一个新的可行窃的地区。
@@ -1595,9 +1610,7 @@ Example 2: Input: 5, Output: [0,1,1,2,1,2]
         }
         
         return res;
-    }
-#### July_25_2019.txt
-72. Edit Distance (Hard)
+    }72. Edit Distance (Hard)
 Given two words word1 and word2, find the minimum number of operations required to convert word1 to word2.
 You have the following 3 operations permitted on a word:
 Insert a character,Delete a character, Replace a character
@@ -1634,9 +1647,12 @@ Insert a character,Delete a character, Replace a character
                                         Math.min( dp[i-1][j-1], dp[i-1][j] ) 
                                        ) + 1; 
                 }
+            }
+        }
             return dp[n][m];        
     }
 
+    
     public int minDistance_memorized(String word1, String word2) {        
         if(word1==null && word2 ==null) return 0;
         if(word1==null) return word2.length();
@@ -1650,6 +1666,7 @@ Insert a character,Delete a character, Replace a character
             {
                 dp[i][j] = Integer.MIN_VALUE;
             }
+        }
         
         return minEdit(word1, word2, word1.length(), word2.length(), dp);
     }
@@ -1671,7 +1688,6 @@ Insert a character,Delete a character, Replace a character
         dp[i][j] = Math.min( minEdit(word1,word2, i, j-1, dp) , Math.min( minEdit(word1, word2, i-1, j-1, dp), minEdit(word1, word2, i-1, j, dp)) ) + 1;
         return dp[i][j];
     }
-#### July_30_2019.txt
 215. Kth Largest Element in an Array
 Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
 
@@ -1746,7 +1762,6 @@ Example 1: Input: [3,2,1,5,6,4] and k = 2, Output: 5
         
         return leftPos;// return pivot index
     }
-#### July_31_2019.txt
 347. Top K Frequent Elements (Medium)
 Given a non-empty array of integers, return the k most frequent elements.
 Example 1: Input: nums = [1,1,1,2,2,3], k = 2, Output: [1,2]
@@ -1814,7 +1829,6 @@ Explanation: "i" and "love" are the two most frequent words.
         
         return l;
     }
-#### June_01_2019.txt
 Substrings. // print all substrings of a given string (the problem is given by Leo)
 import java.util.*;
 class Substrings
@@ -1831,6 +1845,8 @@ class Substrings
             substrings(str, res, sb, i,i+1);
             sb.deleteCharAt(sb.length()-1);
         }
+    }
+
 
     public static void main(String[] args)
     {
@@ -1844,6 +1860,8 @@ class Substrings
         {
             System.out.println(s);
         }       
+    }
+}
 
 17. Letter Combinations of a Phone Number (Medium) 电话号码的字母组合
 Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
@@ -1887,6 +1905,8 @@ class Solution {
             l[index]= alphabet[i];
             combination(hs, digits, res, l, index+1);
         }
+    }    
+}
 
 771. Jewels and Stones (Easy) 宝石与石头    
 You're given strings J representing the types of stones that are jewels, and S representing the stones you have.  Each character in S is a type of stone you have.  You want to know how many of the stones you have are also jewels.
@@ -1912,8 +1932,7 @@ class Solution {
         
         return count;
     }
-#### June_02_2019.txt
-127. Word Ladder (Medium) 单词接龙
+}127. Word Ladder (Medium) 单词接龙
 Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord, such that:
 给定两个单词（beginWord 和 endWord）和一个字典，找到从 beginWord 到 endWord 的最短转换序列的长度。转换需遵循如下规则：
 
@@ -1963,13 +1982,15 @@ class Solution {
                             q.offer(s);
                             hs.remove(s);
                         }
+                    }
+                }
+            }
             res++;            
         }
         
         return 0; // no valid answer
     }
-#### June_03_2019.txt
-11. Container With Most Water 盛最多水的容器
+}11. Container With Most Water 盛最多水的容器
 Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). 给定 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。
 n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). 在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。
 Find two lines, which together with x-axis forms a container, such that the container contains the most water. 找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
@@ -1998,6 +2019,7 @@ class Solution {
         }
         return maxWater;
     }
+}
 
 42. Trapping Rain Water (Hard) 接雨水
 Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
@@ -2029,10 +2051,10 @@ class Solution {
                 water += rmax - height[r]; 
                 r--;
             }
+        }    
         return water;
     }
-#### June_04_2019.txt
-167. Two Sum II - Input array is sorted. 两数之和 II - 有序的输入数组
+}167. Two Sum II - Input array is sorted. 两数之和 II - 有序的输入数组
 给定一个已按照升序排列 的有序数组，找到两个数使得它们相加之和等于目标数。
 函数应该返回这两个下标值 index1 和 index2，其中 index1 必须小于 index2。
 说明:返回的下标值（index1 和 index2）不是从零开始的。你可以假设每个输入只对应唯一的答案，而且你不可以重复使用相同的元素。
@@ -2073,6 +2095,7 @@ Given an array, rotate the array to the right by k steps, where k is non-negativ
             nums[l] = temp;
             l++; r--;
         }
+    }
 
 // Time O(N^2), Space: O(1)
     public void rotate(int[] nums, int k) {
@@ -2107,6 +2130,7 @@ Given an array, rotate the array to the right by k steps, where k is non-negativ
         }
         System.arraycopy(res,0,nums,0,nums.length);
     }
+
 
 7. Reverse Integer 反转整数
 Given a 32-bit signed integer, reverse digits of an integer. 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
@@ -2177,7 +2201,6 @@ C can be placed before D (500) and M (1000) to make 400 and 900.
         
         return total;
     }
-#### June_06_2019.txt
 239. Sliding Window Maximum (Hard) 滑动窗口最大值
 Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. 
 给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
@@ -2242,7 +2265,6 @@ Note: You may assume k is always valid, 1 ≤ k ≤ input array's size for non-e
         
         return res;
     }
-#### June_07_2019.txt
 67. Add Binary (Easy) 二进制求和
 Given two binary strings, return their sum (also a binary string).
 The input strings are both non-empty and contains only characters 1 or 0.
@@ -2271,9 +2293,7 @@ Input: a = "1010", b = "1011" Output: "10101"
         if(c>0) sb.insert(0, c);
         
         return sb.toString();
-    }
-#### June_09_2019.txt
-9. Palindrome Number (Easy)
+    }9. Palindrome Number (Easy)
 Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
 
 Input: 121   Output: true, Input: -121  Output: false
@@ -2317,8 +2337,6 @@ Input: "race a car" Output: false
         return true;    
     }
     
-#### June_10_2019.txt
-
 5. Longest Palindromic Substring (Medium)
 Example 1:
 Input: "babad"
@@ -2352,7 +2370,6 @@ Output: "bb"
         int len = ((r-1)-(l+1));        
         return s.substring(l+1, r);
     }
-#### June_11_2019.txt
 2. Add Two Numbers
 Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
 Output: 7 -> 0 -> 8
@@ -2412,7 +2429,6 @@ https://leetcode.wang/leetCode-50-Pow.html
         
         return res;
     }
-#### June_12_2019.txt
 43. Multiply Strings (Medium)
 Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
 Example 1: Input: num1 = "2", num2 = "3" Output: "6"
@@ -2435,6 +2451,7 @@ public String multiply(String num1, String num2) {
             pos[p1] += sum / 10;
             pos[p2] = (sum) % 10;
         }
+    }  
     
     StringBuilder sb = new StringBuilder();
     for(int p : pos) if(!(sb.length() == 0 && p == 0)) sb.append(p);
@@ -2469,7 +2486,6 @@ public String multiply2(String num1, String num2) {
 	
 	return sb.toString();
 }
-#### June_13_2019.txt
 69. Sqrt(x)
 Implement int sqrt(int x).
 Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
@@ -2503,7 +2519,6 @@ Return lo.
         
         return l-1; // the cloest number
     }
-#### June_14_2019.txt
 162 Find Peak Element
 A peak element is an element that is greater than its neighbors.
 Given an input array where num[i] ≠ num[i+1], find a peak element and return its index.
@@ -2581,6 +2596,7 @@ https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-
             { // check the right side
                 l = mid+1;
             }                 
+        }    
         
         return ans;
     }
@@ -2605,11 +2621,10 @@ https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-
             { // check the right side
                 l = mid+1;
             }                 
+        }    
         
         return ans;
-    }
-#### June_15_2019.txt
-141. Linked List Cycle Easy
+    }141. Linked List Cycle Easy
 Given a linked list, determine if it has a cycle in it.
 To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
 Example 1:
@@ -2664,6 +2679,8 @@ To represent a cycle in the given linked list, we use an integer pos which repre
 
 Note: Do not modify the linked list.
 
+ 
+
 Example 1:
 
 Input: head = [3,2,0,-4], pos = 1
@@ -2684,7 +2701,6 @@ Explanation: There is a cycle in the linked list, where tail connects to the sec
         return null;
     }
 
-#### June_16_2019.txt
 14. Longest Common Prefix (Easy)
 Write a function to find the longest common prefix string amongst an array of strings.
 If there is no common prefix, return an empty string "".
@@ -2707,6 +2723,7 @@ Note: All given inputs are in lowercase letters a-z.
         
         return strs[strs.length-1];
     }
+
 
 33. Search in Rotated Sorted Array (Medium)
 Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
@@ -2746,6 +2763,7 @@ Example 2: Input: nums = [4,5,6,7,0,1,2], target = 3Output: -1
         return -1;        
     }
 
+
 81. Search in Rotated Sorted Array II (Medium)
 Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
 (i.e., [0,0,1,2,2,5,6] might become [2,5,6,0,0,1,2]).
@@ -2756,6 +2774,7 @@ Input: nums = [2,5,6,0,0,1,2], target = 3 Output: false
 Follow up:
 This is a follow up problem to Search in Rotated Sorted Array, where nums may contain duplicates.
 Would this affect the run-time complexity? How and why?
+
 
     public boolean search(int[] nums, int target) {
         int l = 0;
@@ -2846,7 +2865,7 @@ Example 2: Input: 1->1->2->3->3 Output: 1->2->3
         return dummy.next;
     }
 
-#### June_17_2019.txt
+
 237. Delete Node in a Linked List (Easy)
 Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
 Given linked list -- head = [4,5,1,9], which looks like following:
@@ -2859,6 +2878,7 @@ Explanation: You are given the second node with value 5, the linked list should 
             node.val = node.next.val;
             node.next = node.next.next;
         }
+    }
 
 234. Palindrome Linked List (Easy)
 Given a singly linked list, determine if it is a palindrome.
@@ -2978,7 +2998,6 @@ Input:
         
         return dummy.next;
     }
-#### June_18_2019.txt
 232. Implement Queue using Stacks (Easy)
 Implement the following operations of a queue using stacks.
 You must use only standard operations of a stack -- which means only push to top, peek/pop from top, size, and is empty operations are valid.
@@ -3019,7 +3038,7 @@ class MyQueue {
     public boolean empty() {
         return s1.isEmpty() && s2.isEmpty(); 
     }
-#### June_19_2019.txt
+}
 415. Add Strings (Easy)
 Given two non-negative integers num1 and num2 represented as string, return the sum of num1 and num2.
 The length of both num1 and num2 is < 5100.
@@ -3053,7 +3072,6 @@ You must not use any built-in BigInteger library or convert the inputs to intege
         
         return sb.toString();
     }
-#### June_29_2019.txt
 64. Minimum Path Sum (Medium)
 Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
 Note: You can only move either down or right at any point in time.
@@ -3136,7 +3154,6 @@ Note: m and n will be at most 100.
         
         return dp[m-1][n-1];
     }
-#### May_28_2019.txt
 46. Permutations
 Given a collection of distinct integers, return all possible permutations.
 
@@ -3175,6 +3192,8 @@ class Solution {
             permutation(nums, result, l);
             l.remove(l.size()-1);
         }
+    }
+}
 
 47. Permutations II (Medium)
 Given a collection of numbers that might contain duplicates, return all possible unique permutations.
@@ -3201,6 +3220,7 @@ class Solution {
             return;            
         }
         
+        
         for(int i=0;i<nums.length;i++)
         {
             if(used[i]) continue;
@@ -3214,6 +3234,8 @@ class Solution {
             l.remove(l.size()-1);
             used[i]=false;
         }
+    }
+}
 
 77. Combinations (Medium)
 Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
@@ -3252,6 +3274,9 @@ class Solution {
         }
         
     }
+}
+
+
 
 78. Subsets [Medium]
 Given a set of distinct integers, nums, return all possible subsets (the power set).
@@ -3288,6 +3313,7 @@ class Solution {
             subsetsHelper(nums, result, l, i+1);
             l.remove(l.size()-1);
         }        
+    }
     
 }
 
@@ -3324,6 +3350,8 @@ class Solution {
             subsetsHelper(nums, result, l, i+1);
             l.remove(l.size()-1);
         }
+    }
+}
 
 https://leetcode.com/problems/combination-sum/
 39. Combination Sum (Medium)
@@ -3363,8 +3391,10 @@ class Solution {
             findSum(candidates, result, l, target, curSum+candidates[i], i);
             l.remove(l.size()-1);
         }         
+    }
+}
 
-#### May_29_2019.txt
+
 40. Combination Sum II (Medium)
 Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
 Each number in candidates may only be used once in the combination.
@@ -3410,8 +3440,8 @@ class Solution {
         }
         
     }
+}
 
-#### May_30_2019.txt
 216. Combination Sum III (Medium)
 Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
 Note:
@@ -3450,6 +3480,8 @@ class Solution {
             combination(nums, k, target, sum+nums[i],  i+1, l, result); 
             l.remove(l.size()-1);
         }
+    }
+}
 
 22. Generate Parentheses (Medium)
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
@@ -3493,6 +3525,9 @@ class Solution {
                 
             sb.deleteCharAt(sb.length()-1);
         }
+    }
+}
+
 
 377. Combination Sum IV (Medium)
 Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
@@ -3544,8 +3579,8 @@ class Solution {
             combination(nums, target, sum+nums[i], l, result);
             l.remove(l.size()-1);
         }
-#### May_31_2019.txt
-567. Permutation in String (Medium)
+    }
+}567. Permutation in String (Medium)
 Given two strings s1 and s2, write a function to return true if s2 contains the permutation of s1. In other words, one of the first string's permutations is the substring of the second string.
 Example 1:
 Input: s1 = "ab" s2 = "eidbaooo"
@@ -3581,13 +3616,13 @@ class Solution {
         
         return false;
     }
+}
 Output: False
  
 Note:
 The input strings only contain lower case letters.
 The length of both given strings is in range [1, 10,000].
 
-#### Sep_02_2019.txt
 79. Word Search (Medium)
 Given a 2D board and a word, find if the word exists in the grid.
 The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
@@ -3637,3 +3672,4 @@ Given word = "ABCCED", return true. Given word = "SEE", return true. Given word 
         
         return matched;        
     }
+

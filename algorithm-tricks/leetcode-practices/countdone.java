@@ -83,7 +83,7 @@ class combinefiles
                  public boolean accept(File dir, String filename)
                       { return filename.endsWith(".txt"); }
         } );
- //       java.util.Arrays.sort(filesList, Collections.reverseOrder());
+        java.util.Arrays.sort(filesList, Collections.reverseOrder());
         try
         {
             PrintWriter writer = new PrintWriter("combined.doc", "UTF-8");
