@@ -1,0 +1,192 @@
+https://interviewing.io/recordings/Java-Google-1
+
+Transcript
+Intergalactic Avenger: Hello?
+Supersonic Taco: Hi!
+Intergalactic Avenger: How's it going?
+Supersonic Taco: Good, how are you?
+Intergalactic Avenger: Doing good, doing good. Yeah sorry, couldn't hear you for a second so I just wrote this on the screen there. Have you ever used the platform before?
+Supersonic Taco: Yes, a couple times.
+Intergalactic Avenger: Okay so then I guess you're familiar with how it all works, so I'm just going to jump straight into a coding question.
+Supersonic Taco: Alright.
+Intergalactic Avenger: So the first question is: are you familiar with the concept of order statistics. Have you heard that term before?
+Supersonic Taco: No
+Intergalactic Avenger: It's actually a very simple thing with an overly complicated name. So, given an unordered set of numbers like what I've written here: 1, 6, 3, 9, 8, 5, the order statistics are like the nth element in the list if it were sorted. So, the first smallest number in this list would be 1, and the second smallest number is 2, and basically the nth order statistic is then the nth smallest. That make sense?
+Supersonic Taco: Yeah
+Intergalactic Avenger: Alright so we're just going to have some algorithmic questions about finding some of these nth order statistics. Just to get started as sort of a warm-up problem: how about you write a function that, given a list of numbers that are out of order, you just find the smallest. So basically the first order statistic.
+Supersonic Taco: Okay sounds good.
+
+[2:29]
+Supersonic Taco: So I'll just declare it here: public static int is the return and I'll just call it min, and this takes an int I'll call it n.
+Intergalactic Avenger: So this should be like an array.
+Supersonic Taco: Yeah, sorry. So then I'll loop through the array, and the for each of those iterations I'll compare it against a min that I've already set up. So I'll set the min to be arr[0], and so what should I return if the array is null, or if there's no value?
+Intergalactic Avenger: Don't worry about that case. We'll just assume it'll always have some values in it.
+Supersonic Taco: Okay, sounds good. So then we'll set the min to the first one. So then moving through the array, if the element at the index of i is less than min then we make that the new min. And at the very end of the for loop you return. So just to test it to make sure, I'll write a litte test here: int[] input = {2, 3, 0, 6} should give us 0.
+Intergalactic Avenger: Yup, sounds good.
+Supersonic Taco: And let's try that then. Alright there we go: it returned 0.
+Intergalactic Avenger: Perfect, and what's the runtime of this algorithm?
+Supersonic Taco: O(n)
+Intergalactic Avenger: And is there any faster way for you to do it?
+Supersonic Taco: For an unsorted array that I know of, no.
+Intergalactic Avenger: Correct. Okay, so now you get the idea, let's make this a little harder, a little trickier. How about you give me the second smallest number?
+
+[5:28]
+Supersonic Taco: Okay, so for the second smallest number, then I think what we would need to do is maintain two variables and check accross both of them to see...like a larger min and a smaller min so we can check if there's a number that's smaller than both of them then we would put it into the smaller min, and if it's only smaller than the larger one then we can put it into the larger min. So once again are we assuming that the array's length is two or greater?
+Intergalactic Avenger: Yep
+Supersonic Taco: Okay, then I'll just call this min2 and we'll put this at the second element of the arr[], and if the arr[] is greater than the min then it's the very smallest one so the min becomes arr[1]. min2 should be set to min and min is set to the new minimum. And then otherwise, if arr[i] is less than min2 whereas it's still greater than min then this means min2 becomes the arr[i] and instead min becomes min2.
+Intergalactic Avenger: min2 becomes arr[i], but what happened to min then?
+Supersonic Taco: Oh sorry yeah, this is maintained the same I think, because if it's less than min2 then min is still the smallest so it should stay the same, but min2 gets updated
+Intergalactic Avenger: Okay, let's run this.
+Supersonic Taco: I have to return min2 this time. Okay this should give me 2. There, it gave me 2.
+Intergalactic Avenger: Perfect. Okay, I'm trying to think if there is a corner case here. What if these were the numbers here: {3, 2, 5, 6}. It should actually be 3, because 3 is the second smallest.
+Supersonic Taco: Yeah, it returns 3.
+Intergalactic Avenger: What if...Oh because you start back at 0 again, then you flip it all around, I got it. Alright, yeah perfect. And what's the runtime of this one?
+Supersonic Taco: This one is still O(n).
+Intergalactic Avenger: Okay, so we're going to want to move this and turn it into n. So we're going to want to add another parameter here that says I want to find the nth smallest. One way you could do it is you could just expand on this idea and you could just create a list of all of the mins up to n.
+Supersonic Taco: Right.
+Intergalactic Avenger: Now, what would the runtime of that algorithm be?
+Supersonic Taco: Well if we're storing them all, then we need to check across each of them each time which would become O(n^2) because we're running through all of the previous values every time we look through the array.
+Intergalactic Avenger: Yep, so to get the 1st, it just took O(n). To get 2 it took O(n). But now if you expand this in that same sort of pattern it actually becomes O(n^2). So is there a way you can improve on that O(n^2) time?
+Supersonic Taco: Alright let's see. One way to improve would just be to sort the array and that would make it O(nlogn) immediately and then all we have to do is find the nth index in the sorted array.
+Intergalactic Avenger: Okay perfect. Now here's the real challenge. Can we do better than O(nlogn) for any arbitrary m we're trying to find? So we saw that when m is 1, we can do it in O(n) time. When m is 2, we can still do it in O(n) time. You think there's a way that you could extrapolate on that sort of patter and say: oh, I can always do it in O(n) time, no matter which of these I'm trying to find.
+Supersonic Taco: Right. So the reason that we could do it in O(n) time for this m = 1 is because we could just go through and compare them all and see which one is smallest. For m = 2, we had to compare it with each of them and also the previous minimum. Without having to compare it to all the previous minimums I'm trying to think if there's a way to figure out the nth smallest.
+Supersonic Taco: Maybe if we delete for an object but then that wouldn't help either because if we go through…
+Intergalactic Avenger: But if you delete? So certainly it's tricky. If you get stuck, I have some hints for you.
+Supersonic Taco: Yes, I'd appreciate a hint.
+Intergalactic Avenger: Okay so, you mentioned the O(nlogn) case of sorting and then picking the mth item in the list. So in that sense, once we sort this input, you have: [2, 3, 5, 6]. And then let's say m = 3, you go straight for the 5, and you know that 5 is in the correct place, that everything of the left is below it and everything to the right is above it, and it's in position number 3. So that means it is necessarily correct. If we expand this out a little bit more [2, 3, 5, 6, 10, 15, 21], what you can see is that number 5 is in the correct position, but also every single other number is in the correct position. So you've also done work to make sure the 3 is the 2nd position and the 2 is in the 1st position and the 10 is in the 5th position and you've put them all in the right places even though at the end of the all you really cared about is that the 5 is in the right place. Because whatever order any of these other ones are in, it doesn't really matter, you don't really care because you're only really interested in this one.
+Supersonic Taco: Right, okay. So basically we're looking for a way to ensure that a certain value is in a certain spot but all the other values don't have to be sorted.
+Intergalactic Avenger: Correct.
+Supersonic Taco: And the one we want to be in the right place is at the m index.
+Intergalactic Avenger: Right.
+Supersonic Taco: So if we did this for the first minimum then basically we would have to go through each of the elements and then put all the ones that are larger than a certain minimum to the right of it if so that is would be at the beginning. So basically we would have to go through and figure out how many numbers are lower than that number and how many numbers are larger than that number.
+Intergalactic Avenger: Right.
+Supersonic Taco: So what if we do that then. So say we want m to be 2 like in this case where the index is 2 that means we want two numbers to be less than the one at m, and four numbers to be to the right. Somehow there should be a way that we can go through and figure out and make it balanced so that it's like equal on both sides even though those aren't sorted. But we would need to know what the number 5 already is in order to go through and actually put that in the right spot. So there needs to be a way where we can figure that out without already knowing 5.
+Intergalactic Avenger: Right.
+Supersonic Taco: Yeah and if we just chose a random number or when one by one like we did here then it wouldn't work because then we would still go back to being O(n^2). We just still have to go through all the numbers to see which one was right.
+Intergalactic Avenger: But let's take a look at example. You could have described this process where you take this input array, you take the first number you found, and you made sure it went in the right spot. So you described a process of saying: take this number 3, and put it (just that one number) where it goes. So everything to the left is less than it, and everything to the right is greater than it.
+Supersonic Taco: A binary search tree?
+Intergalactic Avenger: Yeah. That's kind of a part of it. So describe how you might do that. You don't really much information about this array coming into it, because it's unsorted, in any order. So you might as well just start with the first number you find and say: I'm just going to put the first one where it belongs and I'll tackle the rest of the problem after that. For example, you can think of what it would look like afterwards: [2, 3, 5, 6, 10, 21, 15]. If you can imagine that this might be what the array would look like after you found the first place. So 3 goes in this spot and everything to the left is less than 3 and everything to the right is greater than 3, and you don't really know what's going on on either side and you haven't really sorted it altogether, but you do know that 3 is in the right spot.
+Intergalactic Avenger: So does this then give you some additional information in terms of how you would proceed from here? So keep in mind we're still looking for the third largest number and you just figured out that the number 3 goes in position number 1.
+Supersonic Taco: So then I know that the number 3 is the second largest number and at this point I would have enough information to find the third largest number using the technique that I just did before where I find the previous minimum then I just have to run through the array one more time to find the next minimum.
+Intergalactic Avenger: Right, that's true. And which part of that array would you run that algorithm on? The whole thing, or a part of it?
+Supersonic Taco: The right, because the right is unsorted.
+Intergalactic Avenger: Well, in a sense the left is also unsorted kind of. Because we don't really have any guarantees about what's going on to the left. In this case you do because there's only one element so there's not really much sorting to do. But what else is an interesting property? So now that you have this 3 in the right spot, in term of what you're looking for are you interested in anything on the left, or are you interested in anything on the right, or are you interested in anything on both sides?
+Supersonic Taco: Well, right now looking at this array, I would be interested in the right because the 3 is only at index 1 and we're looking for index 3. But the 2 could be the 5 too, like what if there was a 5 here instead of the 2.
+Intergalactic Avenger: It couldn't be. It couldn't be because you've split this array up. Let me start by rearranging this more: {10, 2, 5, 6, 11, 3, 15}.So you start with this 10 and you first make sure that everything on your left is less than 10 and everything on your right is greater than 10. So this might look like this: [2, 5, 6, 3, 10, 15, 11]. So you've shifted things around but you've shifted them around in a way so that everything on the left is less than 10 and everything on the right is greater than 10. So it's not just that you've found the one right place for it, but you've done a little bit extra to make sure that you split the array in two pieces.
+Supersonic Taco: Yeah, so then this is actually pretty helpful. If the 10 is over here and this is in the 4th index and m has to be to the left of it, so we don't really need to worry to the right any more because those are greater than 10 anyways.
+Intergalactic Avenger: Exactly. So then when you repeat this and you go for another iteration of it, you're only going to be looking at the left side, right?
+Supersonic Taco: Yeah.
+Intergalactic Avenger: Okay so, does that give you some ideas about how this algorithm might work?
+Supersonic Taco: Yeah it does. Because then in the first time around I'd be iterating through all the numbers to find where it belongs and the second time around I'm only iterating through the left side. So this kind of reminds me a little bit of binary search so the runtime might get a little better than O(n^2) when we do it this way.
+Intergalactic Avenger: Okay
+Supersonic Taco: Alright so, should I start implementing it then?
+Intergalactic Avenger: Yeah let's see what happens.
+
+[25:16]
+Supersonic Taco: Alright so we're outputting just the number, and this is NthSmallest(). I'm just going to write the code for the first time and we can probably iterate through and make that repeat. So the first time around I'll have to go through the entire array. So if I look at the first one, I'll have to put it in the right spot so then I'll take int index = 0 before this loop. We're going through them and if we say: if(arr[index] > arr[i]) then we need to move it to the right, or swap it. Yeah so if the arr[] at index is greater than the arr[] at i then we need to do some swapping here. So should I just abbreviate it and just write swap here, or do you want me to write the whole swap?
+Intergalactic Avenger: You can just write swap.
+Supersonic Taco: Okay. Well actually I'm going to need to test it later so I might as well just do it now. So then we'll write int temp = arr[i] and then arr[i] = arr[index] and arr[index] = temp. So this switches them around if its greater than, but if it's less than, then essentially we need to keep moving so we don't need to do anything there. But if they're equal to each other then we stop. So we start with index = 0, oh there's a problem here because if it's starting with first one then it'll just stop immediately because it's the same one. So then we'll start at the first one, then index = 0 and the first element is 10, and then it checks to see arr[1] which is 2 and 10 > 2 so then it swaps and now it's 2 and then 10 and then it compares it again, 5: 10 > 5 so it swaps, 6: 6 > 5 so it swaps and it looks at 11. This breaks now because it'll stop since it's greater than, but it needs to continue and look for that 3.
+Intergalactic Avenger: Wait, if those numbers don't equal each other…
+Supersonic Taco: Yeah it wouldn't stop but it still needs to...yeah it would stay there and then it would go through and check against 3 and now that it's less than 3 it'll swap with that one instead and 10 will be where the 3 was and then it'll check against 15, which is greater than so it'll stay there.
+Intergalactic Avenger: So that would actually work for this specific input but think about what would happen if the input was something like this: [10, 2, 5, 6, 11, 3, 0]. First you swap the 10 with the 2 so that's right, and then you swap the 10 with the 5 which is totally right then you swap the 10 with the 6 then you leave that. Then you swap the 3 with the 10, so that's cool, and then you swap the 0 with the 10.
+Supersonic Taco: Yeah that's not right.
+Intergalactic Avenger: Not quite right because when you skipped over the 11 now you have something on the left that is bigger than it should be.
+Supersonic Taco: So then I think maybe we have to move the 11 along with the 10 every time, so maybe we can swap the 11 with whatever's next to it so it keeps moving away.
+Intergalactic Avenger: So you had this point with the 10 and the 0 like this, then what were you going to do? Move up the 0 and the 11?
+Supersonic Taco: No it was like the 10 was here: [2, 5, 6, 10, 11, 3, 0] and then you would check the 10 and the 11, and since the 11 is greater you could swap it away. Yeah you could actually just swap it with the end of the array so this becomes 0 and this becomes 11. And then here we check against the 0 is greater than and it swaps, and then it checks the 10 and the 3 is greater so it swaps.
+Intergalactic Avenger: Okay.
+Supersonic Taco: And that would put it in the right place.
+Intergalactic Avenger: So then presumably if there was another number that was greater than 10 you would swap it so like...we had it here that was like: [2, 5, 6, 10, 11, 3, 15].
+Supersonic Taco: So then it would first compare the 10 and the 11. Okay, now I see what you're saying: if it swaps there it would skip over and it wouldn't work.
+Intergalactic Avenger: But you're definitely on the right track. This is definitely the kind of manipulating that you're going to want to be doing in this kind of array. And you're definitely on the right track with respect to looking at each one of these numbers as you're going up and as long as it's less than then you're keeping it to the left and as long as its greater than you're keeping it to the right. So that's kind of how you're kind of scanning this list of numbers. So you're getting into this one sort of problematic case that when you start to have multiple numbers that are bigger it gets kind of tough with how do you deal with the bookkeeping of where does it go and who can you swap it with.
+Supersonic Taco: Yeah I can think of one way to solve that which would be to create another array and then if it's less than whatever we want we put it into the beginning of the array and hold two counters for where the beginning of the array is and then where the end of the array is and if the number is larger we add it to the end until there's only one spot left and then that's where the 10 has to go.
+Intergalactic Avenger: That's a good way to do it.
+Supersonic Taco: Alright so then I'll try to implement that instead.
+
+[35:28]
+Supersonic Taco: Okay so then we have now two counters int start = 0 and int end = arr.length and then we loop through and so we know the number that we're looking for I'll put that in as index again and that'll start at 0 this time. So basically if the number that we're looking at right now which is arr[i] is less than the arr[index] then we put it to the right. So then we have this new array that we have to create that's the same length. And then if the arr[i] < arr[index] then it should go in the beginning so we do newArray[start] = arr[index] and start++ to show that we've added an element.
+Intergalactic Avenger: So in this line here you set newArray[start] = arr[index] is it arr[index] or arr[i]?
+Supersonic Taco: Oh sorry, yeah that's completely different thing. And are there going to be duplicates in this array or no?
+Intergalactic Avenger: Let's just say no for now.
+Supersonic Taco: Okay so if there's no duplicates then any other element we look at cannot be the one we're searching for so then we can just do an else here and this basically says that the arr[i] is greater than what we're looking for so it needs to go to the right. So it goes to newArray[end] = arr[i]. And then do end-- and this loop has to end whenever start and end are one apart from each other, because then that means we've found our index. So if end - start == 1 we return start+1. Alright so I think this should work just for the first one to place it in the right spot. So let's try it.
+Intergalactic Avenger: So I see you're returning the number right away but I'm wondering...so this is going to return not the nth smallest, but some smallest that the...you're returning which condition the first element will have gone to.
+Supersonic Taco: Yes, yes. I just wanted to break down the problem
+Intergalactic Avenger: Got it. Okay.
+Supersonic Taco: Okay, in this specific array...Oh I'm missing a return statement.
+Intergalactic Avenger: Here's an interesting question: so when will end - start == 1? When will this be true?
+Supersonic Taco: end - start will be 1 when we've gone through all the elements in the array and now we're looking at that one empty space where the element should go.
+Intergalactic Avenger: Okay, so if that's goign to happen once you're already completed with this array will this ever be see?
+Supersonic Taco: Yeah you're right. We can just recognize those and return start+1.
+Intergalactic Avenger: IndexOfOfBounds?
+Supersonic Taco: Oh end has to be arr.length-1.
+Intergalactic Avenger: Okay. I think actually because you incremented start right here, you don't need to increment start there. I think that's what's going on.
+Supersonic Taco: Alright and let me try it with another m just to make sure. If we deleted one of these, it should become 3 I believe.
+Intergalactic Avenger: Yep.
+Supersonic Taco: Okay, alright.
+Intergalactic Avenger: So now I have the functionality for figuring out the spot where one specific element should go but I have to repeat until I find wherever the element at the mth index is. So essentially this whole start...if start is m then we know that we've found our element.
+Supersonic Taco: Right.
+Intergalactic Avenger: But the thing is this index has to change every time. So I'm thinking maybe we could do this like a binary search where we choose the middle number in each half and we try to put that where it belongs, and if m is greater than the index there then we run it on the right half and if m is less than then we run it on the left half.
+Supersonic Taco: Okay so then we'll start with, instead of 0, index = start + end/2 and then looking at the end….
+Intergalactic Avenger: The index is representative of the index of the number you're comparing everything with. In that sense index represented this number 10 here. Does it get you anything to pick the number in the middle? This number here is the number in the middle, does it really matter that you take index = 0 or index=start+end/2? It's going to be 50-50 right? It's not going to be exactly in the middle there. There's kind of no way to tell how well this number you're picking at random is going to split this array in tWo. I mean you can do that, but I think that starting at index=0 is an totally reasonable way to go because at this point it's just a random array, there's no order. You might as well pick anything and then go from there.
+Supersonic Taco: Yeah, I think that's fine, we can use 0 then. We can actually make this recursive to do a little less work where once we find where the spot that index should go, we'll determine if m is in the right or left and then we will again do it. But actually that might be….yeah I think that might be one way of implementing because we can always keep index at 0 because the array that we're looking at is now a subarray so the index will always be 0. Or a way we could do this is just have index at start and then move through and then kind of keep doing it with a new start and end and that would be another way of doing it. Or we could just make new parameters here for start and end and implement it as recursive.
+Intergalactic Avenger: So I like your recursive idea because it's definitely going to make the code a little simpler. Do you actually need to add more parameters here if you do is as a recursive algorithm?
+Supersonic Taco: No, I don't have to. If I change the array then I don't have to. I was just wondering like that would still take up more memory because technically I would have to somehow cut off the array...We'll just keep it like this for now and turn it into a subarray.
+Supersonic Taco: Okay so then we're using index = 0 and we're returning start which ends up being the index of whatever element is at 0. So what we need to do is determine if m is greater than or less than start. If m is greater than start, we need to redo this on the right side of the array, so we should perform NthSmallest() on...I actually forgot the method for sub-arrays in Java.
+Intergalactic Avenger: I think there's a thing called range? Subset? Fill? I mean, you could just use copy of range if you wanted to.
+Supersonic Taco: I think I got it, there's a code completion on here and it says that it's a method so I'll just use that then. So then the original would be arr[] and I'm assuming the from is inclusive so we'd use start+1 because start we've already looked at and that's the one we've already found and the end would just still be end. And here it would just be the other way around so if we have NthSmallest() then it would be arr[] and instead of start+1 this would be 0 and this would be just start. And else that means that m = start which means we've found the element at the index we want so we just return start.
+Intergalactic Avenger: Okay, so NthSmallest() actually takes two parameters.
+Supersonic Taco: Oh right, so m minus needs to be add in.
+Intergalactic Avenger: Is it m? Because that's relative to the entire…
+Supersonic Taco: Right so if the m that we're looking for is greater than start then it would need to be m-start and if the element that we're looking for is....so if m < start then now we're looking for still m.
+Intergalactic Avenger: Right.
+Supersonic Taco: I'm going to test this now to see if there's any issues. Let's just see if we get 0 as m then we should still get back 10.
+Intergalactic Avenger: We should get 3. So 3 is the smallest one.
+Supersonic Taco: Oh yeah yeah. So it should give back 3.
+Intergalactic Avenger: We need to import ArrayLists? Or is it Arrays. Oh it's a lowercase c
+Supersonic Taco: Oh okay, let's see what happens now? I'm missing a return statement?
+Intergalactic Avenger: You don't have return in these ones. Wait which ones are they looking at?
+Intergalactic Avenger: So 52 and 54, you're calculating it without returning it.
+Supersonic Taco: Got it, alright. Now it's giving me 0, which that's not even in the input array. Oh I returned the index, I never returned the element.
+Supersonic Taco: Oh that's still not right. Alright, let's see.
+Intergalactic Avenger: So definitely the logic looks right, I'm guessing there must be some off by 1 bug. So we already figured out that with this list when you go the first time, start equals...oh wait start was 3 before, so it should have put it in the...So maybe there's some need to do some debugging with some print statements to see...because yeah the logic here is definitely looking solid.
+Supersonic Taco: Maybe here I'll just print out newArray[]. Okay.
+Intergalactic Avenger: Interesting that you have the 10 in there. So in that sense you want your newArray[] to be one element smaller. So if you see what's happening here is you started with index 0, and you're also checking index 0 again. The size is going to be 1 less because you're kind of taking one out then sort of partitioning it after you've taken that one out. So then now that you've reduced the size by a little bit you have to make up for that when you make this copy.
+Supersonic Taco: Well that wouldn't be affected by the newArray[] would it?
+Intergalactic Avenger: Well now the end actually has to be an array of length-2. Because the end is actually the end of newArray[].length-1.
+Supersonic Taco: Right. Well it's the initial array minus one so it's like the ending, but in the newArray[] it's not…
+Intergalactic Avenger: In the new array, you're copying these values over into the newArray[] so the newArray[] has to…
+Supersonic Taco: Yeah, all I had to do was arr[].length here because the end is not actually the end.
+Intergalactic Avenger: I'm looking at line 38 here.
+Supersonic Taco: Oh yeah.
+Intergalactic Avenger: So that end is actually the end of newArray[].length-1, which is the original arr[].length-2.
+Supersonic Taco: Oh okay.
+Intergalactic Avenger: And then in this one, you're not actually copying the original arr[], you want to copy the newArray[] because the original array is totally out of order and the newArray[] is the one...and you'd need the newArray[].length.
+Supersonic Taco: Okay, I get it and newArray[] has to be smaller. Yeah it should be 1 smaller....
+Intergalactic Avenger: Right, so in this one, you just want to copy to newArray[].length.
+Supersonic Taco: Well newArray[].length would include the values above it wouldnt it?
+Intergalactic Avenger: Well newArray[].length is the end of the new array, and you're trying to copy from your position all the way to the end.
+Supersonic Taco: And here there's still something wrong with the size of newArray[].
+Intergalactic Avenger: Wait can you try running again? What's wrong with the size of newArray[]? Line 46. Oh this one here: line 38, you had just changed this.
+Supersonic Taco: So this should be at minus 2?
+Intergalactic Avenger: Or you could just send end underneath the newArray[] or you could move this one up and just say end = newArray[].length-1. Either way it's the same number.
+Supersonic Taco: Oh okay, and this is still arr[].length-1. Okay now 3, okay now that's actually right.
+Intergalactic Avenger: There it is, not bad.
+Supersonic Taco: Now let's try it for some other other numbers too. So if we tried like 1, then that should give us 5. No..
+Intergalactic Avenger: Close. All right yeah, I think there must be some...I'm guessing there's an off by one in either in this m-start or this m here or the zero to start or what. I'm guessing there's a tiny little off by one bug here. So not a big deal, just because we're running a little short on time. So you did all this work and now you're inspecting smaller and smaller pieces of the array as you recurse into it, what is the runtime of this algorithm? So the question is that you did all this work, or there's all this extra code to be careful not to do any more work than you need to so the question is has this actually sped it up or is it still O(nlogn) or is it even greater than O(nlogn).
+Supersonic Taco: Well I think it depends on the case. Say for example this array was sorted in backwards order. Then the first one we'd look at would be the end and then the next one would be the end again. Say our m was 0 then we'd have to keep going through that array over and over and so we'd basically be looking at the entire array...which in the end still comes out to O(n^2). So I think the worst case our algorithm is still O(n^2).
+Intergalactic Avenger: Okay. But what about the average case. What if you randomized...That's sort of a common thing people do with these sort of divide and conquer algorithms is that if there is kind of a poisonous input then you just kind of randomize it to make sure that it's just in this big old jumbled order. So what can we expect sort of on the average case? You're totally right that there is a worst case input that makes it O(n^2), but what can we generally expect this to be in the average case.
+Supersonic Taco: I think this is still O(nlogn) then. Wait actually, in the average case it would be like we're looking at half the array since then it wouldn't be too much or too little. Wait no we're only looking at half, we'd look at 6 then 3 then 1 which is like O(nlogn).
+Intergalactic Avenger: Close. Can you see me typing up above the NthSmallest()? So the first time you run through this in the first iteration you have n elements that you're going over. Then like you said, you break it down by half and the nex time you just go over the n/2 and the next time is n/4 and n/8 et cetera. So what is that going to add up to?
+Supersonic Taco: O(logn)?
+Intergalactic Avenger: Is it?
+Supersonic Taco: Oh no it's just O(n).
+Intergalactic Avenger: Right, exactly.
+Supersonic Taco: Yeah it just becomes O(n)
+Intergalactic Avenger: Yep! So you did it. You got it down from O(nlogn) to O(n). And the trick is when you do the sort you have this halving you do each tie but you keep doing more and more work. Yeah so when you do a sort, you split it in half and then you do both sides, and so even though it's getting smaller and smaller you have more and more of them that you have to deal with, and so the length of this is logn. So like the number of iterations is logn so that's why it becomes O(nlogn). But in your case you don't have this ever increasing coefficient in front of it, so it just adds up to 2n and it's bounded.
+Intergalactic Avenger: So you got it! Very good.
+Supersonic Taco: Alright, thank you. This is a very interesting problem.
+Intergalactic Avenger: I'm glad you liked it. So I'll leave some comments on the platform but just before we go if you have any questions for me about interviewing or anything else I'd be happy to answer them.
+Supersonic Taco: I think I'm all set.
+Intergalactic Avenger: Okay awesome, then you have a good night and good luck with all your future practice rounds.
+Supersonic Taco: Thank you. Have a good night.
+Intergalactic Avenger: Okay. Bye bye.
